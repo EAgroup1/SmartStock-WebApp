@@ -13,10 +13,11 @@ const deliverySchema = new Schema({
     userItem: { type: String, required: true},
     description: { type: String, required: false}
 }, {
+    //timestamps adds createDate and updateDate of the object
     timestamps: true,
     versionKey: false
 
 })
 
 //we will export our entity
-module.exports = model('Delivery', deliverySchema)
+module.exports = model('Delivery', deliverySchema);

@@ -1,6 +1,10 @@
 const userCtrl = {}
 
-const User = require('../models/User')
+//we require a model from models folder
+const User = require('../models/User');
+
+//we require the info of the jsonwebtoken module
+const jwt = require('jsonwebtoken');
 
 //our User's CRUD
 userCtrl.getAllUsers = async (req, res) => {
@@ -66,5 +70,77 @@ userCtrl.getUser = async (req, res) => {
 
     res.send(user)
 }
+
+userCtrl.logIn = async (req, res) => {
+
+    console.log(req.body);
+
+    const { email, password } = req.body;
+
+    //search the params ({email: email}) ---> next steps encrypt again
+    
+    //we wait to the search in database (async-await)
+    const user = await User.findOne({email})
+
+    if(!user) return res.status(401).send("This email doesn't exist!");
+
+    //& password validator
+    if(user.password !== password) return res.status(401).send("Incorrect password!");
+
+    const token = jwt.sign({_id: user._id}, 'secretkey')
+    res.status(200).json({token})
+
+}
+
+userCtrl.signUp = async (req, res) => {
+
+    //we see the body of the user's request
+    console.log(req.body);
+
+    //we extract the info of the json object
+    const { email, username, password, role } = req.body;
+
+    //in the next steps, we encrypt these params
+    const newSignUpUser = new User({email, username, password, role});
+
+    await newSignUpUser.save();
+
+    //then, we create a token (payload, variable & options)
+    const token = jwt.sign({_id: newSignUpUser._id}, 'secretkey')
+
+    //we return the json object with the created token to the user & status = OK
+    res.status(200).json({token})
+}
+
+//validated function to private routes --- verify token -/- express routing
+function verifyToken(req, res, next) {
+
+    console.log(req.headers.authorization)
+
+    //if you don't have authorization field ---> you can't access to the route
+    if(!req.headers.authorization){
+        return res.status(401).send('Unauthorized acces!');
+    }
+
+    //exemple authorization header field = ['Bearer', 'token...']
+    const token = req.headers.authorization.split(' ')[1]
+    if(token == 'null'){
+        return res.status(401).send('Unauthorized acces!');
+    }
+
+    //we need the token of the user and your private key ---> checking...
+    const payload = jwt.verify(token, 'secretkey')
+    console.log(payload);
+
+    //we save id of the payload on a property
+    req.userId = payload._id;
+    next();
+}
+
+//private test routes -/- get
+/*userCtrl.getBackOffice('/admin/users', verifyToken, (req, res)=>{})
+userCtrl.getProfile('/user/profile', verifyToken, (req, res)=>{
+    req.send(req.userId);
+})*/
 
 module.exports = userCtrl;

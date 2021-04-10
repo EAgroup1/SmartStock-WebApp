@@ -12,10 +12,11 @@ const lotSchema = new Schema({
     businessItem: { type: String, required: true},
     userItem: { type: String, required: true}
 }, {
+    //timestamps adds createDate and updateDate of the object
     timestamps: true,
     versionKey: false
 
 })
 
 //we will export our entity
-module.exports = model('Lot', lotSchema)
+module.exports = model('Lot', lotSchema);

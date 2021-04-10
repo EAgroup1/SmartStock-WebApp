@@ -21,6 +21,7 @@ import { UserService } from './services/user.service';
 
 //routes
 import { AppRoutingModule } from './app.routing';
+import { AuthorizationComponent } from './components/admin/authorization/authorization.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AppRoutingModule } from './app.routing';
     LoginComponent,
     SignupComponent,
     ProfileComponent,
-    Page404Component
+    Page404Component,
+    AuthorizationComponent
   ],
   imports: [
     BrowserModule,

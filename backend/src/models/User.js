@@ -9,10 +9,11 @@ const userSchema = new Schema({
     lastname: { type: String, required: false},
     salary: { type: Number, required: false}
 }, {
+    //timestamps adds createDate and updateDate of the object
     timestamps: true,
     versionKey: false
 
 })
 
 //we will export our entity
-module.exports = model('User', userSchema)
+module.exports = model('User', userSchema);
