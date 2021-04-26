@@ -10,6 +10,9 @@ import { LoginComponent } from './components/user/login/login.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { SignupComponent } from './components/user/signup/signup.component';
 import { AuthorizationComponent } from './components/admin/authorization/authorization.component';
+import { FriendsComponent } from './components/user/friends/friends.component';
+
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
     //initial route ''
@@ -20,7 +23,8 @@ const routes: Routes = [
     { path: 'admin/backoffice', component: UsersComponent }, // users component = backoffice component
     { path: 'user/login', component: LoginComponent },
     { path: 'user/signup', component: SignupComponent },
-    { path: 'user/profile', component: ProfileComponent },
+    { path: 'user/profile', component: ProfileComponent, canActivate: [AuthGuard] }, // we make a private route
+    { path: 'user/friends', component: FriendsComponent, canActivate: [AuthGuard] }, // we make a private route
     { path: '**', component: Page404Component }
 ];
 

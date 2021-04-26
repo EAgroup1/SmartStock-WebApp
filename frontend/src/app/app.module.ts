@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 //Angular CLI automatically manages the creation of components, models and services
 import { UsersComponent } from './components/admin/users/users.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 //we add some components for WebApp
 import { HomeComponent } from './components/home/home.component';
@@ -23,6 +23,10 @@ import { UserService } from './services/user.service';
 import { AppRoutingModule } from './app.routing';
 import { AuthorizationComponent } from './components/admin/authorization/authorization.component';
 
+import { AuthGuard } from './services/auth.guard';
+import {TokenInterceptorService} from './services/token-interceptor.service';
+import { FriendsComponent } from './components/user/friends/friends.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +38,8 @@ import { AuthorizationComponent } from './components/admin/authorization/authori
     SignupComponent,
     ProfileComponent,
     Page404Component,
-    AuthorizationComponent
+    AuthorizationComponent,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,17 @@ import { AuthorizationComponent } from './components/admin/authorization/authori
     FormsModule,
     HttpClientModule
   ],
-  providers: [UserService],
+  //providers: [UserService]
+  //we make in each request a extra header with Authorization header! (Big important!)
+  providers: [
+    UserService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,11 +3,27 @@
   <div class="nav-wrapper black">
     <a href="" class="brand-logo"><i class="material-icons">near_me</i>SmartStock</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="premium">Premium</a></li>
-      <li><a href="user/signup">Sign up</a></li>
-      <li><a href="user/login">Log in</a></li>
-      <li><a href="admin/authorization">Back office</a></li>
-      <li><a href="#"><i class="material-icons">add</i></a></li>
+      <li><a href="premium"><i class="material-icons">card_membership</i></a></li>
+
+      <!--if authService.loggedIn() is false = !authService.loggedIn()-->
+      <!--if don't login in the system show me the next tags-->
+      <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
+        <li><a href="user/signup">Sign up</a></li>
+        <li><a href="user/login">Login</a></li>
+      </ng-container>
+
+      <!--if login in the system show me this other tag-->
+      <!--logOut tag // variable = loggedIn-->
+      <ng-template #loggedIn>
+        <li><a href="user/friends"><i class="material-icons">people</i></a></li>
+        <li><a href="user/profile"><i class="material-icons">account_circle</i></a></li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="authService.logOut()"><i class="material-icons">exit_to_app</i></a>
+        </li>
+      </ng-template>
+
+      <li><a href="admin/backoffice"><i class="material-icons">developer_board</i></a></li>
+      <li><a href="#"><i class="material-icons">apps</i></a></li>
     </ul>
   </div>
 </nav>
