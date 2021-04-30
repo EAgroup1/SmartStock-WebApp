@@ -87,8 +87,12 @@ userCtrl.logIn = async (req, res) => {
     //& password validator
     if(user.password !== password) return res.status(401).send("Incorrect password!");
 
-    const token = jwt.sign({_id: user._id}, 'secretkey')
-    res.status(200).json({token})
+    const token = jwt.sign({_id: user._id}, 'secretkey');
+    _aux={
+        _id:user._id,
+        token:token
+    }
+    res.status(200).json(_aux)
 
 }
 
