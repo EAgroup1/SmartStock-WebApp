@@ -2,20 +2,20 @@ import { Router } from 'express';
 import { Request, Response, NextFunction } from 'express';
 import usersCtrl from '../controllers/users.controller';
 
-const router: Router = Router();
+const usersRouter: Router = Router();
 
 
 //we put all routes in this file & we will se in the future
-router.get('/', usersCtrl.getAllUsers);
-router.post('/', usersCtrl.createUser);
-router.delete('/:id', usersCtrl.deleteUser);
-router.put('/:id', usersCtrl.updateUser);
-router.get('/:id', usersCtrl.getUser);
+usersRouter.get('/', usersCtrl.getAllUsers);
+usersRouter.post('/', usersCtrl.createUser);
+usersRouter.delete('/:id', usersCtrl.deleteUser);
+usersRouter.put('/:id', usersCtrl.updateUser);
+usersRouter.get('/:id', usersCtrl.getUser);
 
 //auth routes ---> we research private routes
-router.post('/logIn', usersCtrl.logIn);
+usersRouter.post('/logIn', usersCtrl.logIn);
 //the signup route has a small difference with the createUser route
-router.post('/signUp', usersCtrl.signUp);
+usersRouter.post('/signUp', usersCtrl.signUp);
 
 //validated function to private routes --- verify token -/- express routing
 //function verifyToken(req: Request, res: Response, next: NextFunction) {
@@ -47,4 +47,4 @@ router.post('/signUp', usersCtrl.signUp);
 // router.get('/user/profile', verifyToken, usersCtrl.getProfile);
 
 //we will export
-export default router;
+export default usersRouter;
