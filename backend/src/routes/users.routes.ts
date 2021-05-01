@@ -23,7 +23,7 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
 
     console.log(req.headers.authorization);
 
-    //if you don't have authorization field ---> you can't access to the route
+    // if you don't have authorization field ---> you can't access to the route
     if(!req.headers.authorization){
         return res.status(401).send('Unauthorized acces!');
     }
@@ -34,11 +34,13 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
         return res.status(401).send('Unauthorized acces!');
     }
 
-    //we need the token of the user and your private key ---> checking...
+    // we need the token of the user and your private key ---> checking...
     const payload = jwt.verify(token, 'secretkey')
     console.log(payload);
 
     // we save id of the payload on a property
+
+    //LA LINEA DE ABAJO NO ESTA BIENNNNNNN!!!
     req.body._id = payload;
     next();
 }

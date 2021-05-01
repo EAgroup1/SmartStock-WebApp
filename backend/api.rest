@@ -5,9 +5,9 @@ POST http://localhost:4000/api/users
 content-Type: application/json
 
 {
-    "username": "nike32",
-    "email": "nike32@gmail.com",
-    "password": "9101112",
+    "userName": "Javier",
+    "email": "Javier@gmail.com",
+    "password": "1234"
 } 
 ###
 DELETE http://localhost:4000/api/users/6060a99a01771e3aa86b105c
