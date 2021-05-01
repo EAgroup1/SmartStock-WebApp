@@ -1,9 +1,9 @@
 //we require a model from models folder and the interface of this model
 import User, { IUser } from '../models/user';
 import { Request, Response } from 'express';
-
 //we require the info of the jsonwebtoken module
 import jwt from 'jsonwebtoken';
+
 
 class userCtrl {
 
@@ -111,8 +111,8 @@ class userCtrl {
         else if(user.password !== password) return res.status(401).send("Incorrect password!");
         const token = jwt.sign({_id: user._id}, 'secretkey');
         const _aux = {
-            _id:user._id,
-            token:token
+            _id: user._id,
+            token: token
         }
         res.status(200).json(_aux);
         } catch (err) {

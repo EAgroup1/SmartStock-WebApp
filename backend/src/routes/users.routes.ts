@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Request, Response, NextFunction } from 'express';
 import usersCtrl from '../controllers/users.controller';
+import jwt from 'jsonwebtoken';
 
 const usersRouter: Router = Router();
 
@@ -18,33 +19,33 @@ usersRouter.post('/logIn', usersCtrl.logIn);
 usersRouter.post('/signUp', usersCtrl.signUp);
 
 //validated function to private routes --- verify token -/- express routing
-//function verifyToken(req: Request, res: Response, next: NextFunction) {
+function verifyToken(req: Request, res: Response, next: NextFunction) {
 
-    //console.log(req.headers.authorization);
+    console.log(req.headers.authorization);
 
     //if you don't have authorization field ---> you can't access to the route
-    //if(!req.headers.authorization){
-    //    return res.status(401).send('Unauthorized acces!');
-    //}
+    if(!req.headers.authorization){
+        return res.status(401).send('Unauthorized acces!');
+    }
 
-    //exemple authorization header field = ['Bearer', 'token...']
-    //const token = req.headers.authorization.split(' ')[1]
-    //if(token == 'null'){
-    //    return res.status(401).send('Unauthorized acces!');
-    //}
+    // exemple authorization header field = ['Bearer', 'token...']
+    const token = req.headers.authorization.split(' ')[1]
+    if(token == 'null'){
+        return res.status(401).send('Unauthorized acces!');
+    }
 
     //we need the token of the user and your private key ---> checking...
-    //const payload = jwt.verify(token, 'secretkey')
-    //console.log(payload);
+    const payload = jwt.verify(token, 'secretkey')
+    console.log(payload);
 
-    //we save id of the payload on a property
-    //req.userId = payload._id;
-    //next();
-//}
+    // we save id of the payload on a property
+    req.body._id = payload;
+    next();
+}
 
-//private routes
-// router.get('/admin/users', verifyToken, usersCtrl.getBackOffice);
-// router.get('/user/profile', verifyToken, usersCtrl.getProfile);
+// private routes
+usersRouter.get('/admin/users', verifyToken, usersCtrl.getBackOffice);
+usersRouter.get('/user/profile', verifyToken, usersCtrl.getProfile);
 
 //we will export
 export default usersRouter;
