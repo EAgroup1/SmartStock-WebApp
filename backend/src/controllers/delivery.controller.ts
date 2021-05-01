@@ -20,7 +20,6 @@ class deliveryCtrl {
 
     //POST CREATEONE
     createDelivery = async (req: Request, res: Response) => {
-
         console.log(req.body)
         try{
     //we create this object to not take delivery's id
@@ -52,7 +51,9 @@ class deliveryCtrl {
 
     //DELETEONE
     deleteDelivery = async (req: Request, res: Response) => {
-        console.log(req.params)
+
+        console.log(req.params);
+        
         try {
             await Delivery.findByIdAndDelete(req.params.id)
             res.json({
@@ -68,7 +69,7 @@ class deliveryCtrl {
     //PUT MODIFYONE
     updateDelivery = async (req: Request, res: Response) => {
 
-        console.log(req.params)
+        console.log(req.params);
 
         //we obtain id before we give it
         const { id } = req.params;
@@ -92,6 +93,7 @@ class deliveryCtrl {
         console.log(req.params)
         try {
             const delivery = await Delivery.findById(req.params.id);
+            res.json(delivery);
             res.send(delivery);
         } catch (err) {
             res.status(500).json({
@@ -99,7 +101,6 @@ class deliveryCtrl {
             });
         }
     }
-
 }
 
 export default new deliveryCtrl();

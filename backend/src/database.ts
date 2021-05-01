@@ -1,10 +1,10 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
+import { mongodb } from './keys';
 
-//my-database = Project's database (originally empty)
-const URI = 'mongodb://localhost/my-database'
+//SmartStockDB = Project's database (originally empty)
 
-mongoose
-.connect(URI, {
+mongoose.connect(mongodb.URI, {
+    useCreateIndex: true,
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useFindAndModify: false
@@ -13,4 +13,4 @@ mongoose
 .catch(err => console.error(err)); //elif (we don't connect correctly)
 
 //we will export
-module.exports = mongoose;
+export default mongoose;
