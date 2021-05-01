@@ -73,8 +73,8 @@ class deliveryCtrl {
 
         //we obtain id before we give it
         const { id } = req.params;
-        const modifiedDelivery: IDelivery = req.body;
         //we want to modify this object with these parameters
+        const modifiedDelivery: IDelivery = req.body;
         try {
             //if any parameter doesn't exist we create it
             await Delivery.findByIdAndUpdate(id, { $set: modifiedDelivery }, {new: true});
@@ -90,7 +90,7 @@ class deliveryCtrl {
 
     //GETONE
     getDelivery = async (req: Request, res: Response) => {
-        console.log(req.params)
+        console.log(req.params);
         try {
             const delivery = await Delivery.findById(req.params.id);
             res.json(delivery);
