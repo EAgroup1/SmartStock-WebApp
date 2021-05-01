@@ -1,6 +1,7 @@
 import morgan from 'morgan';
 import express from 'express';
 import cors from 'cors';
+import router from './routes/users.routes';
 
 //Bcrypt ---> researching...
 //also we research in the swagger for endpoints o
@@ -17,6 +18,6 @@ app.use(cors({
 }));
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/users", require('./routes/users.routes'))
+app.use("/api/users", router);
 
 export default app;
