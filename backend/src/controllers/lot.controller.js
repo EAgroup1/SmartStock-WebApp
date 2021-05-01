@@ -6,7 +6,7 @@ const Lot = require('../models/Lot')
 lotCtrl.getAllLots = async (req, res) => {
 
     const losts = await Lot.find()
-    res.json(lots)
+    res.json(losts)
 }
 
 lotCtrl.createLot = async (req, res) => {
