@@ -1,10 +1,7 @@
 import { Router } from 'express';
-import { Request, Response} from 'express';
 import lotCtrl from '../controllers/lot.controller';
 
-
 const lotRouter: Router = Router();
-
 
 //we put all routes in this file & we will se in the future
 lotRouter.get('/', lotCtrl.getAllLots);

@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from 'mongoose';
 
 export interface ILot extends mongoose.Document {
     name: string,
-    dimensions: number,
+    dimensions: string,
     weight: number,
     qty: number,
     price: number,
@@ -15,7 +15,7 @@ export interface ILot extends mongoose.Document {
 
 const lotSchema = new Schema({
     name: { type: String, required: true},
-    dimensions: { type: Number, required: true},
+    dimensions: { type: String, required: true},
     weight: { type: Number, required: true},
     qty: { type: Number, required: true},
     price: { type: Number, required: true},
@@ -23,7 +23,7 @@ const lotSchema = new Schema({
     info: { type: String},
     minimumQty: { type: Number, required: true},
     businessItem: { type: String, required: true},
-    userItem: { type: String, default: ''}
+    userItem: { type: String}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,
