@@ -29,25 +29,29 @@ GET http://localhost:4000/api/users/6060a99a01771e3aa86b105c
 
 
 //CRUD de LOT
+
 ###
 GET http://localhost:4000/api/lots
+
 ###
 POST http://localhost:4000/api/lots
 content-Type: application/json
 
 {
-    "name": "Cristal#80",
+    "name": "PEZ",
     "dimensions": "60x30x15",
     "weight": 60,
     "qty": 40,
     "price": 150,
-    "isFragile": false,
-    "info": "Ventanas de buena calidad",
+    "isFragile": true,
+    "info": "PEz de buena calidad",
     "minimumQty": 40,
-    "businessItem": "Heladeria"
+    "businessItem": "Pescadería"
 } 
+
 ###
 DELETE http://localhost:4000/api/lots/608e8a76ed68c40aa851dc35
+
 ###
 PUT http://localhost:4000/api/lots/608e88dd08fe491c38eac86e
 content-Type: application/json
@@ -56,5 +60,6 @@ content-Type: application/json
     "businessItem": "Perfumería",
     "userItem": "Yamine"
 } 
+
 ###
-GET http://localhost:4000/api/lots/608e8a76ed68c40aa851dc35
+GET http://localhost:4000/api/lots/608e88dd08fe491c38eac86e

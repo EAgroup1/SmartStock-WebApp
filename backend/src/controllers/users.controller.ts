@@ -39,7 +39,6 @@ class userCtrl {
             res.json({
                 status: 'User Saved Succesfully'
             });
-            res.send({message: '¡Ya estás registrado en el sistema!'})
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -89,7 +88,6 @@ class userCtrl {
         try {
         const user = await User.findById(req.params.id);
         res.json(user);
-        res.send(user);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`

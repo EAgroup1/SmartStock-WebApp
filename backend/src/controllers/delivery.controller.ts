@@ -41,7 +41,6 @@ class deliveryCtrl {
             res.json({
                 status: 'Delivery Saved Succesfully'
             });
-            res.send({message: '¡Ya está creado el Delivery en el sistema!'})
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -94,7 +93,6 @@ class deliveryCtrl {
         try {
             const delivery = await Delivery.findById(req.params.id);
             res.json(delivery);
-            res.send(delivery);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`

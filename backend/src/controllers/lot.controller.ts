@@ -37,7 +37,6 @@ class lotCtrl {
                 res.json({
                     status: 'Lot Saved Succesfully'
                 });
-            res.send({message: '¡Ya está creado el Lot en el sistema!'});
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -84,7 +83,7 @@ class lotCtrl {
         console.log(req.params);
         try {
         const lot = await Lot.findById(req.params.id);
-        res.send(lot);
+        res.json(lot);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
