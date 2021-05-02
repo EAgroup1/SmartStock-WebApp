@@ -1,0 +1,17 @@
+import { Router } from 'express';
+import { Request, Response} from 'express';
+import lotCtrl from '../controllers/lot.controller';
+
+
+const lotRouter: Router = Router();
+
+
+//we put all routes in this file & we will se in the future
+lotRouter.get('/', lotCtrl.getAllLots);
+lotRouter.post('/', lotCtrl.createLot);
+lotRouter.delete('/:id', lotCtrl.deleteLot);
+lotRouter.put('/:id', lotCtrl.updateLot);
+lotRouter.get('/:id', lotCtrl.getLot);
+
+
+export default lotRouter;

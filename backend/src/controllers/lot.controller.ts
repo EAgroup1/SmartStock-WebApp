@@ -15,7 +15,6 @@ class lotCtrl {
         }
     }
 
-
     createLot = async (req: Request, res: Response) => {
 
         console.log(req.body);
@@ -60,7 +59,6 @@ class lotCtrl {
             });
         }
     }
-
 
     updateLot = async (req: Request, res: Response) => {
 
