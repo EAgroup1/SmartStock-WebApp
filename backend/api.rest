@@ -50,16 +50,24 @@ content-Type: application/json
 } 
 
 ###
-DELETE http://localhost:4000/api/lots/608e8a76ed68c40aa851dc35
+DELETE http://localhost:4000/api/lots/608e85b5026cbf03b01306be
 
 ###
-PUT http://localhost:4000/api/lots/608e88dd08fe491c38eac86e
+PUT http://localhost:4000/api/lots/608e84aa211b722700fcd5fc
 content-Type: application/json
 
 {
-    "businessItem": "Perfumería",
-    "userItem": "Yamine"
+    "name": "PEZ",
+    "dimensions": "60x30x15",
+    "weight": 60,
+    "userItem": "CCCC",
+    "qty": 40,
+    "price": 150,
+    "isFragile": true,
+    "info": "Pzz de buena calidad",
+    "minimumQty": 40,
+    "businessItem": "Pescadería"
 } 
 
 ###
-GET http://localhost:4000/api/lots/608e88dd08fe491c38eac86e
+GET http://localhost:4000/api/lots/608e84aa211b722700fcd5fc

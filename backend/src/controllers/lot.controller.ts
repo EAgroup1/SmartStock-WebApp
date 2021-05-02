@@ -46,12 +46,19 @@ class lotCtrl {
 
     deleteLot = async (req: Request, res: Response) => {
     
-        console.log(req.params);
         try {
-            await Lot.findByIdAndDelete(req.params.id);
-            res.json({
-                status: 'Lot eliminado correctamente'
-            });
+            const vacio = await Lot.findByIdAndDelete(req.params.id);
+            console.log(vacio);
+            if(vacio === null){
+                res.status(200).json({
+                    code: 204,
+                    status: 'No esta este usuario en la base de datos'
+                });
+            } else {
+                res.json({
+                    status: 'Lot eliminado correctamente'
+                });
+                }
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -61,17 +68,25 @@ class lotCtrl {
 
     updateLot = async (req: Request, res: Response) => {
 
-        console.log(req.params)
+        console.log(req.params);
         //we obtain id before we give it
         const { id } = req.params;
         //we want to modify this object with these parameters
         const modifiedLot: ILot = req.body;
         try {
         //if any parameter doesn't exist we create it
-        await Lot.findByIdAndUpdate(id, { $set: modifiedLot }, {new: true})
-        res.json({
-            status: 'Lot actualizado correctamente'
-        });
+            const vacio = await Lot.findById(req.params.id);
+            if(vacio === null){
+                res.status(200).json({
+                    code: 204,
+                    status: 'Lot no existe'
+                });
+            } else {
+                await Lot.findByIdAndUpdate(id, { $set: modifiedLot }, {new: true})
+                res.json({
+                    status: 'Lot actualizado correctamente'
+                });
+            }
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
