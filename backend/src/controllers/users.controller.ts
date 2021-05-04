@@ -137,8 +137,14 @@ class userCtrl {
         const token = jwt.sign({_id: newSignUpUser._id}, 'secretkey');
 
         //we return the json object with the created token to the user & status = OK
-        res.status(200).json({token})
+        const _aux = {
+            _id: newSignUpUser._id,
+            token: token
+        }
+        console.log(_aux);
+        res.status(200).json({_aux})
         } catch (err) {
+            console.log(err.message);
             res.status(500).json({
                 status: `${err.message}`
             });
