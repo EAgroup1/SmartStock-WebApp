@@ -151,15 +151,21 @@ class userCtrl {
 
         //in the next steps, we encrypt these params
         try {
-            const newSignUpUser: IUser = new User({ email, userName, password });
-            await newSignUpUser.save();
+        const newSignUpUser: IUser = new User({email, userName, password});
+        await newSignUpUser.save();
+    
+        //then, we create a token (payload, variable & options)
+        const token = jwt.sign({_id: newSignUpUser._id}, 'secretkey');
 
-            //then, we create a token (payload, variable & options)
-            const token = jwt.sign({ _id: newSignUpUser._id }, 'secretkey');
-
-            //we return the json object with the created token to the user & status = OK
-            res.status(200).json({ token })
+        //we return the json object with the created token to the user & status = OK
+        const _aux = {
+            _id: newSignUpUser._id,
+            token: token
+        }
+        console.log(_aux);
+        res.status(200).json({_aux})
         } catch (err) {
+            console.log(err.message);
             res.status(500).json({
                 status: `${err.message}`
             });
