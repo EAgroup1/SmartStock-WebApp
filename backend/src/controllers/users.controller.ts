@@ -150,14 +150,6 @@ class userCtrl {
             });
         }
     }
-
-    getBackOffice = async (req: Request, res: Response)=>{
-        res.status(200).send('All OK!');
-    }
-
-    getProfile = async (req: Request, res: Response)=>{
-        res.status(200).send('All OK!');
-    }
 }
 
 export default new userCtrl();
