@@ -7,9 +7,9 @@ import jwt from 'jsonwebtoken';
 
 class userCtrl {
 
-//our User's CRUD
+    //our User's CRUD
 
-    //GETALL
+    //GETALLUSERS
     getAllUsers = async (_req: Request, res: Response) => {
         try {
             const users: IUser[] = await User.find();
@@ -21,17 +21,18 @@ class userCtrl {
         }
     }
 
-    //POST CREATEONE
+    //POST CREATEUSER
     createUser = async (req: Request, res: Response) => {
 
         console.log(req.body);
 
         try {
-        //we create this object to not take user's id
+            //we create this object to not take user's id
             const newUser: IUser = new User({
                 userName: req.body.userName,
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                role: req.body.role
             });
             console.log(newUser);
             //this takes some time!
@@ -46,8 +47,8 @@ class userCtrl {
         }
     }
 
+    //DELETE USER
     deleteUser = async (req: Request, res: Response) => {
-    
         console.log(req.params);
         try {
             const vacio = await User.findByIdAndDelete(req.params.id);
@@ -55,7 +56,7 @@ class userCtrl {
             if(vacio === null){
                 res.status(400).json({
                     code: 404,
-                    status: 'No esta en la base de datos'
+                    status: 'No esta este usuario en la base de datos'
                 });
             } else {
                 res.status(200).json({
@@ -69,6 +70,7 @@ class userCtrl {
         }
     }
 
+    //UPDATE USER
     updateUser = async (req: Request, res: Response) => {
 
         console.log(req.params);
@@ -98,12 +100,13 @@ class userCtrl {
         }
     }
 
+    //GET USER
     getUser = async (req: Request, res: Response) => {
 
         console.log(req.params);
         try {
-        const user = await User.findById(req.params.id);
-        res.json(user);
+            const user = await User.findById(req.params.id);
+            res.json(user);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -111,6 +114,7 @@ class userCtrl {
         }
     }
 
+    //LOGIN OF ONE USER
     logIn = async (req: Request, res: Response) => {
 
         console.log(req.body);
@@ -118,17 +122,17 @@ class userCtrl {
 
         //search the params ({email: email}) ---> next steps encrypt again
         try {
-        //we wait to the search in database (async-await)
-        const user = await User.findOne({email});
-        if(!user) return res.status(401).send("This email doesn't exist!");
-        //& password validator
-        else if(user.password !== password) return res.status(401).send("Incorrect password!");
-        const token = jwt.sign({_id: user._id}, 'secretkey');
-        const _aux = {
-            _id: user._id,
-            token: token
-        }
-        res.status(200).json(_aux);
+            //we wait to the search in database (async-await)
+            const user = await User.findOne({ email });
+            if (!user) return res.status(401).send("This email doesn't exist!");
+            //& password validator
+            else if (user.password !== password) return res.status(401).send("Incorrect password!");
+            const token = jwt.sign({ _id: user._id }, 'secretkey');
+            const _aux = {
+                _id: user._id,
+                token: token
+            }
+            res.status(200).json(_aux);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -136,13 +140,14 @@ class userCtrl {
         }
     }
 
+    //REGISTER USER
     signUp = async (req: Request, res: Response) => {
 
         //we see the body of the user's request
         console.log(req.body);
 
         //we extract the info of the json object
-        const { email, userName, password} = req.body;
+        const { email, userName, password } = req.body;
 
         //in the next steps, we encrypt these params
         try {
@@ -165,14 +170,6 @@ class userCtrl {
                 status: `${err.message}`
             });
         }
-    }
-
-    getBackOffice = async (req: Request, res: Response)=>{
-        res.status(200).send('All OK!');
-    }
-
-    getProfile = async (req: Request, res: Response)=>{
-        res.status(200).send('All OK!');
     }
 }
 
