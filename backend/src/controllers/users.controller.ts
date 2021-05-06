@@ -50,10 +50,18 @@ class userCtrl {
     
         console.log(req.params);
         try {
-        await User.findByIdAndDelete(req.params.id);
-        res.json({
-            status: 'Usuario eliminado correctamente'
-        });
+            const vacio = await User.findByIdAndDelete(req.params.id);
+            console.log(vacio);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'No esta en la base de datos'
+                });
+            } else {
+                res.status(200).json({
+                    status: 'User eliminado correctamente'
+                });
+            }
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -71,10 +79,18 @@ class userCtrl {
         const modifiedUser: IUser = req.body;
         try {
         //if any parameter doesn't exist we create it
-        await User.findByIdAndUpdate(id, { $set: modifiedUser }, { new: true })
-        res.json({
-            status: 'Usuario actualizado correctamente'
-        });
+        const vacio = await User.findById(req.params.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'User no existe'
+                });
+            } else {
+                await User.findByIdAndUpdate(id, { $set: modifiedUser }, {new: true})
+                res.status(200).json({
+                    status: 'User actualizado correctamente'
+                });
+            }
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
