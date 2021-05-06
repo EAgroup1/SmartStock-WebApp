@@ -1,4 +1,3 @@
-//look at these two files: index and server
 import database from './database';
 //to commit
 import app from './server';

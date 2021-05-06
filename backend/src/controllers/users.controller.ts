@@ -53,15 +53,14 @@ class userCtrl {
         try {
             const vacio = await User.findByIdAndDelete(req.params.id);
             console.log(vacio);
-
-            if (vacio === null) {
-                res.status(200).json({
-                    code: 204,
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
                     status: 'No esta este usuario en la base de datos'
                 });
             } else {
-                res.json({
-                    status: 'Usuario eliminado correctamente'
+                res.status(200).json({
+                    status: 'User eliminado correctamente'
                 });
             }
         } catch (err) {
@@ -81,16 +80,17 @@ class userCtrl {
         //we want to modify this object with these parameters
         const modifiedUser: IUser = req.body;
         try {
-            //if any parameter doesn't exist we create it
-            const vacio = await User.findByIdAndUpdate(id, { $set: modifiedUser }, { new: true })
-            if (vacio === null) {
-                res.status(200).json({
-                    code: 204,
+        //if any parameter doesn't exist we create it
+        const vacio = await User.findById(req.params.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
                     status: 'User no existe'
                 });
             } else {
-                res.json({
-                    status: 'Usuario actualizado correctamente'
+                await User.findByIdAndUpdate(id, { $set: modifiedUser }, {new: true})
+                res.status(200).json({
+                    status: 'User actualizado correctamente'
                 });
             }
         } catch (err) {
@@ -170,14 +170,6 @@ class userCtrl {
                 status: `${err.message}`
             });
         }
-    }
-
-    getBackOffice = async (req: Request, res: Response) => {
-        res.status(200).send('All OK!');
-    }
-
-    getProfile = async (req: Request, res: Response) => {
-        res.status(200).send('All OK!');
     }
 }
 

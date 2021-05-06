@@ -3,6 +3,10 @@ import express from 'express';
 import cors from 'cors';
 import router from './routes';
 
+//other imports
+import swaggerUi from 'swagger-ui-express'
+import * as swaggerDocument from './swagger.json'
+
 //Bcrypt ---> researching...
 //also we research in the swagger for endpoints o
 
@@ -20,5 +24,6 @@ app.use(express.urlencoded({ extended: false }));
 
 // Rutas
 app.use("/api", router);
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 export default app;

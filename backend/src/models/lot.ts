@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
-
+import User, {IUser} from './user';
 export interface ILot extends mongoose.Document {
     name: string,
     dimensions: string,
@@ -9,8 +9,8 @@ export interface ILot extends mongoose.Document {
     isFragile: boolean,
     info?: string,
     minimumQty: number,
-    businessItem: string,
-    userItem?: string
+    businessItem: IUser,
+    userItem?: IUser
 }
 
 const lotSchema = new Schema({
@@ -20,10 +20,10 @@ const lotSchema = new Schema({
     qty: { type: Number, required: true},
     price: { type: Number, required: true},
     isFragile: { type: Boolean, required: true},
-    info: { type: String},
+    info: { type: String, required: false, default: ''},
     minimumQty: { type: Number, required: true},
-    businessItem: { type: String, required: true},
-    userItem: { type: String}
+    businessItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
+    userItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false, default: null}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,
