@@ -52,10 +52,19 @@ class adminCtrl {
     
         console.log(req.params);
         try {
-        await Admin.findByIdAndDelete(req.params.id);
-        res.json({
-            status: 'Admin succesfully deleted'
-        });
+            const empty = await Admin.findByIdAndDelete(req.params.id);
+            console.log(empty);
+            if(empty === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'It can not be found this admin on the API!'
+                });
+            } else {
+                res.status(200).json({
+                    status: 'Admin successfully deleted!'
+                });
+            }
+
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -75,11 +84,19 @@ class adminCtrl {
 
         try {
 
-        //if any parameter doesn't exist we create it
-        await Admin.findByIdAndUpdate(id, { $set: modifiedAdmin }, { new: true })
-        res.json({
-            status: 'Admin updated successfully'
-        });
+            //if any parameter doesn't exist we create it
+            const empty = await Admin.findById(req.params.id);
+            if (empty === null) {
+                res.status(400).json({
+                    code: 404,
+                    status: 'This admin does not exist'
+                });
+            } else {
+                await Admin.findByIdAndUpdate(id, { $set: modifiedAdmin }, { new: true })
+                res.status(200).json({
+                    status: 'Admin successfully deleted!'
+                });
+            }
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -91,8 +108,16 @@ class adminCtrl {
 
         console.log(req.params);
         try {
-        const admin = await Admin.findById(req.params.id);
-        res.json(admin);
+            const admin = await Admin.findById(req.params.id);
+            if (admin === null) {
+                res.status(400).json({
+                    code: 404,
+                    status: 'This admin does not exist'
+                });
+
+            } else {
+                res.json(admin);
+            }
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -139,19 +164,19 @@ class adminCtrl {
 
         //in the next steps, we encrypt these params
         try {
-        const newSignUpAdmin: IAdmin = new Admin({email, adminName, password, role});
-        await newSignUpAdmin.save();
-    
-        //then, we create a token (payload, variable & options)
-        const token = jwt.sign({_id: newSignUpAdmin._id}, 'secretkey');
+            const newSignUpAdmin: IAdmin = new Admin({email, adminName, password, role});
+            await newSignUpAdmin.save();
+        
+            //then, we create a token (payload, variable & options)
+            const token = jwt.sign({_id: newSignUpAdmin._id}, 'secretkey');
 
-        //we return the json object with the created token to the user & status = OK
-        const _aux = {
-            _id: newSignUpAdmin._id,
-            token: token
-        }
-        console.log(_aux);
-        res.status(200).json({_aux})
+            //we return the json object with the created token to the user & status = OK
+            const _aux = {
+                _id: newSignUpAdmin._id,
+                token: token
+            }
+            console.log(_aux);
+            res.status(200).json({_aux})
         } catch (err) {
             console.log(err.message);
             res.status(500).json({

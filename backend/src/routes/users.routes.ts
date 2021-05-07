@@ -44,5 +44,5 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
     next();
 }
 
-//we will export
+//we export this router
 export default usersRouter;

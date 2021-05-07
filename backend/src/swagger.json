@@ -179,6 +179,9 @@
                 },
                 "balance": {
                     "type": "number"
+                },
+                "avatar": {
+                    "type": "string"
                 }
             }
         },

@@ -12,5 +12,5 @@ mongoose.connect(mongodb.URI, {
 .then(db => console.log("DB is connected!")) //if we connect correctly
 .catch(err => console.error(err)); //elif (we don't connect correctly)
 
-//we will export
+//we export this main function
 export default mongoose;

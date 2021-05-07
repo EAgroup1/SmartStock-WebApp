@@ -9,7 +9,8 @@ export interface IUser extends mongoose.Document {
     signUpWithGoogle?: boolean,
     signUpWithFacebook?: boolean,
     location?: string,
-    balance?: number
+    balance?: number,
+    avatar?: string
 }
 
 const userSchema = new Schema({
@@ -21,7 +22,9 @@ const userSchema = new Schema({
     signUpWithGoogle: { type: Boolean, required: false, default: false},
     signUpWithFacebook: { type: Boolean, required: false, default: false},
     location: { type: String, required: false},
-    balance: { type: Number, required: false, default: '0'}
+    balance: { type: Number, required: false, default: '0'},
+    //Guys we need a picture for the user! ---> location avatar
+    avatar: { type: String, required: false}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,
