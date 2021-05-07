@@ -9,6 +9,7 @@ const router: Router = Router();
 router.use('/users', usersRouter);
 router.use('/lots', lotRouter);
 router.use('/delivery', deliveryRouter);
+
 //let's talk more about this API --->
 router.use('/admins', adminRouter);
 
