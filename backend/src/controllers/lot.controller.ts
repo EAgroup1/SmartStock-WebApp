@@ -87,8 +87,6 @@ class lotCtrl {
                     code: 404,
                     status: 'Lot no existe'
                 });
-            } else if (vacio === modifiedLot){ //TODAVIA NO FUNCIONA
-                res.status(300).json({code: 303, status: 'Original y final son iguales'});
             }
             else {
                 await Lot.findByIdAndUpdate(id, { $set: modifiedLot }, {new: true})

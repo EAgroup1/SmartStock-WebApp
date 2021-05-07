@@ -127,6 +127,8 @@ class deliveryCtrl {
             });
         }
     }
+
+    
 }
 
 export default new deliveryCtrl();
