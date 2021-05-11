@@ -1,21 +1,21 @@
 import { Router } from 'express';
 import { Request, Response, NextFunction } from 'express';
-import usersCtrl from '../controllers/users.controller';
+import adminCtrl from '../controllers/admin.controller';
 import jwt from 'jsonwebtoken';
 
-const usersRouter: Router = Router();
+const adminRouter: Router = Router();
 
 //we put all routes in this file & we will se in the future
-usersRouter.get('/', usersCtrl.getAllUsers);
-usersRouter.post('/', usersCtrl.createUser);
-usersRouter.delete('/:id', usersCtrl.deleteUser);
-usersRouter.put('/:id', usersCtrl.updateUser);
-usersRouter.get('/:id', usersCtrl.getUser);
+adminRouter.get('/', adminCtrl.getAllAdmins);
+adminRouter.post('/', adminCtrl.createAdmin);
+adminRouter.delete('/:id', adminCtrl.deleteAdmin);
+adminRouter.put('/:id', adminCtrl.updateAdmin);
+adminRouter.get('/:id', adminCtrl.getAdmin);
 
 //auth routes ---> we research private routes
-usersRouter.post('/logIn', usersCtrl.logIn);
+adminRouter.post('/logIn', adminCtrl.logIn);
 //the signup route has a small difference with the createUser route
-usersRouter.post('/signUp', usersCtrl.signUp);
+adminRouter.post('/signUp', adminCtrl.signUp);
 
 //validated function to private routes --- verify token -/- express routing
 function verifyToken(req: Request, res: Response, next: NextFunction) {
@@ -44,5 +44,8 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
     next();
 }
 
-//we export this router
-export default usersRouter;
+// private routes
+//usersRouter.get('/admin/users', verifyToken, usersCtrl.getBackOffice);
+
+//we will export
+export default adminRouter;

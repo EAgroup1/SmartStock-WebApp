@@ -6,8 +6,10 @@ class lotCtrl {
 
     getAllLots = async (_req: Request, res: Response) => {
         try {
-            const losts: ILot[] = await Lot.find();
-            res.json(losts);
+            const lots: ILot[] = await Lot.find()
+            .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
+            .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
+            res.json(lots);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -28,7 +30,10 @@ class lotCtrl {
             price: req.body.price,
             isFragile: req.body.isFragile,
             minimumQty: req.body.minimumQty,
-            businessItem: req.body.businessItem
+            businessItem: req.body.businessItem,
+            userItem: req.body.userItem,
+            info: req.body.info
+
             });
             console.log(newLot);
 
@@ -50,15 +55,15 @@ class lotCtrl {
             const vacio = await Lot.findByIdAndDelete(req.params.id);
             console.log(vacio);
             if(vacio === null){
-                res.status(200).json({
-                    code: 204,
-                    status: 'No esta este usuario en la base de datos'
+                res.status(400).json({
+                    code: 404,
+                    status: 'No esta en la base de datos'
                 });
             } else {
-                res.json({
+                res.status(200).json({
                     status: 'Lot eliminado correctamente'
                 });
-                }
+            }
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -76,14 +81,16 @@ class lotCtrl {
         try {
         //if any parameter doesn't exist we create it
             const vacio = await Lot.findById(req.params.id);
+
             if(vacio === null){
-                res.status(200).json({
-                    code: 204,
+                res.status(400).json({
+                    code: 404,
                     status: 'Lot no existe'
                 });
-            } else {
+            }
+            else {
                 await Lot.findByIdAndUpdate(id, { $set: modifiedLot }, {new: true})
-                res.json({
+                res.status(200).json({
                     status: 'Lot actualizado correctamente'
                 });
             }
@@ -97,7 +104,9 @@ class lotCtrl {
     getLot = async (req: Request, res: Response) => {
         console.log(req.params);
         try {
-        const lot = await Lot.findById(req.params.id);
+        const lot = await Lot.findById(req.params.id)
+        .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
+        .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
         res.json(lot);
         } catch (err) {
             res.status(500).json({

@@ -9,19 +9,22 @@ export interface IUser extends mongoose.Document {
     signUpWithGoogle?: boolean,
     signUpWithFacebook?: boolean,
     location?: string,
-    balance?: number
+    balance?: number,
+    avatar?: string
 }
 
 const userSchema = new Schema({
-    userName: { type: String, unique: true, required: true},
-    email: { type: String, lowercase: true, trim: true, unique: true, required: true},
+    userName: { type: String,required: true,  unique: true},
+    email: { type: String, required: true, lowercase: true, trim: true, unique: true},
     password: { type: String, required: true},
-    role: { type: String, default: ''},
-    bank: { type: String, default: ''},
-    signUpWithGoogle: { type: Boolean, default: false},
-    signUpWithFacebook: { type: Boolean, default: false},
-    location: { type: String},
-    balance: { type: Number}
+    role: { type: String, required: false},
+    bank: { type: String, required: false},
+    signUpWithGoogle: { type: Boolean, required: false, default: false},
+    signUpWithFacebook: { type: Boolean, required: false, default: false},
+    location: { type: String, required: false},
+    balance: { type: Number, required: false, default: '0'},
+    //Guys we need a picture for the user! ---> location avatar
+    avatar: { type: String, required: false}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,

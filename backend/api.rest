@@ -5,24 +5,23 @@ POST http://localhost:4000/api/users
 content-Type: application/json
 
 {
-    "userName": "Javier",
-    "email": "Javier@gmail.com",
-    "password": "1234"
+    "userName": "Jonatan",
+    "email": "Jonatan@gmail.com",
+    "password": "5678"
 } 
+
 ###
-DELETE http://localhost:4000/api/users/6060a99a01771e3aa86b105c
+DELETE http://localhost:4000/api/users/id
 ###
-PUT http://localhost:4000/api/users/6060a99a01771e3aa86b105c
+PUT http://localhost:4000/api/users/6091d6732d3a564454063110
 content-Type: application/json
 
 {
-    "username": "ex1",
-    "password": "expsswd",
-    "name": "example",
-    "lastname": "fullexample"
+    "userName": "Jonatan"
+
 } 
 ###
-GET http://localhost:4000/api/users/6060a99a01771e3aa86b105c
+GET http://localhost:4000/api/users/id
 
 
 
@@ -38,36 +37,82 @@ POST http://localhost:4000/api/lots
 content-Type: application/json
 
 {
-    "name": "PEZ",
+    "name": "Leche",
     "dimensions": "60x30x15",
     "weight": 60,
     "qty": 40,
     "price": 150,
     "isFragile": true,
-    "info": "PEz de buena calidad",
+    "info": "La vaca lechera",
     "minimumQty": 40,
-    "businessItem": "Pescadería"
+    "businessItem": "6091d6782d3a564454063112"
 } 
 
 ###
-DELETE http://localhost:4000/api/lots/608e85b5026cbf03b01306be
+DELETE http://localhost:4000/api/lots/6092eb5193496c0ac44f67df
 
 ###
-PUT http://localhost:4000/api/lots/608e84aa211b722700fcd5fc
+PUT http://localhost:4000/api/lots/6092e97f3d3a8214344cde13
 content-Type: application/json
 
 {
-    "name": "PEZ",
+    "name": "Leche",
     "dimensions": "60x30x15",
     "weight": 60,
-    "userItem": "CCCC",
+    "userItem": "6091d6782d3a564454063112",
     "qty": 40,
     "price": 150,
     "isFragile": true,
-    "info": "Pzz de buena calidad",
+    "info": "HA CAMBIADO OU YEAH",
     "minimumQty": 40,
-    "businessItem": "Pescadería"
+    "businessItem": "6091d6782d3a564454063112"
 } 
 
 ###
-GET http://localhost:4000/api/lots/608e84aa211b722700fcd5fc
+GET http://localhost:4000/api/lots/6092eb5193496c0ac44f67df
+
+
+//CRUD DE DELIVERY
+
+### 
+GET http://localhost:4000/api/delivery/
+###
+POST http://localhost:4000/api/delivery/
+content-Type: application/json
+
+{
+    "lotItem": "6092e97f3d3a8214344cde13",
+    "originLocation": "3.4379º,-2.1179º",
+    "destinationLocation": "3.4279º,-2.179º",
+    "destinationItem": "6091d6782d3a564454063112",
+    "deliveryDate": "13/09/2017",
+    "isPicked": true,
+    "isDelivered": false,
+    "businessItem":"6091d6782d3a564454063112",
+    "isAssigned": true,
+    "userItem": "6091d6782d3a564454063112",
+    "description": "Picar al 1o 1a"
+} 
+###
+DELETE http://localhost:4000/api/delivery/6092ee134f8cc80494f7b0b5
+###
+PUT http://localhost:4000/api/delivery/6092ef23a4886c1c2021e565
+content-Type: application/json 
+
+{
+    "lotItem": "6091cfbc57de44327c1eb88f",
+    "originLocation": "3.4379º,-2.1179º",
+    "destinationLocation": "3.4279º,-2.179º",
+    "destinationItem": "6091d6732d3a564454063110",
+    "deliveryDate": "13/09/2017",
+    "isPicked": true,
+    "isDelivered": true,
+    "businessItem":"6091d6762d3a564454063111",
+    "isAssigned": true,
+    "userItem": "6091d6782d3a564454063112",
+    "description": "Ahora pica al 4o que el del 1o no viene"
+} 
+###
+GET http://localhost:4000/api/delivery/6092ef23a4886c1c2021e565
+
+
