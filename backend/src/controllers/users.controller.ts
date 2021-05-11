@@ -138,7 +138,7 @@ class userCtrl {
         else if(user.password !== password) return res.status(401).send("Incorrect password!");
         const token = jwt.sign({_id: user._id}, 'secretkey');
         const _aux = {
-            id: user._id,
+            _id: user._id,
             token: token,
             userName: user.userName
         }
