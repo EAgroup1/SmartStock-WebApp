@@ -20,5 +20,5 @@ RUN npm run build
 # RUN npm ci --only=production
 
 # Bundle app source
-EXPOSE 8000
+EXPOSE 4000
 CMD [ "node", "server.js" ]

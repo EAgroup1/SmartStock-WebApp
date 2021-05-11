@@ -1,3 +1,3 @@
 export const mongodb = {
-    "URI": "mongodb://mongo/SmartStockDB"
+    "URI": "mongodb://root:u65r5c5U@mongo/SmartStockDB"
 };
