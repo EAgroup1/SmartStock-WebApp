@@ -175,7 +175,7 @@ class userCtrl {
             userName: newSignUpUser.userName
         }
         console.log(_aux);
-        res.status(200).json({_aux});
+        res.status(200).json(_aux);
         } catch (err) {
             console.log(err.message);
             res.status(500).json({
