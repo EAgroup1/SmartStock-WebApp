@@ -138,7 +138,7 @@ class userCtrl {
         else if(user.password !== password) return res.status(401).send("Incorrect password!");
         const token = jwt.sign({_id: user._id}, 'secretkey');
         const _aux = {
-            id: user._id,
+            _id: user._id,
             token: token,
             userName: user.userName
         }
@@ -175,7 +175,7 @@ class userCtrl {
             userName: newSignUpUser.userName
         }
         console.log(_aux);
-        res.status(200).json({_aux});
+        res.status(200).json(_aux);
         } catch (err) {
             console.log(err.message);
             res.status(500).json({
