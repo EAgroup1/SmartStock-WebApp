@@ -104,13 +104,14 @@ class userCtrl {
         try {
         //we wait to the search in database (async-await)
         const user = await User.findOne({email});
-        if(!user) return res.status(401).send("This email doesn't exist!");
+        if(!user) return res.status(401).json({status:"This email doesn't exist!"});
         //& password validator
         else if(user.password !== password) return res.status(401).send("Incorrect password!");
         const token = jwt.sign({_id: user._id}, 'secretkey');
         const _aux = {
-            _id: user._id,
-            token: token
+            id: user._id,
+            token: token,
+            userName: user.userName
         }
         res.status(200).json(_aux);
         } catch (err) {
@@ -139,7 +140,8 @@ class userCtrl {
         //we return the json object with the created token to the user & status = OK
         const _aux = {
             _id: newSignUpUser._id,
-            token: token
+            token: token,
+            userName: newSignUpUser.userName
         }
         console.log(_aux);
         res.status(200).json({_aux})
