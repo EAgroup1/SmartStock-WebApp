@@ -14,7 +14,7 @@ const app = express();
 // Configuración
 app.set('port', process.env.PORT || 4000);
 //we use the port 8000 for Flutter ---> important from Eric!
-app.use(cors({origin: 'http://localhost:8000/'}));
+app.use(cors({origin: 'http://localhost:8000'}));
 
 // Middlewares
 app.use(morgan('dev'));
