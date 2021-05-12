@@ -8,7 +8,7 @@ content-Type: application/json
 
 {
     "userName": "Marie",
-    "email": "Marie@gmail.com",
+    "email": "marie@gmail.com",
     "password": "5678"
 } 
 
@@ -56,7 +56,7 @@ POST http://localhost:4000/api/lots
 content-Type: application/json
 
 {
-    "name": "Leche",
+    "name": "Zapatos",
     "dimensions": "60x30x15",
     "weight": 60,
     "qty": 40,
@@ -126,11 +126,13 @@ GET http://localhost:4000/api/lots/get/Leche
 ### 
 GET http://localhost:4000/api/delivery/
 ###
+GET http://localhost:4000/api/delivery/deliveries/609c29591c34f216f043c43d
+##
 POST http://localhost:4000/api/delivery/
 content-Type: application/json
 
 {
-    "lotItem": "6092e97f3d3a8214344cde13",
+    "lotItem": "609c49134f2a8c39548b977b",
     "originLocation": "3.4379º,-2.1179º",
     "destinationLocation": "3.4279º,-2.179º",
     "destinationItem": "6091d6782d3a564454063112",
@@ -139,7 +141,7 @@ content-Type: application/json
     "isDelivered": false,
     "businessItem":"6091d6782d3a564454063112",
     "isAssigned": true,
-    "userItem": "6091d6782d3a564454063112",
+    "userItem": "609c29591c34f216f043c43d",
     "description": "Picar al 1o 1a"
 } 
 ###
