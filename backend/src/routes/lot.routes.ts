@@ -9,6 +9,6 @@ lotRouter.post('/', lotCtrl.createLot);
 lotRouter.delete('/:id', lotCtrl.deleteLot);
 lotRouter.put('/:id', lotCtrl.updateLot);
 lotRouter.get('/:id', lotCtrl.getLot);
-lotRouter.get('/:name', lotCtrl.getLotsWithSameName);
+lotRouter.get('/get/:name', lotCtrl.getLotsWithSameName);
 
 export default lotRouter;

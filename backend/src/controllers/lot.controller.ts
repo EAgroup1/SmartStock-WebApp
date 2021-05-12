@@ -118,7 +118,9 @@ class lotCtrl {
     getLotsWithSameName = async (req: Request, res: Response) => {
         console.log(req.params);
         try {
-            const lot: ILot[] = await Lot.find({"name" : req.params.name});
+            const lot: ILot[] = await Lot.find({ "name": req.params.name })
+            .populate('businessItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 })
+            .populate('userItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 });
             res.json(lot);
         } catch (err) {
             res.status(500).json({
