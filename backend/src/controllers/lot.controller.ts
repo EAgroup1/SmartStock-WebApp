@@ -2,7 +2,7 @@ import Lot, { ILot } from '../models/lot';
 import { Request, Response } from 'express';
 
 class lotCtrl {
-//CRUD
+    //CRUD
 
     getAllLots = async (_req: Request, res: Response) => {
         try {
@@ -104,10 +104,22 @@ class lotCtrl {
     getLot = async (req: Request, res: Response) => {
         console.log(req.params);
         try {
-        const lot = await Lot.findById(req.params.id)
-        .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
-        .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
-        res.json(lot);
+            const lot = await Lot.findById(req.params.id)
+            .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
+            .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getLotsWithSameName = async (req: Request, res: Response) => {
+        console.log(req.params);
+        try {
+            const lot: ILot[] = await Lot.find({"name" : req.params.name});
+            res.json(lot);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`

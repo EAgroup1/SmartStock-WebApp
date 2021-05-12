@@ -11,7 +11,7 @@ content-Type: application/json
 } 
 
 ###
-DELETE http://localhost:4000/api/users/id
+DELETE http://localhost:4000/api/users/:id
 ###
 PUT http://localhost:4000/api/users/6091d6732d3a564454063110
 content-Type: application/json
@@ -21,7 +21,7 @@ content-Type: application/json
 
 } 
 ###
-GET http://localhost:4000/api/users/id
+GET http://localhost:4000/api/users/:id
 
 
 
@@ -71,6 +71,10 @@ content-Type: application/json
 ###
 GET http://localhost:4000/api/lots/6092eb5193496c0ac44f67df
 
+//Buscamos LOT por nombre pasado por parámetro
+
+###
+GET http://localhost:4000/api/lots/:name
 
 //CRUD DE DELIVERY
 
