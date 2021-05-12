@@ -15,10 +15,11 @@ WORKDIR /usr/src/app
 COPY ./backend/package*.json ./
 
 WORKDIR /usr/src/app/backend
+
 RUN npm run build
 # If you are building your code for production
 # RUN npm ci --only=production
 
 # Bundle app source
 EXPOSE 4000
-CMD [ "node", "server.js" ]
+CMD [ "node", "./build/src/server.js" ]
