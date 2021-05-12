@@ -127,12 +127,12 @@ GET http://localhost:4000/api/lots/get/Leche
 GET http://localhost:4000/api/delivery/
 ###
 GET http://localhost:4000/api/delivery/deliveries/609c29591c34f216f043c43d
-##
+###
 POST http://localhost:4000/api/delivery/
 content-Type: application/json
 
 {
-    "lotItem": "609c49134f2a8c39548b977b",
+    "lotItem": "609c28c61c34f216f043c437",
     "originLocation": "3.4379º,-2.1179º",
     "destinationLocation": "3.4279º,-2.179º",
     "destinationItem": "6091d6782d3a564454063112",
@@ -145,9 +145,9 @@ content-Type: application/json
     "description": "Picar al 1o 1a"
 } 
 ###
-DELETE http://localhost:4000/api/delivery/6092ee134f8cc80494f7b0b5
+DELETE http://localhost:4000/api/delivery/609c29951c34f216f043c43e
 ###
-PUT http://localhost:4000/api/delivery/6092ef23a4886c1c2021e565
+PUT http://localhost:4000/api/delivery/609c29951c34f216f043c43e
 content-Type: application/json 
 
 {
