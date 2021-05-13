@@ -145,7 +145,7 @@ class userCtrl {
         console.log(_aux);
         res.status(200).json(_aux);
         } catch (err) {
-            res.status(500).json({
+            res.status(409).json({
                 status: `${err.message}`
             });
         }
@@ -153,7 +153,6 @@ class userCtrl {
 
     //REGISTER USER
     signUp = async (req: Request, res: Response) => {
-
         //we see the body of the user's request
         console.log(req.body);
 
@@ -178,7 +177,7 @@ class userCtrl {
         res.status(200).json(_aux);
         } catch (err) {
             console.log(err.message);
-            res.status(500).json({
+            res.status(409).json({
                 status: `${err.message}`
             });
         }
