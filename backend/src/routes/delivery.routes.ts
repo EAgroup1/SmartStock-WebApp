@@ -9,6 +9,7 @@ deliveryRouter.post('/', deliveryCtrl.createDelivery);
 deliveryRouter.delete('/:id', deliveryCtrl.deleteDelivery);
 deliveryRouter.put('/:id', deliveryCtrl.updateDelivery);
 deliveryRouter.get('/:id', deliveryCtrl.getDelivery);
+deliveryRouter.post('/:id/deliveries', deliveryCtrl.getDeliveries);
 
 
 export default deliveryRouter;

@@ -1,5 +1,7 @@
 import Delivery, { IDelivery } from '../models/delivery';
 import { Request, Response } from 'express';
+import User, { IUser } from '../models/user';
+
 
 
 class deliveryCtrl { 
@@ -9,6 +11,26 @@ class deliveryCtrl {
         console.log(_req.body);
         try {
             const deliveries: IDelivery[] = await Delivery.find()
+            .populate('lotItem')
+            .populate('destinationItem',{'userName':1,'email':1,'location':1,'role':1})
+            .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
+            .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
+
+            console.log(deliveries);
+            res.json(deliveries);
+            
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    //GETALLUSER
+    getDeliveries = async(req: Request, res: Response)=> {
+        console.log(req.body);
+        try {
+             const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id)})
             .populate('lotItem')
             .populate('destinationItem',{'userName':1,'email':1,'location':1,'role':1})
             .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
