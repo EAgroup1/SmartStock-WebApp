@@ -30,10 +30,6 @@ class deliveryCtrl {
     getDeliveries = async(req: Request, res: Response)=> {
         console.log(req.body);
         try {
-            const user = await User.findById(req.params.id);
-            console.log(user);
-            
-
              const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id)})
             .populate('lotItem')
             .populate('destinationItem',{'userName':1,'email':1,'location':1,'role':1})
