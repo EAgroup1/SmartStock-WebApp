@@ -13,6 +13,7 @@ export interface ILot extends mongoose.Document {
     userItem?: IUser
 }
 
+
 const lotSchema = new Schema({
     name: { type: String, required: true},
     dimensions: { type: String, required: true},
