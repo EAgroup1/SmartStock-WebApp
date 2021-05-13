@@ -145,7 +145,7 @@ class userCtrl {
         console.log(_aux);
         res.status(200).json(_aux);
         } catch (err) {
-            res.status(409).json({
+            res.status(500).json({
                 status: `${err.message}`
             });
         }
