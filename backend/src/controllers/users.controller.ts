@@ -182,6 +182,7 @@ class userCtrl {
             });
         }
     }
+
 }
 
 export default new userCtrl();

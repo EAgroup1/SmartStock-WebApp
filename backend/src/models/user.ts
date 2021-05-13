@@ -12,11 +12,9 @@ export interface IUser extends mongoose.Document {
     signUpWithFacebook?: boolean,
     location?: string,
     balance?: number,
-    avatar?: string,
+    avatar?: string
     resetPasswordToken?: string,
-    resetPasswordExpires?: Date,
-    passwordConfirmation: String,
-    comparePassword(candidatePassword: string): Promise<boolean>;
+    resetPasswordExpires?: Date
 }
 
 const userSchema = new Schema({
@@ -60,24 +58,12 @@ userSchema.pre<IUser>("save", function save(next) {
   });
 
 //   //verificate sign-in (hash)
-//   userSchema.methods.comparePassword = function(passw, cb) {
-//     bcrypt.compare(passw, this.password, function(err, isMatch) {
-//       if (err) {
-//         return cb(err, false);
-//       }
-//       return cb(null, isMatch);
+//   userSchema.methods.comparePassword = function(candidatePassword, cb) {
+//     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+//       if (err) return cb(err);
+//       cb(null, isMatch);
 //     });
 //   };
-
-  userSchema.methods.comparePassword = function (candidatePassword: string): Promise<boolean> {
-    let password = this.password;
-    return new Promise((resolve, reject) => {
-        bcrypt.compare(candidatePassword, password, (err, success) => {
-            if (err) return reject(err);
-            return resolve(success);
-        });
-    });
-};
 
 //we will export our entity
 export default model<IUser>('User', userSchema);
