@@ -3,6 +3,10 @@ import User, { IUser } from '../models/user';
 import { Request, Response } from 'express';
 //we require the info of the jsonwebtoken module
 import jwt from 'jsonwebtoken';
+//we'll comment on the following lines if these are not necessary
+import Token, {IToken} from '../models/token';
+import crypto from 'crypto';
+import bcrypt from 'bcrypt-nodejs';
 
 
 class userCtrl {
@@ -181,6 +185,20 @@ class userCtrl {
                 status: `${err.message}`
             });
         }
+    }
+
+    //we send the "resetToken" to user
+    requestPasswordReset = async(email: any) => {
+        const user = await User.findOne({email});
+
+        if(!user) throw new Error("This user doesn't exist!");
+        let token = await Token.findOne({userId: user._id});
+        if(token) await token.deleteOne();
+        let resetToken = crypto.randomBytes(32).toString("hex");
+        const saltRounds = 10;
+        //auto-gen a salt and hash (salt declared before)
+        //const hash = await bcrypt.hash(resetToken, Number(saltRounds), null, function(err, hash));
+        
     }
 }
 
