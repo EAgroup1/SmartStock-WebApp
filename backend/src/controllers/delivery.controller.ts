@@ -76,6 +76,7 @@ class deliveryCtrl {
             } else {
             await Delivery.findByIdAndUpdate(req.body.id, { $set: {"isReady":true}})
             res.status(200).json({
+
                 status: 'Delivery actualizado correctamente'
             });
          }           
