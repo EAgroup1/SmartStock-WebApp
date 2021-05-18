@@ -26,11 +26,29 @@ class deliveryCtrl {
         }
     }
 
-    //GETALLUSER
+    //GET NOT REDAY DELIVERIES USER
     getDeliveries = async(req: Request, res: Response)=> {
         console.log(req.body);
         try {
-             const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id)})
+             const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":false})
+            .populate('lotItem')
+            .populate('destinationItem',{'userName':1,'email':1,'location':1,'role':1})
+            .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
+            .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
+
+            console.log(deliveries);
+            res.json(deliveries);
+            
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+    getReadyDeliveries = async(req: Request, res: Response)=> {
+        console.log(req.body);
+        try {
+             const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":true})
             .populate('lotItem')
             .populate('destinationItem',{'userName':1,'email':1,'location':1,'role':1})
             .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
@@ -46,12 +64,36 @@ class deliveryCtrl {
         }
     }
 
+    setReadyDelivery = async(req: Request, res: Response)=> {
+        console.log(req.body.id);
+        try {
+            const vacio = await Delivery.findById(req.body.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'Delivery no existe'
+                });
+            } else {
+            await Delivery.findByIdAndUpdate(req.body.id, { $set: {"isReady":true}})
+            res.status(200).json({
+                status: 'Delivery actualizado correctamente'
+            });
+         }           
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
     //POST CREATEONE
     createDelivery = async (req: Request, res: Response) => {
         console.log(req.body)
         try{
     //we create this object to not take delivery's id
             const newDelivery: IDelivery = new Delivery({
+                lots: "6091cfbc57de44327c1eb88f",
                 lotItem: req.body.lotItem,
                 originLocation: req.body.originLocation,
                 destinationLocation: req.body.destinationLocation,
@@ -59,6 +101,7 @@ class deliveryCtrl {
                 deliveryDate: req.body.deliveryDate,
                 isPicked: req.body.isPicked,
                 isDelivered: req.body.isDelivered,
+                isReady: req.body.isReady,
                 businessItem: req.body.businessItem,
                 isAssigned: req.body.isAssigned,
                 userItem: req.body.userItem,
