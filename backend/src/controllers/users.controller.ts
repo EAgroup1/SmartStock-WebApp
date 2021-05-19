@@ -4,7 +4,6 @@ import { Request, Response } from 'express';
 //we require the info of the jsonwebtoken module
 import jwt from 'jsonwebtoken';
 
-
 class userCtrl {
 
     //our User's CRUD
@@ -77,7 +76,7 @@ class userCtrl {
         console.log(req.params);
 
         //we obtain id before we give it
-        const { id } = req.params;
+        const {id} = req.params;
         //we want to modify this object with these parameters
         const modifiedUser: IUser = req.body;
         try {
@@ -89,7 +88,7 @@ class userCtrl {
                     status: 'User no existe'
                 });
             } else {
-                await User.findByIdAndUpdate(id, { $set: modifiedUser }, { new: true })
+                await User.findByIdAndUpdate(id, {$set: modifiedUser}, {new: true})
                 res.status(200).json({
                     status: 'User actualizado correctamente'
                 });
@@ -127,23 +126,23 @@ class userCtrl {
     logIn = async (req: Request, res: Response) => {
 
         console.log(req.body);
-        const { email, password } = req.body;
+        const {email, password} = req.body;
 
         //search the params ({email: email}) ---> next steps encrypt again
         try {
-        //we wait to the search in database (async-await)
-        const user = await User.findOne({email});
-        if(!user) return res.status(401).json({status:"This email doesn't exist!"});
-        //& password validator
-        else if(user.password !== password) return res.status(401).send("Incorrect password!");
-        const token = jwt.sign({_id: user._id}, 'secretkey');
-        const _aux = {
-            _id: user._id,
-            token: token,
-            userName: user.userName
-        }
-        console.log(_aux);
-        res.status(200).json(_aux);
+            //we wait to the search in database (async-await)
+            const user = await User.findOne({email});
+            if (!user) return res.status(401).json({status: "This email doesn't exist!"});
+            //& password validator
+            else if (user.password !== password) return res.status(401).send("Incorrect password!");
+            const token = jwt.sign({_id: user._id}, 'secretkey');
+            const _aux = {
+                _id: user._id,
+                token: token,
+                userName: user.userName
+            }
+            console.log(_aux);
+            res.status(200).json(_aux);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -157,24 +156,24 @@ class userCtrl {
         console.log(req.body);
 
         //we extract the info of the json object
-        const { email, userName, password } = req.body;
+        const {email, userName, password} = req.body;
 
         //in the next steps, we encrypt these params
         try {
-        const newSignUpUser: IUser = new User({email, userName, password});
-        await newSignUpUser.save();
-    
-        //then, we create a token (payload, variable & options)
-        const token = jwt.sign({_id: newSignUpUser._id}, 'secretkey');
+            const newSignUpUser: IUser = new User({email, userName, password});
+            await newSignUpUser.save();
 
-        //we return the json object with the created token to the user & status = OK
-        const _aux = {
-            _id: newSignUpUser._id,
-            token: token,
-            userName: newSignUpUser.userName
-        }
-        console.log(_aux);
-        res.status(200).json(_aux);
+            //then, we create a token (payload, variable & options)
+            const token = jwt.sign({_id: newSignUpUser._id}, 'secretkey');
+
+            //we return the json object with the created token to the user & status = OK
+            const _aux = {
+                _id: newSignUpUser._id,
+                token: token,
+                userName: newSignUpUser.userName
+            }
+            console.log(_aux);
+            res.status(200).json(_aux);
         } catch (err) {
             console.log(err.message);
             res.status(409).json({
@@ -183,5 +182,6 @@ class userCtrl {
         }
     }
 }
+
 
 export default new userCtrl();
