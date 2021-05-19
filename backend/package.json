@@ -15,8 +15,12 @@
   "license": "ISC",
   "dependencies": {
     "async": "^3.2.0",
+<<<<<<< HEAD
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
+=======
+    "bcrypt-nodejs": "^0.0.3",
+>>>>>>> cefd34770c1dba590d3f26715fb50bdc5eddd25c
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -24,7 +28,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.19",
+    "mongoose": "^5.12.9",
     "morgan": "^1.10.0",
     "nodemailer": "^6.6.0",
     "passport": "^0.4.1",
@@ -35,8 +39,12 @@
   },
   "devDependencies": {
     "@types/async": "^3.2.6",
+<<<<<<< HEAD
     "@types/bcrypt-nodejs": "0.0.31",
     "@types/bcryptjs": "^2.4.2",
+=======
+    "@types/bcrypt-nodejs": "^0.0.31",
+>>>>>>> cefd34770c1dba590d3f26715fb50bdc5eddd25c
     "@types/body-parser": "^1.19.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.10",
