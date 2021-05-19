@@ -1,9 +1,9 @@
-//this is the file that it starts my app
+//file that it starts my app
+import dotenv from 'dotenv';
+dotenv.config();
 
-import database from './database';
-
-//to commit
 import app from './server';
+import database from './database';
 
 app.listen(app.get('port'), () => {
     //Express Application

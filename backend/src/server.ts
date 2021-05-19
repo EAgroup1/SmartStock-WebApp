@@ -31,13 +31,14 @@ app.set('port', process.env.PORT || 4000);
 //we use the port 8000 for Flutter ---> important from Eric!
 app.use(cors({origin: 'http://localhost:8000'}));
 
-// Middlewares
+// Middlewares ---> functions that process data before routes
 app.use(morgan('dev'));
 app.use(express.json());
 //we don't need json to send data ---> a variant
 app.use(express.urlencoded({ extended: false }));
 
 //other uses ---> if this doesn't works, you comment the next two lines
+//we implement cookies to know the req's go to the same navigator
 app.use(cookieParser());
 app.use(session({ secret: 'session secret key'}));
 

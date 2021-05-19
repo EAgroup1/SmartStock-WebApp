@@ -7,9 +7,9 @@ POST http://localhost:4000/api/users
 content-Type: application/json
 
 {
-    "userName": "Marie",
-    "email": "marie@gmail.com",
-    "password": "5678"
+    "userName": "Yun",
+    "email": "yun@gmail.com",
+    "password": "yun5678"
 } 
 
 ###
@@ -25,26 +25,15 @@ content-Type: application/json
 ###
 GET http://localhost:4000/api/users/608dc69df661910fb86c8f3d
 
+###
+POST http://localhost:4000/api/users/logIn
+content-Type: application/json
 
+{
+    "email": "yun@gmail.com",
+    "password": "yun5678"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+} 
 
 //CRUD de LOT
 
@@ -96,31 +85,6 @@ GET http://localhost:4000/api/lots/6092eb5193496c0ac44f67df
 ###
 GET http://localhost:4000/api/lots/get/Leche
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //CRUD DE DELIVERY
 
 ### 
@@ -165,5 +129,3 @@ content-Type: application/json
 } 
 ###
 GET http://localhost:4000/api/delivery/609c54bda34787271456871e
-
-

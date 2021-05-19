@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 import { mongodb } from './keys';
 
-//SmartStockDB = Project's database (originally empty)
-
 mongoose.connect(mongodb.URI, {
     useCreateIndex: true,
     useUnifiedTopology: true,

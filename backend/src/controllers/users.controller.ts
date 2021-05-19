@@ -7,6 +7,8 @@ import jwt from 'jsonwebtoken';
 import Token, {IToken} from '../models/token';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt-nodejs';
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
 
 
 class userCtrl {
@@ -139,8 +141,12 @@ class userCtrl {
         const user = await User.findOne({email});
         if(!user) return res.status(401).json({status:"This email doesn't exist!"});
         //& password validator
-        else if(user.password !== password) return res.status(401).send("Incorrect password!");
-        const token = jwt.sign({_id: user._id}, 'secretkey');
+        const correctPassword: boolean = await user.validatePassword(password);
+        if(!correctPassword) return res.status(401).send("Incorrect password!");
+        //the token of the user expires in one day ++
+        const token: string = jwt.sign({_id: user._id}, process.env.JWT_SECRET || 'tokentest', {
+            expiresIn: '24h'
+        });
         const _aux = {
             _id: user._id,
             token: token,
@@ -169,7 +175,10 @@ class userCtrl {
         await newSignUpUser.save();
     
         //then, we create a token (payload, variable & options)
-        const token = jwt.sign({_id: newSignUpUser._id}, 'secretkey');
+        //the token of the user expires in one day ++
+        const token: string = jwt.sign({_id: newSignUpUser._id}, process.env.JWT_SECRET || 'tokentest', {
+            expiresIn: '24h'
+        });
 
         //we return the json object with the created token to the user & status = OK
         const _aux = {
@@ -187,19 +196,11 @@ class userCtrl {
         }
     }
 
-    //we send the "resetToken" to user
-    requestPasswordReset = async(email: any) => {
-        const user = await User.findOne({email});
-
-        if(!user) throw new Error("This user doesn't exist!");
-        let token = await Token.findOne({userId: user._id});
-        if(token) await token.deleteOne();
-        let resetToken = crypto.randomBytes(32).toString("hex");
-        const saltRounds = 10;
-        //auto-gen a salt and hash (salt declared before)
-        //const hash = await bcrypt.hash(resetToken, Number(saltRounds), null, function(err, hash));
-        
+    //some tests about private routes (for the moment NO async)
+    privateRoute = (req: Request, res: Response) => {
+        res.send('some tests')
     }
+
 }
 
 export default new userCtrl();

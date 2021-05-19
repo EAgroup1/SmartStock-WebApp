@@ -1,8 +1,8 @@
-import mongoose, { Schema, model } from 'mongoose';
-//the password cannot store in plaintext on database
+import mongoose, {Schema, model, Document} from 'mongoose';
+//password cannot store in plaintext on database
 import bcrypt from 'bcrypt-nodejs';
 
-export interface IUser extends mongoose.Document {
+export interface IUser extends Document {
     userName: string,
     email: string,
     password: string,
@@ -15,8 +15,7 @@ export interface IUser extends mongoose.Document {
     avatar?: string,
     resetPasswordToken?: string,
     resetPasswordExpires?: Date,
-    passwordConfirmation: String,
-    comparePassword(candidatePassword: string): Promise<boolean>;
+    validatePassword(password: string): Promise<boolean>
 }
 
 const userSchema = new Schema({
@@ -40,27 +39,35 @@ const userSchema = new Schema({
     versionKey: false
 });
 
-//if this doesn't works, you comment the next function
 //we hash the user's password on this function
-
-//userSchema.pre<IUser>("save", function save(next) {
-userSchema.pre<IUser>('save', function(next) {
-    var user = this;
-    //a salt factor of 10 is very secure 
-    var SALT_FACTOR = 10;
+userSchema.pre('save', function(next) {
+    let user = <IUser>this;
+    //salt factor of 12 is too safe! 
+    var SALT_FACTOR = 12;
 
     if(!user.isModified('password')) return next();
 
-    bcrypt.genSalt(SALT_FACTOR, function(err, salt){
+    return bcrypt.genSalt(SALT_FACTOR, function(err, salt){
         if(err) return next(err);
 
-        bcrypt.hash(user.password, salt, null, function(err, hash){
+        return bcrypt.hash(user.password, salt, null, function(err, hash){
             if(err) return next(err);
             user.password = hash;
-            next();
+            return next();
         });
     });
 });
+
+//validate the encrypted password
+userSchema.methods.validatePassword = async function(password: string): Promise<boolean> {
+    let user = <IUser>this;
+    return await new Promise((resolve, reject)=>{
+        bcrypt.compare(password , user.password, (err, isMatch) => {
+        if(err) return reject(err);
+        return resolve(isMatch);
+        });
+    });
+};
 
 //we will export our entity
 export default model<IUser>('User', userSchema);
