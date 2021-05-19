@@ -31,7 +31,7 @@ class deliveryCtrl {
         console.log(req.body);
         try {
              const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":false})
-            .populate('lotItem')
+            .populate({path:'lotItem', options:{path:'userItem'}})
             .populate('destinationItem',{'userName':1,'email':1,'location':1,'role':1})
             .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
             .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
@@ -49,7 +49,7 @@ class deliveryCtrl {
         console.log(req.body);
         try {
              const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":true})
-            .populate('lotItem')
+            .populate({path:'lotItem', options:{path:'userItem'}})
             .populate('destinationItem',{'userName':1,'email':1,'location':1,'role':1})
             .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
             .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
