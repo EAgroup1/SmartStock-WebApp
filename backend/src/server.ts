@@ -1,8 +1,23 @@
 //this file contains all info about express ---> similarities with app
-import morgan from 'morgan';
+import morgan from 'morgan'; //logger
 import express from 'express';
 import cors from 'cors';
 import router from './routes';
+
+//researching new libraries ---> available very soon...
+import path from 'path';
+import favicon from 'serve-favicon';
+import cookieParser from 'cookie-parser';
+//import bodyParser from 'body-parser'; //this is replaced by express 
+
+//other libraries to reset password
+import session from 'express-session';
+import nodemailer from 'nodemailer';
+import passport from 'passport';
+import localStrategy from 'passport-local';
+import bcrypt from 'bcrypt-nodejs';
+import async from 'async';
+import crypto from 'crypto';
 
 //we call swagger imports
 import swaggerUi from 'swagger-ui-express'
@@ -16,10 +31,16 @@ app.set('port', process.env.PORT || 4000);
 //we use the port 8000 for Flutter ---> important from Eric!
 app.use(cors({origin: 'http://localhost:8000'}));
 
-// Middlewares
+// Middlewares ---> functions that process data before routes
 app.use(morgan('dev'));
 app.use(express.json());
+//we don't need json to send data ---> a variant
 app.use(express.urlencoded({ extended: false }));
+
+//other uses ---> if this doesn't works, you comment the next two lines
+//we implement cookies to know the req's go to the same navigator
+app.use(cookieParser());
+app.use(session({ secret: 'session secret key'}));
 
 // Rutas
 app.use("/api", router);

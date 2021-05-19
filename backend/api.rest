@@ -7,9 +7,15 @@ POST http://localhost:4000/api/users
 content-Type: application/json
 
 {
+<<<<<<< HEAD
     "userName": "West",
     "email": "west@gmail.com",
     "password": "1234"
+=======
+    "userName": "Yun",
+    "email": "yun@gmail.com",
+    "password": "yun5678"
+>>>>>>> 0152088dee7e5f248ad08ed03379f810c9160997
 } 
 
 ###
@@ -25,26 +31,15 @@ content-Type: application/json
 ###
 GET http://localhost:4000/api/users/608dc69df661910fb86c8f3d
 
+###
+POST http://localhost:4000/api/users/logIn
+content-Type: application/json
 
+{
+    "email": "yun@gmail.com",
+    "password": "yun5678"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+} 
 
 //CRUD de LOT
 
@@ -96,31 +91,6 @@ GET http://localhost:4000/api/lots/6091cbdf81612f2a801c068f
 ###
 GET http://localhost:4000/api/lots/get/Leche
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //CRUD DE DELIVERY
 
 ### 
@@ -128,10 +98,20 @@ GET http://localhost:4000/api/delivery/
 ###
 POST http://localhost:4000/api/delivery/609c29591c34f216f043c43d/deliveries
 ###
+POST  http://localhost:4000/api/delivery/609c29591c34f216f043c43d/readydeliveries
+###
+POST  http://localhost:4000/api/delivery/readydelivery
+content-Type: application/json 
+
+{
+    "id": "60a258caa9103b2548a13ac4"
+}
+###
 POST http://localhost:4000/api/delivery/
 content-Type: application/json
 
 {
+    "lots":"609c49134f2a8c39548b977b",
     "lotItem": "609c49134f2a8c39548b977b",
     "originLocation": "3.4379º,-2.1179º",
     "destinationLocation": "3.4279º,-2.179º",
@@ -139,7 +119,8 @@ content-Type: application/json
     "deliveryDate": "13/09/2017",
     "isPicked": true,
     "isDelivered": false,
-    "businessItem":"609c29591c34f216f043c43d",
+    "isReady": true,
+    "businessItem":"60993b2b9ee40b10046c59bb",
     "isAssigned": true,
     "userItem": "609c29591c34f216f043c43d",
     "description": "Picar al 1o 1a"
@@ -151,7 +132,7 @@ PUT http://localhost:4000/api/delivery/609c29951c34f216f043c43e
 content-Type: application/json 
 
 {
-    "lotItem": "6091cfbc57de44327c1eb88f",
+    "lotItem": "6091cfbc57de44327c1eb88f""609c49134f2a8c39548b977b",
     "originLocation": "3.4379º,-2.1179º",
     "destinationLocation": "3.4279º,-2.179º",
     "destinationItem": "6091d6732d3a564454063110",
@@ -165,5 +146,3 @@ content-Type: application/json
 } 
 ###
 GET http://localhost:4000/api/delivery/609c54bda34787271456871e
-
-

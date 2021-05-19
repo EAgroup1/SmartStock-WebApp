@@ -3,6 +3,9 @@ import { Request, Response, NextFunction } from 'express';
 import usersCtrl from '../controllers/users.controller';
 import jwt from 'jsonwebtoken';
 
+//some tests
+import {TokenValidation} from '../libs/checkToken';
+
 const usersRouter: Router = Router();
 
 //we put all routes in this file & we will se in the future
@@ -43,6 +46,9 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
     req.body._id = payload;
     next();
 }
+
+//some tests about private routes (only if you have a token)
+usersRouter.get('/privateRoute', TokenValidation, usersCtrl.privateRoute);
 
 //we export this router
 export default usersRouter;

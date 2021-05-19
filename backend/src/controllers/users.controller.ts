@@ -3,6 +3,12 @@ import User, { IUser } from '../models/user';
 import { Request, Response } from 'express';
 //we require the info of the jsonwebtoken module
 import jwt from 'jsonwebtoken';
+//we'll comment on the following lines if these are not necessary
+import Token, {IToken} from '../models/token';
+import crypto from 'crypto';
+import bcrypt from 'bcrypt-nodejs';
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
 
 
 class userCtrl {
@@ -135,8 +141,12 @@ class userCtrl {
         const user = await User.findOne({email});
         if(!user) return res.status(401).json({status:"This email doesn't exist!"});
         //& password validator
-        else if(user.password !== password) return res.status(401).send("Incorrect password!");
-        const token = jwt.sign({_id: user._id}, 'secretkey');
+        const correctPassword: boolean = await user.validatePassword(password);
+        if(!correctPassword) return res.status(401).send("Incorrect password!");
+        //the token of the user expires in one day ++
+        const token: string = jwt.sign({_id: user._id}, process.env.JWT_SECRET || 'tokentest', {
+            expiresIn: '24h'
+        });
         const _aux = {
             _id: user._id,
             token: token,
@@ -165,7 +175,10 @@ class userCtrl {
         await newSignUpUser.save();
     
         //then, we create a token (payload, variable & options)
-        const token = jwt.sign({_id: newSignUpUser._id}, 'secretkey');
+        //the token of the user expires in one day ++
+        const token: string = jwt.sign({_id: newSignUpUser._id}, process.env.JWT_SECRET || 'tokentest', {
+            expiresIn: '24h'
+        });
 
         //we return the json object with the created token to the user & status = OK
         const _aux = {
@@ -182,6 +195,12 @@ class userCtrl {
             });
         }
     }
+
+    //some tests about private routes (for the moment NO async)
+    privateRoute = (req: Request, res: Response) => {
+        res.send('some tests')
+    }
+
 }
 
 export default new userCtrl();
