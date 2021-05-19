@@ -15,12 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "async": "^3.2.0",
-<<<<<<< HEAD
-    "bcrypt-nodejs": "0.0.3",
-    "bcryptjs": "^2.4.3",
-=======
     "bcrypt-nodejs": "^0.0.3",
->>>>>>> cefd34770c1dba590d3f26715fb50bdc5eddd25c
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -39,12 +34,7 @@
   },
   "devDependencies": {
     "@types/async": "^3.2.6",
-<<<<<<< HEAD
-    "@types/bcrypt-nodejs": "0.0.31",
-    "@types/bcryptjs": "^2.4.2",
-=======
     "@types/bcrypt-nodejs": "^0.0.31",
->>>>>>> cefd34770c1dba590d3f26715fb50bdc5eddd25c
     "@types/body-parser": "^1.19.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.10",
