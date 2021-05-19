@@ -1,11 +1,15 @@
 //this is the file that it starts my app
 import User, { IUser } from './models/user';
-import database from './database';
 import session from 'express-session';
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 //to commit
+//file that it starts my app
+import dotenv from 'dotenv';
+dotenv.config();
+
 import app from './server';
+import database from './database';
 import passport from "passport";
 
 app.use(
