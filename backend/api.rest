@@ -7,15 +7,9 @@ POST http://localhost:4000/api/users
 content-Type: application/json
 
 {
-<<<<<<< HEAD
-    "userName": "West",
-    "email": "west@gmail.com",
-    "password": "1234"
-=======
     "userName": "Yun",
     "email": "yun@gmail.com",
     "password": "yun5678"
->>>>>>> 0152088dee7e5f248ad08ed03379f810c9160997
 } 
 
 ###
@@ -59,8 +53,8 @@ content-Type: application/json
     "isFragile": true,
     "info": "Cabra",
     "minimumQty": 40,
-    "businessItem": "60a29195c162011d00809661",
-    "userItem":"60a29195c162011d00809661"
+    "businessItem": "60a69ae76196f9208c4f8a86",
+    "userItem":"60a69ae76196f9208c4f8a86"
 } 
 
 ###
@@ -84,7 +78,7 @@ content-Type: application/json
 } 
 
 ###
-GET http://localhost:4000/api/lots/6091cbdf81612f2a801c068f
+GET http://localhost:4000/api/lots/60a69ae76196f9208c4f8a86
 
 //Buscamos LOT por nombre pasado por parámetro
 
