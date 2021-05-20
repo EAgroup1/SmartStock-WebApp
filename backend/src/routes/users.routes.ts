@@ -2,9 +2,7 @@ import { Router } from 'express';
 import { Request, Response, NextFunction } from 'express';
 import usersCtrl from '../controllers/users.controller';
 import jwt from 'jsonwebtoken';
-
-//some tests
-import {TokenValidation} from '../libs/checkToken';
+import passport from 'passport';
 
 const usersRouter: Router = Router();
 
@@ -19,6 +17,12 @@ usersRouter.get('/:id', usersCtrl.getUser);
 usersRouter.post('/logIn', usersCtrl.logIn);
 //the signup route has a small difference with the createUser route
 usersRouter.post('/signUp', usersCtrl.signUp);
+usersRouter.post('/send-email', usersCtrl.sendEmail);
+
+//test passport (Headers-Authorization: Bearer token)
+usersRouter.get('/special', passport.authenticate('jwt', {session: false}), (req, res) =>{
+    res.send('works!');
+})
 
 //validated function to private routes --- verify token -/- express routing
 function verifyToken(req: Request, res: Response, next: NextFunction) {
@@ -46,9 +50,6 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
     req.body._id = payload;
     next();
 }
-
-//some tests about private routes (only if you have a token)
-usersRouter.get('/privateRoute', TokenValidation, usersCtrl.privateRoute);
 
 //we export this router
 export default usersRouter;

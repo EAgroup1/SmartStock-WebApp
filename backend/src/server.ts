@@ -5,19 +5,12 @@ import cors from 'cors';
 import router from './routes';
 
 //researching new libraries ---> available very soon...
-import path from 'path';
-import favicon from 'serve-favicon';
 import cookieParser from 'cookie-parser';
-//import bodyParser from 'body-parser'; //this is replaced by express 
 
 //other libraries to reset password
 import session from 'express-session';
-import nodemailer from 'nodemailer';
 import passport from 'passport';
-import localStrategy from 'passport-local';
-import bcrypt from 'bcrypt-nodejs';
-import async from 'async';
-import crypto from 'crypto';
+import passportMiddleware from './middlewares/passport'
 
 //we call swagger imports
 import swaggerUi from 'swagger-ui-express'
@@ -36,6 +29,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 //we don't need json to send data ---> a variant
 app.use(express.urlencoded({ extended: false }));
+app.use(passport.initialize());
+passport.use(passportMiddleware);
 
 //other uses ---> if this doesn't works, you comment the next two lines
 //we implement cookies to know the req's go to the same navigator
