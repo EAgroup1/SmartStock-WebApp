@@ -26,13 +26,42 @@ content-Type: application/json
 GET http://localhost:4000/api/users/608dc69df661910fb86c8f3d
 
 ###
+POST http://localhost:4000/api/users/signUp
+content-Type: application/json
+
+{
+    "email": "hector.fernandez.granja@estudiantat.upc.edu",
+    "userName": "hectorUPC",
+    "password": "5678"
+
+} 
+
+###
 POST http://localhost:4000/api/users/logIn
 content-Type: application/json
 
 {
-    "email": "yun@gmail.com",
-    "password": "yun5678"
+    "email": "hector.fernandez.granja@estudiantat.upc.edu",
+    "password": "3nw20"
 
+} 
+
+###
+PUT http://localhost:4000/api/users/forgotPassword
+content-Type: application/json 
+
+{
+    "email": "hector.fernandez.granja@estudiantat.upc.edu"
+} 
+
+###
+PUT http://localhost:4000/api/users/resetPassword
+content-Type: application/json 
+
+{
+    "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE4NDMxM2NkMWMyNTQ5ZjgwYzFjMDIiLCJpYXQiOjE2MjE2NDMwMTEsImV4cCI6MTYyMTY0MzYxMX0.uDndyguYwp4-bQpqwKdmZpYVMKeqWZxzGyLmX-c6nVw",
+    "newPass": "3nw20",
+    "confNewPass": "3nw20"
 } 
 
 //CRUD de LOT
