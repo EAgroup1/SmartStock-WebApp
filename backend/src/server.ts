@@ -10,11 +10,6 @@ const { Server } = require("socket.io");
 import { Message } from './models';
 // import User, {IUser} from './models/user';
 
-//researching new libraries ---> available very soon...
-import cookieParser from 'cookie-parser';
-
-//other libraries to reset password
-import session from 'express-session';
 import passport from 'passport';
 import passportMiddleware from './middlewares/passport'
 
@@ -63,11 +58,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 passport.use(passportMiddleware);
-
-//other uses ---> if this doesn't works, you comment the next two lines
-//we implement cookies to know the req's go to the same navigator
-// app.use(cookieParser());
-// app.use(session({ secret: 'session secret key'}));
 
 // Rutas
 app.use("/api", router);
