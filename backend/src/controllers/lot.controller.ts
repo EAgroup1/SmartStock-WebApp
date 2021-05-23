@@ -142,20 +142,6 @@ class lotCtrl {
             });
         }
     }
-
-    getLotsAsc = async (req: Request, res: Response) => {
-        try {
-            const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
-            .populate('businessItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 })
-            .populate('userItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 });
-            res.json(lot);
-        } catch (err) {
-            res.status(500).json({
-                status: `${err.message}`
-            });
-        }
-    }
-
 }
 
 export default new lotCtrl();
