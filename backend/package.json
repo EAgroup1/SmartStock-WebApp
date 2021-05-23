@@ -35,6 +35,8 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "serve-favicon": "^2.5.0",
+    "socket.io": "^4.1.2",
+    "sort-json-array": "^0.1.7",
     "swagger-jsdoc": "^7.0.0-rc.6",
     "swagger-ui-express": "^4.1.6"
   },
@@ -57,6 +59,7 @@
     "@types/passport-jwt": "^3.0.5",
     "@types/passport-local": "^1.0.33",
     "@types/serve-favicon": "^2.5.2",
+    "@types/socket.io": "^3.0.2",
     "@types/swagger-jsdoc": "^6.0.0",
     "@types/swagger-ui-express": "^4.1.2",
     "concurrently": "^6.0.2",

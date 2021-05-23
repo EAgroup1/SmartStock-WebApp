@@ -4,6 +4,12 @@ import express from 'express';
 import cors from 'cors';
 import router from './routes';
 
+//require all imports to deploy WebSockets
+import http from 'http';
+const { Server } = require("socket.io");
+import { Message } from './models';
+// import User, {IUser} from './models/user';
+
 //researching new libraries ---> available very soon...
 import cookieParser from 'cookie-parser';
 
@@ -18,6 +24,32 @@ import * as swaggerDocument from './swagger.json'
 
 // Inicializaciones
 const app = express();
+
+//initialize sockets
+const server = http.createServer(app);
+const io = new Server(server);
+
+//port for sockets
+var port = 3001;
+
+io.on('connection', (socket: any) => {
+
+    //disconnect of the system
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+
+    //send a broadcast message
+    console.log('a user connected on port %s', port);
+    socket.on('send-message', (m: Message) =>{
+        console.log('[server](message): %s', JSON.stringify(m));
+        io.emit('message', m);
+    });
+});
+
+server.listen(port, () => {
+    console.log('listening in http://localhost:' + port);
+});
 
 // Configuración
 app.set('port', process.env.PORT || 4000);
@@ -34,8 +66,8 @@ passport.use(passportMiddleware);
 
 //other uses ---> if this doesn't works, you comment the next two lines
 //we implement cookies to know the req's go to the same navigator
-app.use(cookieParser());
-app.use(session({ secret: 'session secret key'}));
+// app.use(cookieParser());
+// app.use(session({ secret: 'session secret key'}));
 
 // Rutas
 app.use("/api", router);
