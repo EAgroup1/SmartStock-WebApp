@@ -24,26 +24,54 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-//port for sockets
-var port = 3001;
-
 io.on('connection', (socket: any) => {
 
-    //disconnect of the system
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
+    console.log('user connect...', socket.id);
+
+    //prove --- after prove this function we deleted
+    socket.on('send_message', (data: any) => {
+        socket.broadcast.emit('receiver_message', data);
     });
 
-    //send a broadcast message
-    console.log('a user connected on port %s', port);
-    socket.on('send-message', (m: Message) =>{
+    //user is typing
+    socket.on('typing', (m: Message) => {
+        console.log('[server](message): %s', JSON.stringify(m));
+        io.emit('typing', m);
+    });
+
+    //user send a message
+    socket.on('message', (m: Message) =>{
         console.log('[server](message): %s', JSON.stringify(m));
         io.emit('message', m);
     });
+
+    //user sends the location
+    socket.on('location', (m: Message) =>{
+        console.log('[server](message): %s', JSON.stringify(m));
+        io.emit('location', m);
+    });
+
+    //user connects to the system
+    socket.on('connect', () => {});
+
+    //user disconnects to the system
+    socket.on('disconnect', () => {
+        console.log('user disconnect...', socket.id);
+    });
+
+    //user has an error
+    socket.on('error', (err: any) => {
+        console.log('received error from user:', socket.id);
+        console.log(err);
+    });
 });
 
-server.listen(port, () => {
-    console.log('listening in http://localhost:' + port);
+//port for sockets
+var server_port = process.env.PORT || 3000;
+
+//we obviate the error
+server.listen(server_port, () => {
+    console.log('listening on http://localhost:' + server_port);
 });
 
 // Configuración
