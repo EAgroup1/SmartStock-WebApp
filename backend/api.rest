@@ -77,7 +77,6 @@ POST http://localhost:4000/api/lots
 content-Type: application/json
 
 {
-<<<<<<< HEAD
     "name": "Huevos",
     "dimensions": "60x30x15",
     "weight": 2,
@@ -87,18 +86,6 @@ content-Type: application/json
     "info": "Huevos de la mejor calidad!",
     "minimumQty": 2,
     "businessItem": "60aeaf651ffb7307940ae116"
-=======
-    "name": "arroz",
-    "dimensions": "10x10x10",
-    "weight": 40,
-    "qty": 300,
-    "price": 2,
-    "isFragile": false,
-    "info": "japon",
-    "minimumQty": 10,
-    "businessItem": "60a69ae76196f9208c4f8a86",
-    "userItem":"60a8379570e909276c35b7c0"
->>>>>>> f5c57f42bd8d82b2ab378c50e672b2b039b953e8
 } 
 
 ###
