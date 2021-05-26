@@ -24,7 +24,7 @@ const lotSchema = new Schema({
     info: { type: String, required: false, default: ''},
     minimumQty: { type: Number, required: true},
     businessItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
-    userItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false, default: null}
+    userItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,
