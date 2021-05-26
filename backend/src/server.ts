@@ -26,43 +26,28 @@ const io = new Server(server);
 
 io.on('connection', (socket: any) => {
 
-    console.log('user connect...', socket.id);
-
-    //prove --- after prove this function we deleted
-    socket.on('send_message', (data: any) => {
-        socket.broadcast.emit('receiver_message', data);
-    });
-
-    //user is typing
-    socket.on('typing', (m: Message) => {
-        console.log('[server](message): %s', JSON.stringify(m));
-        io.emit('typing', m);
-    });
-
-    //user send a message
-    socket.on('message', (m: Message) =>{
-        console.log('[server](message): %s', JSON.stringify(m));
-        io.emit('message', m);
-    });
-
-    //user sends the location
-    socket.on('location', (m: Message) =>{
-        console.log('[server](message): %s', JSON.stringify(m));
-        io.emit('location', m);
-    });
-
-    //user connects to the system
-    socket.on('connect', () => {});
+    //get the id of the user & join in a room (one-to-one)
+    //if string generates problems ---> we delete 'string'
+    const id = socket.handshake.query.id;
+    socket.join(id);
 
     //user disconnects to the system
     socket.on('disconnect', () => {
-        console.log('user disconnect...', socket.id);
+        socket.leave(id);
     });
 
-    //user has an error
-    socket.on('error', (err: any) => {
-        console.log('received error from user:', socket.id);
-        console.log(err);
+    //send message to particular user
+    socket.on('send_message', (message:any) => {
+        const receiverChatID = message.receiverChatID;
+        const senderChatID = message.senderChatID;
+        const content = message.content;
+
+        //send message to particular room
+        socket.in(receiverChatID).emit('receive_message', {
+            'content': content,
+            'senderChatID': senderChatID,
+            'receiverChatID': receiverChatID,
+        });
     });
 });
 
