@@ -1,5 +1,6 @@
 import Lot, { ILot } from '../models/lot';
 import { Request, Response } from 'express';
+import User, { IUser } from '../models/user';
 
 class lotCtrl {
     //CRUD
@@ -132,6 +133,19 @@ class lotCtrl {
         console.log(req.params);
         try {
             const lot: ILot[] = await Lot.find({ "name": req.params.name })
+            .populate('businessItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 })
+            .populate('userItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 });
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getLotsByUserId = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
             .populate('businessItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 })
             .populate('userItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 });
             res.json(lot);

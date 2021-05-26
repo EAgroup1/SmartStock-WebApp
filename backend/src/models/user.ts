@@ -13,8 +13,8 @@ export interface IUser extends Document {
     location?: string,
     balance?: number,
     avatar?: string,
-    resetPasswordToken?: string,
-    resetPasswordExpires?: Date,
+    avatarCloudBinary?: string,
+    resetLink?: string,
     validatePassword(password: string): Promise<boolean>
 }
 
@@ -30,9 +30,9 @@ const userSchema = new Schema({
     balance: { type: Number, required: false, default: '0'},
     //Guys we need a picture for the user! ---> location avatar
     avatar: { type: String, required: false},
+    avatarCloudBinary: {type: String, required: false},
     //reset pass--->
-    resetPasswordToken: { type: String },
-    resetPasswordExpires: { type: Date }
+    resetLink: { type: String, default: ''}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,

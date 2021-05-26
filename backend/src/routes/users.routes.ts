@@ -6,6 +6,9 @@ import passport from 'passport';
 
 const usersRouter: Router = Router();
 
+usersRouter.put('/forgotPassword', usersCtrl.forgotPassword);
+usersRouter.put('/resetPassword', usersCtrl.resetPassword);
+
 //we put all routes in this file & we will se in the future
 usersRouter.get('/', usersCtrl.getAllUsers);
 usersRouter.post('/', usersCtrl.createUser);
@@ -17,7 +20,6 @@ usersRouter.get('/:id', usersCtrl.getUser);
 usersRouter.post('/logIn', usersCtrl.logIn);
 //the signup route has a small difference with the createUser route
 usersRouter.post('/signUp', usersCtrl.signUp);
-usersRouter.post('/send-email', usersCtrl.sendEmail);
 
 //test passport (Headers-Authorization: Bearer token)
 usersRouter.get('/special', passport.authenticate('jwt', {session: false}), (req, res) =>{

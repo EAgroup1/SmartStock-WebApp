@@ -26,13 +26,42 @@ content-Type: application/json
 GET http://localhost:4000/api/users/608dc69df661910fb86c8f3d
 
 ###
+POST http://localhost:4000/api/users/signUp
+content-Type: application/json
+
+{
+    "email": "dia@dia.com",
+    "userName": "dia",
+    "password": "1234"
+
+} 
+
+###
 POST http://localhost:4000/api/users/logIn
 content-Type: application/json
 
 {
-    "email": "yun@gmail.com",
-    "password": "yun5678"
+    "email": "hector.fernandez.granja@estudiantat.upc.edu",
+    "password": "3nw20"
 
+} 
+
+###
+PUT http://localhost:4000/api/users/forgotPassword
+content-Type: application/json 
+
+{
+    "email": "hector.fernandez.granja@estudiantat.upc.edu"
+} 
+
+###
+PUT http://localhost:4000/api/users/resetPassword
+content-Type: application/json 
+
+{
+    "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE4NDMxM2NkMWMyNTQ5ZjgwYzFjMDIiLCJpYXQiOjE2MjE2NDMwMTEsImV4cCI6MTYyMTY0MzYxMX0.uDndyguYwp4-bQpqwKdmZpYVMKeqWZxzGyLmX-c6nVw",
+    "newPass": "3nw20",
+    "confNewPass": "3nw20"
 } 
 
 //CRUD de LOT
@@ -41,10 +70,14 @@ content-Type: application/json
 GET http://localhost:4000/api/lots/ALL
 
 ###
+GET http://localhost:4000/api/lots/getByUser/60a8379570e909276c35b7c0
+
+###
 POST http://localhost:4000/api/lots
 content-Type: application/json
 
 {
+<<<<<<< HEAD
     "name": "Huevos",
     "dimensions": "60x30x15",
     "weight": 2,
@@ -54,16 +87,29 @@ content-Type: application/json
     "info": "Huevos de la mejor calidad!",
     "minimumQty": 2,
     "businessItem": "60aeaf651ffb7307940ae116"
+=======
+    "name": "arroz",
+    "dimensions": "10x10x10",
+    "weight": 40,
+    "qty": 300,
+    "price": 2,
+    "isFragile": false,
+    "info": "japon",
+    "minimumQty": 10,
+    "businessItem": "60a69ae76196f9208c4f8a86",
+    "userItem":"60a8379570e909276c35b7c0"
+>>>>>>> f5c57f42bd8d82b2ab378c50e672b2b039b953e8
 } 
 
 ###
-DELETE http://localhost:4000/api/lots/6092eb5193496c0ac44f67df
+DELETE http://localhost:4000/api/lots/60a927fc546e2a1cfc07cebb
 
 ###
-PUT http://localhost:4000/api/lots/60a161814c1c6a41446e1034
+PUT http://localhost:4000/api/lots/60a8fc845be6b70a807f5f3c
 content-Type: application/json
 
 {
+<<<<<<< HEAD
     "name": "Leche",
     "dimensions": "60x30x15",
     "weight": 60,
@@ -74,6 +120,9 @@ content-Type: application/json
     "info": "HA CAMBIADO OU YEAH",
     "minimumQty": 40,
     "businessItem": "60aeaf411ffb7307940ae113"
+=======
+    "businessItem": "60a901085be6b70a807f5f3f"
+>>>>>>> f5c57f42bd8d82b2ab378c50e672b2b039b953e8
 } 
 
 ###
@@ -82,7 +131,7 @@ GET http://localhost:4000/api/lots/60a69ae76196f9208c4f8a86
 //Buscamos LOT por nombre pasado por parámetro
 
 ###
-GET http://localhost:4000/api/lots/get/Leche
+GET http://localhost:4000/api/lots/get/patatas
 
 //CRUD DE DELIVERY
 
@@ -97,7 +146,7 @@ POST  http://localhost:4000/api/delivery/readydelivery
 content-Type: application/json 
 
 {
-    "id": "60a258caa9103b2548a13ac4"
+    "id": "60a9327a546e2a1cfc07cebc"
 }
 ###
 POST http://localhost:4000/api/delivery/
@@ -138,4 +187,4 @@ content-Type: application/json
     "description": "Ahora pica al 4o que el del 1o no viene"
 } 
 ###
-GET http://localhost:4000/api/delivery/609c54bda34787271456871e
+GET http://localhost:4000/api/delivery/60a9327a546e2a1cfc07cebc
