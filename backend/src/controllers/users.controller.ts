@@ -149,7 +149,8 @@ class userCtrl {
         const _aux = {
             _id: user._id,
             token: token,
-            userName: user.userName
+            userName: user.userName,
+            role: user.role
         }
         console.log(_aux);
         res.status(200).json(_aux);
