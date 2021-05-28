@@ -33,7 +33,28 @@ content-Type: application/json
     "email": "yun@gmail.com",
     "password": "yun5678"
 
-} 
+}
+
+###
+PUT http://localhost:4000/api/users/forgotPassword
+content-Type: application/json
+
+{
+    "email": "hector.fernandez.granja@estudiantat.upc.edu"
+}
+
+###
+PUT http://localhost:4000/api/users/resetPassword
+content-Type: application/json
+
+{
+    "resetLink": "",
+    "newPass": "3nw20",
+    "confNewPass": "3nw20"
+}
+
+###
+GET http://localhost:4000/api/users/localhost:4000/api/lots/getByUser/60a8379570e909276c35b7c0
 
 //CRUD de LOT
 
