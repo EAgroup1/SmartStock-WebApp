@@ -11,7 +11,7 @@ class deliveryCtrl {
         console.log(_req.body);
         try {
             const deliveries: IDelivery[] = await Delivery.find()
-            .populate('lotItem')
+            .populate({path:'lotItem', populate:{path:'userItem'}})
             .populate('destinationItem',{'userName':1,'email':1,'location':1,'role':1})
             .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
             .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});

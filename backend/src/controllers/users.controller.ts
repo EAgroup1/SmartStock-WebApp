@@ -3,13 +3,6 @@ import User, { IUser } from '../models/user';
 import { Request, Response } from 'express';
 //we require the info of the jsonwebtoken module
 import jwt from 'jsonwebtoken';
-//we'll comment on the following lines if these are not necessary
-import Token, {IToken} from '../models/token';
-import crypto from 'crypto';
-import bcrypt from 'bcrypt-nodejs';
-import passport from 'passport';
-import LocalStrategy from 'passport-local';
-
 
 class userCtrl {
 
@@ -196,9 +189,11 @@ class userCtrl {
         }
     }
 
-    //some tests about private routes (for the moment NO async)
-    privateRoute = (req: Request, res: Response) => {
-        res.send('some tests')
+    //send email
+    sendEmail = async (req: Request, res: Response) => {
+        const {email} = req.body;
+
+        res.send('received');
     }
 
 }
