@@ -7,9 +7,9 @@ POST http://localhost:4000/api/users
 content-Type: application/json
 
 {
-    "userName": "Yun",
-    "email": "yun@gmail.com",
-    "password": "yun5678"
+    "userName": "hectorprueba",
+    "email": "hectorfernandezg16@gmail.com",
+    "password": "hectorprueba"
 } 
 
 ###
@@ -22,6 +22,16 @@ content-Type: application/json
     "userName": "Jonatan"
 
 } 
+
+###
+PUT http://localhost:4000/api/users/60a8379570e909276c35b7c0
+content-Type: application/json
+
+{
+    "email": "ejemplo1234@hotmail.com"
+
+} 
+
 ###
 GET http://localhost:4000/api/users/608dc69df661910fb86c8f3d
 
@@ -40,7 +50,7 @@ PUT http://localhost:4000/api/users/forgotPassword
 content-Type: application/json
 
 {
-    "email": "hector.fernandez.granja@estudiantat.upc.edu"
+    "email": "hectorfernandezg16@gmail.com"
 }
 
 ###
