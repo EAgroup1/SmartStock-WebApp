@@ -20,7 +20,7 @@ class lotCtrl {
 
     getAllLotsSorted = async (_req: Request, res: Response) => {
         try {
-            const lots: ILot[] = await Lot.find({}).sort({name:1})
+            const lots: ILot[] = await Lot.find({ 'userItem': { $exists: false } } ).sort({name:1})
                 .populate('businessItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 })
                 .populate('userItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 });
             res.json(lots);

@@ -7,9 +7,9 @@ POST http://localhost:4000/api/users
 content-Type: application/json
 
 {
-    "userName": "Rigoberto",
-    "email": "Rigoberto@gmail.com",
-    "password": "Rigoberto"
+    "userName": "Marie",
+    "email": "Marie@gmail.com",
+    "password": "1111"
 } 
 
 ###
@@ -67,36 +67,34 @@ content-Type: application/json
 //CRUD de LOT
 
 ###
-GET http://localhost:4000/api/lots/ALL
-
+GET http://localhost:4000/api/lots/
 ###
-GET http://localhost:4000/api/lots/getByUser/60a8379570e909276c35b7c0
+GET http://localhost:4000/api/lots/getByUser/60aec83bf9855a23e0a6a7ef
 
 ###
 POST http://localhost:4000/api/lots
 content-Type: application/json
 
 {
-    "name": "Huevos",
+    "name": "Camisetas",
     "dimensions": "60x30x15",
     "weight": 2,
     "qty": 2,
     "price": 2,
     "isFragile": true,
-    "info": "Huevos de la mejor calidad!",
+    "info": "Camisetas de la mejor calidad!",
     "minimumQty": 2,
-    "businessItem": "60aeaf651ffb7307940ae116"
+    "businessItem": "60b21fc328f8332714b3ed50"
 } 
 
 ###
-DELETE http://localhost:4000/api/lots/60a927fc546e2a1cfc07cebb
+DELETE http://localhost:4000/api/lots/60b2201b28f8332714b3ed51
 
 ###
 PUT http://localhost:4000/api/lots/60a8fc845be6b70a807f5f3c
 content-Type: application/json
 
 {
-<<<<<<< HEAD
     "name": "Leche",
     "dimensions": "60x30x15",
     "weight": 60,
@@ -107,9 +105,6 @@ content-Type: application/json
     "info": "HA CAMBIADO OU YEAH",
     "minimumQty": 40,
     "businessItem": "60aeaf411ffb7307940ae113"
-=======
-    "businessItem": "60a901085be6b70a807f5f3f"
->>>>>>> f5c57f42bd8d82b2ab378c50e672b2b039b953e8
 } 
 
 ###
