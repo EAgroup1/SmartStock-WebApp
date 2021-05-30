@@ -84,11 +84,11 @@ content-Type: application/json
     "isFragile": true,
     "info": "Camisetas de la mejor calidad!",
     "minimumQty": 2,
-    "businessItem": "60b21fc328f8332714b3ed50"
+    "businessItem": "60b22fba192afd215c5fe506"
 } 
 
 ###
-DELETE http://localhost:4000/api/lots/60b2201b28f8332714b3ed51
+DELETE http://localhost:4000/api/lots/60b22a24192afd215c5fe505
 
 ###
 PUT http://localhost:4000/api/lots/60a8fc845be6b70a807f5f3c

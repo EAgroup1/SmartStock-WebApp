@@ -37,7 +37,8 @@ class userCtrl {
                 userName: req.body.userName,
                 email: req.body.email,
                 password: req.body.password,
-                role: req.body.role
+                role: req.body.role,
+                bank: req.body.bank
             });
 
             console.log(newUser);
