@@ -150,7 +150,8 @@ class userCtrl {
         const _aux = {
             _id: user._id,
             token: token,
-            userName: user.userName
+            userName: user.userName,
+            role: user.role
         }
         console.log(_aux);
         res.status(200).json(_aux);
@@ -218,7 +219,7 @@ class userCtrl {
                 subject: 'Reset your password',
                 html:`
                 <h2>Clica en el siguiente enlace para restablecer tu contraseña ${user.userName}:</h2>
-                <p>${process.env.CLIENT_URL}/resetPassword/${token}</p>
+                <p>${process.env.CLIENT_URL}/#/createnewpassword/${token}</p>
                 `
             };
             await User.updateOne({_id: user._id},{$set:{resetLink: token}},{new: true});

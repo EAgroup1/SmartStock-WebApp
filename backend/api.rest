@@ -22,49 +22,46 @@ content-Type: application/json
     "userName": "Jonatan"
 
 } 
-###
-GET http://localhost:4000/api/users/608dc69df661910fb86c8f3d
 
 ###
-POST http://localhost:4000/api/users/signUp
+PUT http://localhost:4000/api/users/60a8379570e909276c35b7c0
 content-Type: application/json
 
 {
-    "email": "dia@dia.com",
-    "userName": "dia",
-    "password": "1234"
+    "email": "ejemplo1234@hotmail.com"
 
 } 
+
+###
+GET http://localhost:4000/api/users/608dc69df661910fb86c8f3d
 
 ###
 POST http://localhost:4000/api/users/logIn
 content-Type: application/json
 
 {
-    "email": "hector.fernandez.granja@estudiantat.upc.edu",
-    "password": "3nw20"
+    "email": "yun@gmail.com",
+    "password": "yun5678"
 
-} 
+}
 
 ###
 PUT http://localhost:4000/api/users/forgotPassword
-content-Type: application/json 
+content-Type: application/json
 
 {
-    "email": "hector.fernandez.granja@estudiantat.upc.edu"
-} 
+    "email": "hectorfernandezg16@gmail.com"
+}
 
 ###
 PUT http://localhost:4000/api/users/resetPassword
-content-Type: application/json 
+content-Type: application/json
 
 {
-    "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE4NDMxM2NkMWMyNTQ5ZjgwYzFjMDIiLCJpYXQiOjE2MjE2NDMwMTEsImV4cCI6MTYyMTY0MzYxMX0.uDndyguYwp4-bQpqwKdmZpYVMKeqWZxzGyLmX-c6nVw",
+    "resetLink": "",
     "newPass": "3nw20",
     "confNewPass": "3nw20"
-} 
-
-//CRUD de LOT
+}
 
 ###
 GET http://localhost:4000/api/lots/
@@ -78,9 +75,9 @@ content-Type: application/json
 {
     "name": "Camisetas",
     "dimensions": "60x30x15",
-    "weight": 2,
-    "qty": 2,
-    "price": 2,
+    "weight": 60,
+    "qty": 40,
+    "price": 1,
     "isFragile": true,
     "info": "Camisetas de la mejor calidad!",
     "minimumQty": 2,
@@ -91,14 +88,14 @@ content-Type: application/json
 DELETE http://localhost:4000/api/lots/60b22a24192afd215c5fe505
 
 ###
-PUT http://localhost:4000/api/lots/60a8fc845be6b70a807f5f3c
+PUT http://localhost:4000/api/lots/60a161814c1c6a41446e1034
 content-Type: application/json
 
 {
     "name": "Leche",
     "dimensions": "60x30x15",
     "weight": 60,
-    "userItem": "60aeaf411ffb7307940ae113",
+    "userItem": "6091cbdf81612f2a801c068f",
     "qty": 40,
     "price": 150,
     "isFragile": true,
@@ -113,7 +110,7 @@ GET http://localhost:4000/api/lots/60a69ae76196f9208c4f8a86
 //Buscamos LOT por nombre pasado por parámetro
 
 ###
-GET http://localhost:4000/api/lots/get/patatas
+GET http://localhost:4000/api/lots/get/Leche
 
 //CRUD DE DELIVERY
 
@@ -128,7 +125,7 @@ POST  http://localhost:4000/api/delivery/readydelivery
 content-Type: application/json 
 
 {
-    "id": "60a9327a546e2a1cfc07cebc"
+    "id": "60a258caa9103b2548a13ac4"
 }
 ###
 POST http://localhost:4000/api/delivery/
@@ -169,4 +166,4 @@ content-Type: application/json
     "description": "Ahora pica al 4o que el del 1o no viene"
 } 
 ###
-GET http://localhost:4000/api/delivery/60a9327a546e2a1cfc07cebc
+GET http://localhost:4000/api/delivery/609c54bda34787271456871e
