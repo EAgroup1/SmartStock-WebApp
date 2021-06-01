@@ -32,7 +32,7 @@ const userSchema = new Schema({
     avatar: { type: String, required: false},
     avatarCloudBinary: {type: String, required: false},
     //reset pass--->
-    resetLink: { type: String, default: ''}
+    resetLink: { type: String, required: false }
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,
