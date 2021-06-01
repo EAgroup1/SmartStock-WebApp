@@ -10,8 +10,10 @@ deliveryRouter.post('/', deliveryCtrl.createDelivery);
 deliveryRouter.delete('/:id', deliveryCtrl.deleteDelivery);
 deliveryRouter.put('/:id', deliveryCtrl.updateDelivery);
 deliveryRouter.get('/:id', deliveryCtrl.getDelivery);
-deliveryRouter.post('/:id/deliveries', deliveryCtrl.getDeliveries);
-deliveryRouter.post('/:id/readydeliveries', deliveryCtrl.getReadyDeliveries);
-deliveryRouter.post('/readydelivery', deliveryCtrl.setReadyDelivery);
+//marie te he modificado las dos siguientes rutas porque estaban como deliveryRouter.post - ya me dirás
+deliveryRouter.get('/:id/deliveries', deliveryCtrl.getDeliveries);
+deliveryRouter.get('/:id/readydeliveries', deliveryCtrl.getReadyDeliveries);
+//la siguiente también la he retocado era un post y ahora es un put
+deliveryRouter.put('/readydelivery/:id', deliveryCtrl.setReadyDelivery);
 
 export default deliveryRouter;

@@ -4,11 +4,12 @@ import express from 'express';
 import cors from 'cors';
 import router from './routes';
 
-//researching new libraries ---> available very soon...
-import cookieParser from 'cookie-parser';
+//require all imports to deploy WebSockets
+import http from 'http';
+const { Server } = require("socket.io");
+import { Message } from './models';
+// import User, {IUser} from './models/user';
 
-//other libraries to reset password
-import session from 'express-session';
 import passport from 'passport';
 import passportMiddleware from './middlewares/passport'
 
@@ -18,6 +19,45 @@ import * as swaggerDocument from './swagger.json'
 
 // Inicializaciones
 const app = express();
+
+//initialize sockets
+const server = http.createServer(app);
+const io = new Server(server);
+
+io.on('connection', (socket: any) => {
+
+    //get the id of the user & join in a room (one-to-one)
+    //if string generates problems ---> we delete 'string'
+    const id = socket.handshake.query.id;
+    socket.join(id);
+
+    //user disconnects to the system
+    socket.on('disconnect', () => {
+        socket.leave(id);
+    });
+
+    //send message to particular user
+    socket.on('send_message', (message:any) => {
+        const receiverChatID = message.receiverChatID;
+        const senderChatID = message.senderChatID;
+        const content = message.content;
+
+        //send message to particular room
+        socket.in(receiverChatID).emit('receive_message', {
+            'content': content,
+            'senderChatID': senderChatID,
+            'receiverChatID': receiverChatID,
+        });
+    });
+});
+
+//port for sockets
+var server_port = process.env.PORT || 3000;
+
+//we obviate the error
+server.listen(server_port, () => {
+    console.log('listening on http://localhost:' + server_port);
+});
 
 // Configuración
 app.set('port', process.env.PORT || 4000);
@@ -32,11 +72,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 passport.use(passportMiddleware);
-
-//other uses ---> if this doesn't works, you comment the next two lines
-//we implement cookies to know the req's go to the same navigator
-app.use(cookieParser());
-app.use(session({ secret: 'session secret key'}));
 
 // Rutas
 app.use("/api", router);

@@ -3,6 +3,12 @@ import User, { IUser } from '../models/user';
 import { Request, Response } from 'express';
 //we require the info of the jsonwebtoken module
 import jwt from 'jsonwebtoken';
+import mailgun from 'mailgun-js';
+import _ from 'lodash';
+//if we see that JWT_SECRET & RESETJWT_SECRET fail we use also the following structure 
+let DOMAIN: string = process.env.DOMAIN!;
+let APIKEY: string = process.env.MAILGUN_APIKEY!;
+const mg = mailgun({apiKey: APIKEY, domain: DOMAIN});
 
 class userCtrl {
 
@@ -143,7 +149,8 @@ class userCtrl {
         const _aux = {
             _id: user._id,
             token: token,
-            userName: user.userName
+            userName: user.userName,
+            role: user.role
         }
         console.log(_aux);
         res.status(200).json(_aux);
@@ -190,10 +197,90 @@ class userCtrl {
     }
 
     //send email
-    sendEmail = async (req: Request, res: Response) => {
+    forgotPassword = async (req: Request, res: Response) => {
+
+        //check in the terminal if it's work
+        console.log(req.body);
         const {email} = req.body;
 
-        res.send('received');
+        try {
+            const user = await User.findOne({email});
+            //make sure user exist in db
+            if(!user) return res.status(401).json({status:"This email doesn't exist!"});
+            //user exist and now create a one token valid for 5 mins
+            const token: string = jwt.sign({_id: user._id}, process.env.RESET_JWT_SECRET || 'tokentestreset', {
+                expiresIn: '10m'
+            });
+            //we send the email to the user
+            const data = {
+                from: 'support@grupo1ea.com',
+                to: email,
+                subject: 'Reset your password',
+                html:`
+                <h2>Clica en el siguiente enlace para restablecer tu contraseña ${user.userName}:</h2>
+                <p>${process.env.CLIENT_URL}/resetPassword/${token}</p>
+                `
+            };
+            await User.updateOne({_id: user._id},{$set:{resetLink: token}},{new: true});
+            mg.messages().send(data, function(error: any, body:any){
+                if(error) return res.status(401).json({error: "some problem"})
+                return res.json({message: 'email has been sent, follow the instructions'})
+            });
+            
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    resetPassword = (req: Request, res: Response) => {
+
+        //check in the terminal if it's work
+        console.log(req.body);
+
+        const {resetLink, newPass, confNewPass} = req.body;
+
+        if(resetLink){
+            if(newPass === confNewPass){
+                jwt.verify(resetLink, process.env.RESET_JWT_SECRET || 'tokentestreset', async function(error: any, decodeData: any) {
+                    if(error){
+                        return res.status(401).json({error: "Incorrect token or has been expired!"})
+                    }
+
+                    try{
+                        await User.findOne({resetLink}, async (err: any, user: any) =>{
+                            if(err || !user){
+                                return res.status(401).json({error: "There is no user for this token!"});
+                            }
+                            const obj = {
+                                password: newPass,
+                                resetLink: ''
+                            }
+        
+                            user = _.extend(user,obj);
+                            //and we save the user with the new password
+                            await user.save((err: any, result: any)=>{
+                                if(err){
+                                    return res.status(400).json({error: "Error to change the password!"});
+                                } else {
+                                    return res.status(200).json({message: 'Password change succesfully!'});
+                                }
+                            })
+                        })
+                    } catch (err) {
+                        console.log(err.message);
+                        res.status(500).json({
+                            status: `${err.message}`
+                        });
+                    }
+                })
+            } else {
+                return res.status(401).json({status: "¡No coinciden las contraseñas! Prueba otra vez"});
+            }
+        } else {
+            return res.status(401).json({status:"¡No estás autorizad@ para hacer esto!"});
+        }
     }
 
 }
