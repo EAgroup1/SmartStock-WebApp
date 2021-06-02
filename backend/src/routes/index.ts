@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import usersRouter from './users.routes';
+import faqRouter from './faq.routes';
 import lotRouter from './lot.routes';
 import deliveryRouter from './delivery.routes'
 import adminRouter from './admin.routes'
@@ -7,6 +8,7 @@ import adminRouter from './admin.routes'
 const router: Router = Router();
 
 router.use('/users', usersRouter);
+router.use('/faq', faqRouter);
 router.use('/lots', lotRouter);
 router.use('/delivery', deliveryRouter);
 

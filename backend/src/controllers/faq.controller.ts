@@ -29,9 +29,9 @@ class faqCtrl {
         try {
             //we create this object to not take user's id
             const newFaq: IFaq = new Faq({
-                title: req.body.userName,
-                body: req.body.email,
-                type: req.body.password
+                title: req.body.title,
+                content: req.body.content,
+                type: req.body.type
             });
 
             console.log(newFaq);

@@ -1,6 +1,30 @@
-//CRUD de USER
+//CRUD de FAQ
 
 ###
+GET http://localhost:4000/api/faq
+###
+POST http://localhost:4000/api/faq
+content-Type: application/json
+
+{
+  "title": "What kinds of apps can I build with Flutter?",
+  "content": "Flutter is designed to support mobile apps that run on both Android and iOS, as well as interactive apps that you want to run on your web pages or on the desktop. (Note that desktop support is in beta, but a snapshot of the beta is available on the stable channel.) Apps that need to deliver highly branded designs are particularly well suited for Flutter. However, you can also create pixel-perfect experiences that match the Android and iOS design languages with Flutter. Flutter’s package ecosystem supports a wide variety of hardware (such as camera, GPS, network, and storage) and services (such as payments, cloud storage, authentication, and ads).",
+  "type": "Business"
+}
+
+###
+DELETE http://localhost:4000/api/faq/:id
+###
+PUT http://localhost:4000/api/faq/6091d6732d3a564454063110
+content-Type: application/json
+
+{
+  "title": "modified"
+
+}
+
+
+### //CRUD de USER
 GET http://localhost:4000/api/users
 ###
 POST http://localhost:4000/api/users
