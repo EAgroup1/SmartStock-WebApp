@@ -1,6 +1,8 @@
 //we require a model from models folder and the interface of this model
 import Admin, { IAdmin } from '../models/admin';
 import { Request, Response } from 'express'
+import Mejora, { IMejora } from '../models/mejora';
+
 
 //we don't need the imports of the API User
 
@@ -189,6 +191,41 @@ class adminCtrl {
         res.status(200).send('All OK!');
     }*/
 
+    getMejoras= async(req: Request, res: Response) => {
+        try {
+            const mejoras: IMejora[] = await Mejora.find();
+            res.json(mejoras);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    
+    }
+
+    setMejora= async(req:Request, res: Response) => {
+        console.log(req.body);
+        try {
+
+        //we create this object to not take user's id
+            const newMejora: IMejora = new Mejora({
+                userItem: req.body.userItem,
+                mejora: req.body.mejora
+            });
+            console.log(newMejora);
+
+            //this takes some time!
+            await newMejora.save();
+            res.json({
+                status: 'Mejora Saved Succesfully'
+            });
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+
+    }
 }
 
 export default new adminCtrl();

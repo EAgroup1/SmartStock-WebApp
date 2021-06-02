@@ -12,6 +12,9 @@ adminRouter.delete('/:id', adminCtrl.deleteAdmin);
 adminRouter.put('/:id', adminCtrl.updateAdmin);
 adminRouter.get('/:id', adminCtrl.getAdmin);
 
+adminRouter.post('/mejora', adminCtrl.setMejora);
+adminRouter.get('/mejoras', adminCtrl.getMejoras);
+
 //auth routes ---> we research private routes
 adminRouter.post('/logIn', adminCtrl.logIn);
 //the signup route has a small difference with the createUser route
