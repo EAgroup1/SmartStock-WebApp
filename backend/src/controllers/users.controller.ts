@@ -12,6 +12,30 @@ const mg = mailgun({apiKey: APIKEY, domain: DOMAIN});
 
 class userCtrl {
 
+
+        getBudgesUser = async (req: Request, res: Response) => {
+
+            console.log(req.params);
+            try {
+                const user = await User.findById(req.params.id);
+                if (user === null) {
+                    res.status(400).json({
+                        code: 404,
+                        status: 'User no existe'
+                    });
+
+                } else {
+                    res.json(user.badges);
+                }
+            } catch (err) {
+                res.status(500).json({
+                    status: `${err.message}`
+                });
+            }
+        }
+
+
+
     //our User's CRUD
 
     //GETALLUSERS

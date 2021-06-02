@@ -15,7 +15,8 @@ export interface IUser extends Document {
     avatar?: string,
     avatarCloudBinary?: string,
     resetLink?: string,
-    validatePassword(password: string): Promise<boolean>
+    validatePassword(password: string): Promise<boolean>,
+    badges?: number
 }
 
 const userSchema = new Schema({
@@ -32,7 +33,8 @@ const userSchema = new Schema({
     avatar: { type: String, required: false},
     avatarCloudBinary: {type: String, required: false},
     //reset pass--->
-    resetLink: { type: String, required: false }
+    resetLink: { type: String, required: false },
+    badges: { type: Number, required: false, default: 0}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,

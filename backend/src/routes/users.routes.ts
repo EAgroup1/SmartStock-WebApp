@@ -15,6 +15,7 @@ usersRouter.post('/', usersCtrl.createUser);
 usersRouter.delete('/:id', usersCtrl.deleteUser);
 usersRouter.put('/:id', usersCtrl.updateUser);
 usersRouter.get('/:id', usersCtrl.getUser);
+usersRouter.get('/badges/:id', usersCtrl.getBudgesUser);
 
 //auth routes ---> we research private routes
 usersRouter.post('/logIn', usersCtrl.logIn);
