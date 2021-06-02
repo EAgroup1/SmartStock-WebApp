@@ -161,6 +161,30 @@ class userCtrl {
         }
     }
 
+    //LOGIN OF ONE USER GOOGLE
+    logInGoogle = async (req: Request, res: Response) => {
+        console.log(req.body);
+        const { email, userName, password, avatar} = req.body;
+        //search the params ({email: email}) ---> next steps encrypt again
+        try {
+            //we wait to the search in database (async-await)
+            const user = await User.findOne({email});
+            if(!user) {
+                const newSignUpUser: IUser = new User({email, userName, password, avatar});
+                await newSignUpUser.save();
+                const user = await User.findOne({email});
+                return res.status(200).json(user);
+            }
+            else {
+                return res.status(200).json(user);
+            }
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
     //REGISTER USER
     signUp = async (req: Request, res: Response) => {
         //we see the body of the user's request

@@ -18,6 +18,8 @@ usersRouter.get('/:id', usersCtrl.getUser);
 
 //auth routes ---> we research private routes
 usersRouter.post('/logIn', usersCtrl.logIn);
+
+usersRouter.post('/logInGoogle', usersCtrl.logInGoogle);
 //the signup route has a small difference with the createUser route
 usersRouter.post('/signUp', usersCtrl.signUp);
 
