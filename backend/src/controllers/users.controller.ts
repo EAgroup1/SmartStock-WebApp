@@ -37,7 +37,8 @@ class userCtrl {
                 userName: req.body.userName,
                 email: req.body.email,
                 password: req.body.password,
-                role: req.body.role
+                role: req.body.role,
+                bank: req.body.bank
             });
 
             console.log(newUser);
@@ -218,7 +219,7 @@ class userCtrl {
                 subject: 'Reset your password',
                 html:`
                 <h2>Clica en el siguiente enlace para restablecer tu contraseña ${user.userName}:</h2>
-                <p>${process.env.CLIENT_URL}/resetPassword/${token}</p>
+                <p>${process.env.CLIENT_URL}/#/createnewpassword/${token}</p>
                 `
             };
             await User.updateOne({_id: user._id},{$set:{resetLink: token}},{new: true});

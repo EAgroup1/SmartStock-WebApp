@@ -8,8 +8,8 @@ class lotCtrl {
     getAllLots = async (_req: Request, res: Response) => {
         try {
             const lots: ILot[] = await Lot.find()
-            .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
-            .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
+            .populate('businessItem')
+            .populate('userItem');
             res.json(lots);
         } catch (err) {
             res.status(500).json({
@@ -17,12 +17,12 @@ class lotCtrl {
             });
         }
     }
-
+    //get all lots Sorted without User asociated
     getAllLotsSorted = async (_req: Request, res: Response) => {
         try {
-            const lots: ILot[] = await Lot.find({}).sort({name:1})
-                .populate('businessItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 })
-                .populate('userItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 });
+            const lots: ILot[] = await Lot.find({ 'userItem': { $exists: false } } ).sort({name:1})
+                .populate('businessItem')
+                .populate('userItem');
             res.json(lots);
         } catch (err) {
             res.status(500).json({
@@ -119,8 +119,8 @@ class lotCtrl {
         console.log(req.params);
         try {
             const lot = await Lot.findById(req.params.id)
-            .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
-            .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
+            .populate('businessItem')
+            .populate('userItem');
             res.json(lot);
         } catch (err) {
             res.status(500).json({
@@ -133,8 +133,8 @@ class lotCtrl {
         console.log(req.params);
         try {
             const lot: ILot[] = await Lot.find({ "name": req.params.name })
-            .populate('businessItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 })
-            .populate('userItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 });
+            .populate('businessItem')
+            .populate('userItem');
             res.json(lot);
         } catch (err) {
             res.status(500).json({
@@ -142,12 +142,12 @@ class lotCtrl {
             });
         }
     }
-
+ 
     getLotsByUserId = async (req: Request, res: Response) => {
         try {
             const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
-            .populate('businessItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 })
-            .populate('userItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 });
+            .populate('businessItem')
+            .populate('userItem');
             res.json(lot);
         } catch (err) {
             res.status(500).json({
