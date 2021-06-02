@@ -8,8 +8,8 @@ import _ from 'lodash';
 //if we see that JWT_SECRET & RESETJWT_SECRET fail we use also the following structure 
 let DOMAIN: string = process.env.DOMAIN!;
 let APIKEY: string = process.env.MAILGUN_APIKEY!;
-const mg = mailgun({apiKey: APIKEY, domain: DOMAIN});
-
+const mg = mailgun({apiKey: "d8109ba748ecaf90c0435456c4ba1563-fa6e84b7-e2544f8e", domain: DOMAIN});
+// LA APIKEY ESTA EN CLARO OJITO
 class userCtrl {
 
     //our User's CRUD

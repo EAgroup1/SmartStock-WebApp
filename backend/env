@@ -1,0 +1,6 @@
+BCRYPT_SALT=11
+JWT_SECRET="mfefkuhio3k2rjkofn2migqjuojhnkj"
+RESET_JWT_SECRET="dd5d5d456f8hj9f7ffjh97g5f4s54g87"
+CLIENT_URL=http://localhost:8000
+MAILGUN_APIKEY="d8109ba748ecaf90c0435456c4ba1563-fa6e84b7-e2544f8e"
+DOMAIN = "sandbox41cc05e182ad461d85c66a16aa91a7bf.mailgun.org"
