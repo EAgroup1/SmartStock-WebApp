@@ -12,6 +12,30 @@ const mg = mailgun({apiKey: APIKEY, domain: DOMAIN});
 
 class userCtrl {
 
+    updateBadges = async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const modifiedUser: IUser = req.body;
+        try {
+            //if any parameter doesn't exist we create it
+            const vacio = await User.findById(req.params.id);
+            if (vacio === null) {
+                res.status(400).json({
+                    code: 404,
+                    status: 'Lot no existe'
+                });
+            }
+            else {
+                await User.findByIdAndUpdate(id, { $set: modifiedUser }, { new: true })
+                res.status(200).json({
+                    status: 'Lot actualizado correctamente'
+                });
+            }
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
 
         getBudgesUser = async (req: Request, res: Response) => {
 
@@ -175,7 +199,8 @@ class userCtrl {
             _id: user._id,
             token: token,
             userName: user.userName,
-            role: user.role
+            role: user.role,
+            badges: user.badges
         }
         console.log(_aux);
         res.status(200).json(_aux);

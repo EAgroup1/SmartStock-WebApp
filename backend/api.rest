@@ -1,5 +1,8 @@
 //CRUD de USER
-
+###
+GET http://localhost:4000/api/users/badges/60b684372ffee403ecae5fa2
+###
+//get('/badgesUpdate/:id
 ###
 GET http://localhost:4000/api/users
 ###
@@ -96,20 +99,11 @@ content-Type: application/json
 DELETE http://localhost:4000/api/lots/60b22a24192afd215c5fe505
 
 ###
-PUT http://localhost:4000/api/lots/60a161814c1c6a41446e1034
+PUT http://localhost:4000/api/lots/60b684ff2ffee403ecae5fa6
 content-Type: application/json
 
 {
-    "name": "Leche",
-    "dimensions": "60x30x15",
-    "weight": 60,
-    "userItem": "6091cbdf81612f2a801c068f",
-    "qty": 40,
-    "price": 150,
-    "isFragile": true,
-    "info": "HA CAMBIADO OU YEAH",
-    "minimumQty": 40,
-    "businessItem": "60aeaf411ffb7307940ae113"
+    "name": "MARRON"
 } 
 
 ###
