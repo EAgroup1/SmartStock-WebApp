@@ -24,7 +24,7 @@ usersRouter.post('/signUp', usersCtrl.signUp);
 //test passport (Headers-Authorization: Bearer token)
 usersRouter.get('/special', passport.authenticate('jwt', {session: false}), (req, res) =>{
     res.send('works!');
-})
+}),
 
 //validated function to private routes --- verify token -/- express routing
 function verifyToken(req: Request, res: Response, next: NextFunction) {

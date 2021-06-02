@@ -38,7 +38,9 @@ class userCtrl {
                 email: req.body.email,
                 password: req.body.password,
                 role: req.body.role,
-                bank: req.body.bank
+                bank: req.body.bank,
+                privacity: req.body.privacity,
+                notifications: req.body.notifications
             });
 
             console.log(newUser);
@@ -151,7 +153,9 @@ class userCtrl {
             _id: user._id,
             token: token,
             userName: user.userName,
-            role: user.role
+            role: user.role,
+            privacity: user.privacity,
+            notifications: user.notifications
         }
         console.log(_aux);
         res.status(200).json(_aux);
@@ -185,7 +189,9 @@ class userCtrl {
         const _aux = {
             _id: newSignUpUser._id,
             token: token,
-            userName: newSignUpUser.userName
+            userName: newSignUpUser.userName,
+            privacity: newSignUpUser.privacity,
+            notifications: newSignUpUser.notifications
         }
         console.log(_aux);
         res.status(200).json(_aux);

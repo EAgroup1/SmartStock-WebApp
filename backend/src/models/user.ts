@@ -8,6 +8,8 @@ export interface IUser extends Document {
     password: string,
     role?: string,
     bank?: string,
+    privacity?: boolean,
+    notifications?: boolean
     signUpWithGoogle?: boolean,
     signUpWithFacebook?: boolean,
     location?: string,
@@ -24,6 +26,8 @@ const userSchema = new Schema({
     password: { type: String, required: true},
     role: { type: String, required: false},
     bank: { type: String, required: false},
+    privacity: {type: Boolean, required: false, default: false},
+    notifications: {type: Boolean, required: false, default: false},
     signUpWithGoogle: { type: Boolean, required: false, default: false},
     signUpWithFacebook: { type: Boolean, required: false, default: false},
     location: { type: String, required: false},

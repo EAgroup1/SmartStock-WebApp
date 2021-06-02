@@ -15,16 +15,17 @@ content-Type: application/json
 ###
 DELETE http://localhost:4000/api/users/:id
 ###
-PUT http://localhost:4000/api/users/6091d6732d3a564454063110
+PUT http://localhost:4000/api/users/60b740d85c0254209806f6f0
 content-Type: application/json
 
 {
-    "userName": "Jonatan"
+    "privacity": true
+
 
 } 
 
 ###
-PUT http://localhost:4000/api/users/60a8379570e909276c35b7c0
+PUT http://localhost:4000/api/users/60b73d6b5c0254209806f6ec
 content-Type: application/json
 
 {
@@ -89,7 +90,7 @@ content-Type: application/json
     "isFragile": true,
     "info": "Purpura de la mejor calidad!",
     "minimumQty": 2,
-    "businessItem": "60b684562ffee403ecae5fa3"
+    "businessItem": "60b6d6ef6c8cfa52084769b4"
 } 
 
 ###
