@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+ import mongoose from 'mongoose';
 import { mongodb } from './keys';
 
 mongoose.connect(mongodb.URI, {
