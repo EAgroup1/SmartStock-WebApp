@@ -13,7 +13,7 @@ content-Type: application/json
 } 
 
 ###
-DELETE http://localhost:4000/api/users/:id
+DELETE http://localhost:4000/api/users/60bcb16e0cbc7d2f541c2049
 ###
 PUT http://localhost:4000/api/users/6091d6732d3a564454063110
 content-Type: application/json
