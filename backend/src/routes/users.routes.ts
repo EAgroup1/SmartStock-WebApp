@@ -9,6 +9,9 @@ const usersRouter: Router = Router();
 usersRouter.put('/forgotPassword', usersCtrl.forgotPassword);
 usersRouter.put('/resetPassword', usersCtrl.resetPassword);
 
+usersRouter.get('/getNumByRole/:role', usersCtrl.getNumByRole);
+usersRouter.get('/getNumAll', usersCtrl.getNumAll);
+
 //we put all routes in this file & we will se in the future
 usersRouter.get('/', usersCtrl.getAllUsers);
 usersRouter.post('/', usersCtrl.createUser);
