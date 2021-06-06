@@ -10,7 +10,8 @@ export interface ILot extends mongoose.Document {
     info?: string,
     minimumQty: string,
     businessItem: IUser,
-    userItem?: IUser
+    userItem?: IUser,
+    stored?: boolean
 }
 
 const lotSchema = new Schema({
@@ -23,7 +24,8 @@ const lotSchema = new Schema({
     info: { type: String, required: false, default: ''},
     minimumQty: { type: String, required: true},
     businessItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
-    userItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false}
+    userItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false},
+    stored: { type: Boolean, required: false, default: false}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,
