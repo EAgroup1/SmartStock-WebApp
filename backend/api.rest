@@ -2,6 +2,22 @@
 
 ###
 GET http://localhost:4000/api/users
+
+###
+GET http://localhost:4000/api/users/getNumByRole/Company
+
+###
+GET http://localhost:4000/api/users/getNumAll
+
+###
+PUT http://localhost:4000/api/users/60b0e7ba3ad95f1b78ec74a1
+content-Type: application/json
+
+{
+    "role": "User"
+
+} 
+
 ###
 POST http://localhost:4000/api/users
 content-Type: application/json
@@ -14,14 +30,6 @@ content-Type: application/json
 
 ###
 DELETE http://localhost:4000/api/users/:id
-###
-PUT http://localhost:4000/api/users/6091d6732d3a564454063110
-content-Type: application/json
-
-{
-    "userName": "Jonatan"
-
-} 
 
 ###
 PUT http://localhost:4000/api/users/60a8379570e909276c35b7c0
@@ -77,6 +85,12 @@ GET http://localhost:4000/api/lots/All
 GET http://localhost:4000/api/lots/getByUser/60b369d031dfad0138709cbd
 
 ###
+GET http://localhost:4000/api/lots/getByUser/60a8379570e909276c35b7c0
+
+###
+GET http://localhost:4000/api/lots/getNumAll
+
+###
 POST http://localhost:4000/api/lots
 content-Type: application/json
 
@@ -125,6 +139,10 @@ GET http://localhost:4000/api/lots/get/Leche
 
 ### 
 GET http://localhost:4000/api/delivery/
+
+###
+GET http://localhost:4000/api/delivery/getNumAll
+
 ###
 GET http://localhost:4000/api/delivery/60b0b73999e1c70758c73b7b/deliveries
 ###

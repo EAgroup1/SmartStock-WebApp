@@ -168,6 +168,38 @@ class lotCtrl {
             });
         }
     }
+
+    //new functions for the test
+    getNumLotsById = async (req: Request, res: Response) => {
+        console.log(req.params);
+        try {
+            //const lot: ILot[] = await Lot.find({ "name": req.params.name })
+            const numByRole: number = await User.find({ "role": req.params.role }).count();
+            //if anything
+            //const numAll = await User.find().count();
+            res.status(200).send(numByRole.toString());
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getNumAll = async (req: Request, res: Response) => {
+        //console.log(req.params);
+        try {
+            //const lot: ILot[] = await Lot.find({ "name": req.params.name })
+            const numAll: number = await User.find().count();
+            //if anything
+            //const numAll = await User.find().count();
+            res.status(200).send(numAll.toString());
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
 }
 
 export default new lotCtrl();
