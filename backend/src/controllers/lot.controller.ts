@@ -46,7 +46,8 @@ class lotCtrl {
             minimumQty: req.body.minimumQty,
             businessItem: req.body.businessItem,
             userItem: req.body.userItem,
-            info: req.body.info
+            info: req.body.info,
+            stored: req.body.stored
 
             });
             console.log(newLot);
