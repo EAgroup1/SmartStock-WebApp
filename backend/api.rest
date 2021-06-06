@@ -63,10 +63,18 @@ content-Type: application/json
     "confNewPass": "3nw20"
 }
 
+
+
+
+
+//HTTP OF LOTS-LOTS-LOTS-LOTS
+
+
+
 ###
-GET http://localhost:4000/api/lots/
+GET http://localhost:4000/api/lots/All
 ###
-GET http://localhost:4000/api/lots/getByUser/60aec83bf9855a23e0a6a7ef
+GET http://localhost:4000/api/lots/getByUser/60b369d031dfad0138709cbd
 
 ###
 POST http://localhost:4000/api/lots

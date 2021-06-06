@@ -21,8 +21,8 @@ class lotCtrl {
     getAllLotsSorted = async (_req: Request, res: Response) => {
         try {
             const lots: ILot[] = await Lot.find({ 'userItem': { $exists: false } } ).sort({name:1})
-                .populate('businessItem')
-                .populate('userItem');
+                .populate('businessItem');
+            console.log(lots);
             res.json(lots);
         } catch (err) {
             res.status(500).json({
@@ -148,6 +148,19 @@ class lotCtrl {
             const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
             .populate('businessItem')
             .populate('userItem');
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getLotsByBusinessId = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({ "businessItem": Object(req.params.id) }).sort({ name: 1 })
+                .populate('businessItem')
+                .populate('userItem');
             res.json(lot);
         } catch (err) {
             res.status(500).json({
