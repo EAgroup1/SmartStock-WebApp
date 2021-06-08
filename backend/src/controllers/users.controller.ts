@@ -234,7 +234,7 @@ class userCtrl {
             if(!user) return res.status(401).json({status:"This email doesn't exist!"});
             //user exist and now create a one token valid for 5 mins
             const token: string = jwt.sign({_id: user._id}, process.env.RESET_JWT_SECRET || 'tokentestreset', {
-                expiresIn: '10m'
+                expiresIn: '5m'
             });
             //we send the email to the user
             const data = {
