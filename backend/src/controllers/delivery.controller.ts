@@ -14,6 +14,7 @@ class deliveryCtrl {
         try {
             const deliveries: IDelivery[] = await Delivery.find()
             .populate({path:'lotItem', populate:{path:'userItem'}})
+            .populate({path:'lotItem', populate:{path:'businessItem'}})
             .populate('destinationItem')
             .populate('businessItem')
             .populate('userItem');
@@ -42,6 +43,7 @@ class deliveryCtrl {
         try {
              const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":false})
             .populate({path:'lotItem', populate:{path:'userItem'}})
+            .populate({path:'lotItem', populate:{path:'businessItem'}})
             .populate('destinationItem')
             .populate('businessItem')
             .populate('userItem');
@@ -60,6 +62,7 @@ class deliveryCtrl {
         try {
              const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":true})
             .populate({path:'lotItem', populate:{path:'userItem'}})
+            .populate({path:'lotItem', populate:{path:'businessItem'}})
             .populate('destinationItem')
             .populate('businessItem')
             .populate('userItem');
@@ -97,6 +100,79 @@ class deliveryCtrl {
             });
         }
     }
+
+    //get not assigned deliveries for deliverer
+    getNotAssigned = async(req: Request, res: Response)=> {
+        try {
+             const deliveries: IDelivery[] = await Delivery.find({"isAssigned":false, "isReady":true})
+            .populate({path:'lotItem', populate:{path:'userItem'}})
+            .populate({path:'lotItem', populate:{path:'businessItem'}})
+            .populate('destinationItem')
+            .populate('businessItem')
+            .populate('userItem');
+
+            console.log(deliveries);
+            res.json(deliveries);
+            
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+    //get assigned deliveries for deliverer
+    getAssigned = async(req: Request, res: Response)=> {
+        try {
+            const vacio = await User.findById(req.params.id)
+            if(vacio === null){
+                console.log(req.body);
+                res.status(400).json({
+                    code: 404,
+                    status: 'User no existe?'
+                });
+            }
+            const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id),"isAssigned":true})
+            .populate({path:'lotItem', populate:{path:'userItem'}})
+            .populate({path:'lotItem', populate:{path:'businessItem'}})
+            .populate('destinationItem')
+            .populate('businessItem')
+            .populate('userItem');
+
+            console.log(deliveries);
+            res.json(deliveries);
+            
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+    //set is assigned delivery for deliverer
+    setAssigned = async(req: Request, res: Response)=> {
+        console.log(req.params.id);
+        try {
+            const vacio = await Delivery.findById(req.params.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'Delivery no existe'
+                });
+            } else {
+            await Delivery.findByIdAndUpdate(req.params.id, { $set: {"userItem":Object(req.body.id), "isAssigned":true}})
+            res.status(200).json({
+
+                status: 'Delivery actualizado correctamente'
+            });
+         }           
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+
 
     //POST CREATEONE
     createDelivery = async (req: Request, res: Response) => {
