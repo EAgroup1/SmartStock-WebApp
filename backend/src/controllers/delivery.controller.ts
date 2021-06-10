@@ -120,7 +120,7 @@ class deliveryCtrl {
             });
         }
     }
-    //get assigned deliveries for deliverer
+    //get assigned deliveries of the deliverer
     getAssigned = async(req: Request, res: Response)=> {
         try {
             const vacio = await User.findById(req.params.id)
@@ -131,7 +131,7 @@ class deliveryCtrl {
                     status: 'User no existe?'
                 });
             }
-            const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id),"isAssigned":true})
+            const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id),"isAssigned":true, "isDelivered":false})
             .populate({path:'lotItem', populate:{path:'userItem'}})
             .populate({path:'lotItem', populate:{path:'businessItem'}})
             .populate('destinationItem')
@@ -171,7 +171,52 @@ class deliveryCtrl {
             });
         }
     }
-
+    //set is picked delivery for deliverer
+    setIsPicked = async(req: Request, res: Response)=> {
+        console.log(req.params.id);
+        try {
+            const vacio = await Delivery.findById(req.params.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'Delivery no existe'
+                });
+            } else {
+            await Delivery.findByIdAndUpdate(req.params.id, {"isPicked":true})
+            res.status(200).json({
+                status: 'Delivery actualizado correctamente'
+            });
+         }           
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+    //set is delivered
+    setIsDelivered = async(req: Request, res: Response)=> {
+        console.log(req.params.id);
+        try {
+            const vacio = await Delivery.findById(req.params.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'Delivery no existe'
+                });
+            } else {
+            await Delivery.findByIdAndUpdate(req.params.id, {"isDelivered":true})
+            res.status(200).json({
+                status: 'Delivery actualizado correctamente'
+            });
+            }           
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
 
 
     //POST CREATEONE
