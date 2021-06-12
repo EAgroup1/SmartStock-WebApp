@@ -231,23 +231,23 @@ class userCtrl {
         try {
             const user = await User.findOne({email});
             //make sure user exist in db
-            if(!user) return res.status(401).json({status:"This email doesn't exist!"});
+            if(!user) return res.status(401).json({message: 'The email address ' + req.body.email + ' is not associated with any account. Double-check your email address and try again.'});
             //user exist and now create a one token valid for 5 mins
             const token: string = jwt.sign({_id: user._id}, process.env.RESET_JWT_SECRET || 'tokentestreset', {
                 expiresIn: '5m'
             });
+            let link = "" + process.env.CLIENT_URL + "/api/users/reset/" + token;
             //we send the email to the user
-            const data = {
-                from: 'support@grupo1ea.com',
+            const mailOptions = {
                 to: email,
-                subject: 'Reset your password',
-                html:`
-                <h2>Clica en el siguiente enlace para restablecer tu contraseña ${user.userName}:</h2>
-                <p>${process.env.CLIENT_URL}/#/createnewpassword/${token}</p>
-                `
+                from: process.env.FROM_EMAIL || "example@example.com",
+                subject: 'Password change request',
+                text: `Hi ${user.userName} \n
+                Please click on the following link ${link} to reset your password. \n\n
+                If you did not request this, please ignore this email and your password will remain unchanged. \n`
             };
             await User.updateOne({_id: user._id},{$set:{resetLink: token}},{new: true});
-            mg.messages().send(data, function(error: any, body:any){
+            mg.messages().send(mailOptions, function(error: any, body:any){
                 if(error) return res.status(401).json({error: "some problem"})
                 return res.json({message: 'email has been sent, follow the instructions'})
             });
@@ -259,12 +259,41 @@ class userCtrl {
         }
     }
 
+    reset = (req: Request, res: Response) => {
+
+        const resetLink: string = req.params.resetLink;
+        //const {newPass, confNewPass} = req.body;
+
+        if(resetLink){
+                jwt.verify(resetLink, process.env.RESET_JWT_SECRET || 'tokentestreset', async function(error: any, decodeData: any) {
+                    if(error){
+                        return res.status(401).json({error: "Incorrect token or has been expired!"})
+                    }
+
+                    try{
+                        await User.findOne({resetLink}, async (err: any, user: any) =>{
+                            if(err || !user){
+                                return res.status(401).json({error: "There is no user for this token!"});
+                            }
+                            res.render('pages/reset', {user});
+                        });
+                    } catch (err) {
+                        console.log(err.message);
+                        res.status(500).json({
+                            status: `${err.message}`
+                        });
+                    }
+                });
+            }
+    }
+
     resetPassword = (req: Request, res: Response) => {
 
         //check in the terminal if it's work
-        console.log(req.body);
-
-        const {resetLink, newPass, confNewPass} = req.body;
+        //console.log(req.body);
+        
+        const resetLink: string = req.params.resetLink;
+        const {/*resetLink, */newPass, confNewPass} = req.body;
 
         if(resetLink){
             if(newPass === confNewPass){
@@ -278,6 +307,8 @@ class userCtrl {
                             if(err || !user){
                                 return res.status(401).json({error: "There is no user for this token!"});
                             }
+
+                            //res.render('reset', {user});
                             const obj = {
                                 password: newPass,
                                 resetLink: ''
@@ -286,11 +317,24 @@ class userCtrl {
                             user = _.extend(user,obj);
                             //and we save the user with the new password
                             await user.save((err: any, result: any)=>{
-                                if(err){
-                                    return res.status(400).json({error: "Error to change the password!"});
-                                } else {
-                                    return res.status(200).json({message: 'Password change succesfully!'});
-                                }
+                                if(err) return res.status(500).json({message: err.message});
+                                
+                                const mailOptions = {
+                                    to: user.email,
+                                    from: process.env.FROM_EMAIL || "example@example.com",
+                                    subject: 'Your password has been changed',
+                                    text: `Hi ${user.userName} \n
+                                    This is a confirmation that the password for your account ${user.email} has just been changed. \n`
+                                };
+
+                                mg.messages().send(mailOptions, function(error: any, body:any){
+                                    if(error) return res.status(500).json({message: error.message});
+                                    res.status(200).json({message: 'Your password has been updated.'});
+                                });
+
+                                // else {
+                                //     return res.status(200).json({message: 'Password change succesfully!'});
+                                // }
                             })
                         })
                     } catch (err) {
