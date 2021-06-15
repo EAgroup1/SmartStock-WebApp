@@ -6,8 +6,9 @@ import passport from 'passport';
 
 const usersRouter: Router = Router();
 
-usersRouter.put('/forgotPassword', usersCtrl.forgotPassword);
-usersRouter.put('/resetPassword', usersCtrl.resetPassword);
+usersRouter.post('/forgotPassword', usersCtrl.forgotPassword);
+usersRouter.get('/reset/:resetLink', usersCtrl.reset);
+usersRouter.post('/reset/:resetLink', usersCtrl.resetPassword);
 
 usersRouter.get('/getNumByRole/:role', usersCtrl.getNumByRole);
 usersRouter.get('/getNumAll', usersCtrl.getNumAll);

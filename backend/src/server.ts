@@ -8,6 +8,7 @@ import router from './routes';
 import http from 'http';
 const { Server } = require("socket.io");
 import { Message } from './models';
+import path from 'path';
 // import User, {IUser} from './models/user';
 
 import passport from 'passport';
@@ -70,6 +71,19 @@ server.listen(server_port, () => {
 });*/
 
 // Configuración
+<<<<<<< HEAD
+=======
+app.set('port', process.env.PORT || 4000);
+
+//example prove of simple views backend
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+//another example prove
+app.get('/resetPass', function(req, res){
+    res.render('pages/reset');
+});
+
+>>>>>>> 168b049e6bc8b92663d7e5a6138f83b9c02a4d24
 //we use the port 8000 for Flutter ---> important from Eric!
 app.use(cors({origin: 'http://localhost:8000'}));
 app.use(cors({origin: '*'}));
