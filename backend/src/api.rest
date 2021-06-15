@@ -1,16 +1,37 @@
 //CRUD de USER
 
 ###
-GET http://localhost:4000/api/users
+GET http://localhost:3000/api/users
 
 ###
-GET http://localhost:4000/api/users/getNumByRole/Company
+GET http://localhost:3000/api/users/getNumByRole/Company
 
 ###
-GET http://localhost:4000/api/users/getNumAll
+GET http://localhost:3000/api/users/60c4f100aaaa0a33e4e27ebd
 
 ###
-PUT http://localhost:4000/api/users/60b0e7ba3ad95f1b78ec74a1
+PUT http://localhost:3000/api/users/60c4f100aaaa0a33e4e27ebd
+content-Type: application/json
+
+{
+    "friends":["60c4f116aaaa0a33e4e27ebe"]
+} 
+
+###
+POST http://localhost:3000/api/users
+content-Type: application/json
+
+{
+    "userName": "hectorprueba2",
+    "email": "hectorfernandezg16@gmail.com",
+    "password": "12345"
+} 
+
+###
+DELETE http://localhost:3000/api/users/:id
+
+###
+PUT http://localhost:3000/api/users/60be61ae74ee9a25041a649e
 content-Type: application/json
 
 {
@@ -19,56 +40,33 @@ content-Type: application/json
 } 
 
 ###
-POST http://localhost:4000/api/users
+GET http://localhost:3000/api/users/608dc69df661910fb86c8f3d
+
+###
+POST http://localhost:3000/api/users/logIn
 content-Type: application/json
 
 {
-    "userName": "Marie",
-    "email": "Marie@gmail.com",
-    "password": "1111"
-} 
-
-###
-DELETE http://localhost:4000/api/users/:id
-
-###
-PUT http://localhost:4000/api/users/60a8379570e909276c35b7c0
-content-Type: application/json
-
-{
-    "email": "ejemplo1234@hotmail.com"
-
-} 
-
-###
-GET http://localhost:4000/api/users/608dc69df661910fb86c8f3d
-
-###
-POST http://localhost:4000/api/users/logIn
-content-Type: application/json
-
-{
-    "email": "yun@gmail.com",
-    "password": "yun5678"
-
+    "email": "hector.fernandez.granja@estudiantat.upc.edu",
+    "password": "nuevo1"
 }
 
 ###
-PUT http://localhost:4000/api/users/forgotPassword
+PUT http://localhost:3000/api/users/forgotPassword
 content-Type: application/json
 
 {
-    "email": "hectorfernandezg16@gmail.com"
+    "email": "hector.fernandez.granja@estudiantat.upc.edu"
 }
 
 ###
-PUT http://localhost:4000/api/users/resetPassword
+PUT http://localhost:3000/api/users/resetPassword
 content-Type: application/json
 
 {
-    "resetLink": "",
-    "newPass": "3nw20",
-    "confNewPass": "3nw20"
+    "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE4NDMxM2NkMWMyNTQ5ZjgwYzFjMDIiLCJpYXQiOjE2MjMxNTQwMTUsImV4cCI6MTYyMzE1NDMxNX0.CqcP2LqCakt4s2KlOeXHS044_jaBDxDTgdGlgSykiu8",
+    "newPass": "nuevo1",
+    "confNewPass": "nuevo1"
 }
 
 

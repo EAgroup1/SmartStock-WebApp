@@ -1,7 +1,4 @@
 //this is the file that it starts my app
-import User, { IUser } from './models/user';
-import session from 'express-session';
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 //to commit
 //file that it starts my app
@@ -10,75 +7,48 @@ dotenv.config();
 
 import app from './server';
 import database from './database';
-import passport from "passport";
+var server = require('http').Server(app);
+const options= {   
+    transports: ["websocket"],
+       cors: {     origin: "*",
+            methods: ["GET", "POST"]} };
 
-app.use(
-    session({
-        secret: "secretcode",
-        resave: true,
-        saveUninitialized: true,
-        cookie: {
-            sameSite: "none",
-            secure: true,
-            maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
-        }
-    }))
 
-app.use(passport.initialize());
-app.use(passport.session());
+let io = require('socket.io')(server,options);
 
-// @ts-ignore
-passport.serializeUser((user: IUser, done: any) => {
-    return done(null, user._id);
+
+//const io = new Server(server);
+
+io.on('connection', (socket: any) => {
+    console.log("Socket listening with id: "+socket.id);
+    socket.emit('MyReceiverSocket',socket.id);
+    socket.on('escribiendo',(data: any) =>{
+        console.log("Listening chat with id: "+socket.id);
+        //socket.in(data).emit('escribiendo',data);
+        socket.to(data).emit('escribiendo',socket.id);
+        //socket.id;
+    });
+    socket.on('newmsg',(data: any) =>{
+        console.log("New message from "+socket.id);
+        console.log(data);
+        socket.to(data.socket).emit('newmsg', data);
+    });
+    socket.on('disconnect', (data: any) => {
+        socket.to(data).disconnect();
+        console.log("Disconnected chat with id: "+socket.id);
+    });
 });
 
-passport.deserializeUser((id: string, done: any) => {
 
-    User.findById(id, (err: Error, doc: IUser) => {
-        // Whatever we return goes to the client and binds to the req.user property
-        return done(null, doc);
-    })
-})
-
-passport.use(new GoogleStrategy({
-        clientID: "769302200300-fbhuhmvis40o4evi55757jp3fej15tek.apps.googleusercontent.com",
-        clientSecret: "gnLV_f1aIVzXsp93UqHZCSpz",
-        callbackURL: "/api/users/google/getGoogleAuthCallback"
-    },
-    function (_: any, __: any, profile: any, cb: any) {
-        //console.log(profile);
-        User.findOne({ userName: profile.name.givenName }, async (err: Error, doc: IUser) => {
-
-            if (err) {
-                return cb(err, null);
-            }
-
-            if (!doc) {
-                const newUser = new User({
-                    id: profile.id,
-                    signUpWithGoogle: true,
-                    userName: profile.name.givenName,
-                    password: profile.id,
-                    email: profile.emails[0].value
-                });
-
-                await newUser.save();
-                cb(null, newUser);
-            }
-            cb(null, doc);
-        })
-
-    }));
-
-app.get('/api/users/google/getGoogleAuthRequest', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-app.get('/api/users/google/getGoogleAuthCallback',
-    passport.authenticate('google', { failureRedirect: 'https://localhost:4000', session: true }),
-    function (req, res) {
-        res.redirect('http://localhost:8000');
-    });
+//CONNECTS SOCKET
+var server_port = process.env.PORT || 3000;
+//we obviate the error
+server.listen(server_port, () => {
+    console.log('listening on http://localhost:' + server_port);
+});
 
 
+//CONNECTS MONGODB
 app.listen(app.get('port'), () => {
     //Express Application
     console.log(`Server on port: ${app.get('port')}`);
