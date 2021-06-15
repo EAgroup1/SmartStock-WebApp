@@ -1,0 +1,190 @@
+//CRUD de USER
+
+###
+GET http://localhost:3000/api/users
+
+###
+GET http://localhost:3000/api/users/getNumByRole/Company
+
+###
+GET http://localhost:3000/api/users/60c4f100aaaa0a33e4e27ebd
+
+###
+PUT http://localhost:3000/api/users/60c4f100aaaa0a33e4e27ebd
+content-Type: application/json
+
+{
+    "friends":["60c4f116aaaa0a33e4e27ebe"]
+} 
+
+###
+POST http://localhost:3000/api/users
+content-Type: application/json
+
+{
+    "userName": "hectorprueba2",
+    "email": "hectorfernandezg16@gmail.com",
+    "password": "12345"
+} 
+
+###
+DELETE http://localhost:3000/api/users/:id
+
+###
+PUT http://localhost:3000/api/users/60be61ae74ee9a25041a649e
+content-Type: application/json
+
+{
+    "role": "User"
+
+} 
+
+###
+GET http://localhost:3000/api/users/608dc69df661910fb86c8f3d
+
+###
+POST http://localhost:3000/api/users/logIn
+content-Type: application/json
+
+{
+    "email": "hector.fernandez.granja@estudiantat.upc.edu",
+    "password": "nuevo1"
+}
+
+###
+PUT http://localhost:3000/api/users/forgotPassword
+content-Type: application/json
+
+{
+    "email": "hector.fernandez.granja@estudiantat.upc.edu"
+}
+
+###
+PUT http://localhost:3000/api/users/resetPassword
+content-Type: application/json
+
+{
+    "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE4NDMxM2NkMWMyNTQ5ZjgwYzFjMDIiLCJpYXQiOjE2MjMxNTQwMTUsImV4cCI6MTYyMzE1NDMxNX0.CqcP2LqCakt4s2KlOeXHS044_jaBDxDTgdGlgSykiu8",
+    "newPass": "nuevo1",
+    "confNewPass": "nuevo1"
+}
+
+
+
+
+
+//HTTP OF LOTS-LOTS-LOTS-LOTS
+
+
+
+###
+GET http://localhost:3000/api/lots/All
+###
+GET http://localhost:3000/api/lots/getByUser/60b369d031dfad0138709cbd
+
+###
+GET http://localhost:3000/api/lots/getByUser/60a8379570e909276c35b7c0
+
+###
+GET http://localhost:3000/api/lots/getNumAll
+
+###
+POST http://localhost:3000/api/lots
+content-Type: application/json
+
+{
+    "name": "Zapatos",
+    "dimensions": "60x30x15",
+    "weight": 60,
+    "qty": 40,
+    "price": 1,
+    "isFragile": true,
+    "info": "Zapatos de montaña",
+    "minimumQty": 40,
+    "businessItem": "60b0b73999e1c70758c73b7b",
+    "userItem":"60b0b73999e1c70758c73b7b"
+} 
+
+###
+DELETE http://localhost:3000/api/lots/60b22a24192afd215c5fe505
+
+###
+PUT http://localhost:3000/api/lots/60a161814c1c6a41446e1034
+content-Type: application/json
+
+{
+    "name": "Leche",
+    "dimensions": "60x30x15",
+    "weight": 60,
+    "userItem": "6091cbdf81612f2a801c068f",
+    "qty": 40,
+    "price": 150,
+    "isFragile": true,
+    "info": "HA CAMBIADO OU YEAH",
+    "minimumQty": 40,
+    "businessItem": "60aeaf411ffb7307940ae113"
+} 
+
+###
+GET http://localhost:3000/api/lots/60a69ae76196f9208c4f8a86
+
+//Buscamos LOT por nombre pasado por parámetro
+
+###
+GET http://localhost:3000/api/lots/get/Leche
+
+//CRUD DE DELIVERY
+
+### 
+GET http://localhost:3000/api/delivery/
+
+###
+GET http://localhost:3000/api/delivery/getNumAll
+
+###
+GET http://localhost:3000/api/delivery/60b0b73999e1c70758c73b7b/deliveries
+###
+GET   http://localhost:3000/api/delivery/60b0b73999e1c70758c73b7b/readydeliveries
+###
+PUT   http://localhost:3000/api/delivery/readydelivery/60b0e35fb1cdf634acb5ae8b
+
+###
+POST http://localhost:3000/api/delivery/
+content-Type: application/json
+
+{
+    "lots":"",
+    "lotItem": "60b0e298b1cdf634acb5ae8a",
+    "originLocation": "3.4379,-2.1179",
+    "destinationLocation": "3.4279,-2.179",
+    "destinationItem": "60b0b73999e1c70758c73b7b",
+    "deliveryDate": "13/09/2017",
+    "isPicked": false,
+    "isDelivered": false,
+    "isReady": false,
+    "businessItem":"60b0b73999e1c70758c73b7b",
+    "isAssigned": true,
+    "userItem": "60b0b73999e1c70758c73b7b",
+    "description": "Picar al 1o 1a"
+} 
+###
+DELETE http://localhost:3000/api/delivery/609c4a5f4f2a8c39548b977c
+###
+PUT http://localhost:3000/api/delivery/609c29951c34f216f043c43e
+content-Type: application/json 
+
+{
+    "lotItem": "6091cfbc57de44327c1eb88f",
+    "originLocation": "3.4379º,-2.1179º",
+    "destinationLocation": "3.4279º,-2.179º",
+    "destinationItem": "6091d6732d3a564454063110",
+    "deliveryDate": "13/09/2017",
+    "isPicked": true,
+    "isDelivered": true,
+    "businessItem":"6091d6762d3a564454063111",
+    "isAssigned": true,
+    "userItem": "6091d6782d3a564454063112",
+    "description": "Ahora pica al 4o que el del 1o no viene"
+} 
+###
+GET http://localhost:3000/api/delivery/609c54bda34787271456871e

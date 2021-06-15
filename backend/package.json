@@ -32,7 +32,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "serve-favicon": "^2.5.0",
-    "socket.io": "^4.1.2",
+    "socket.io": "^2.3.0",
     "sort-json-array": "^0.1.7",
     "swagger-jsdoc": "^7.0.0-rc.6",
     "swagger-ui-express": "^4.1.6"

@@ -21,11 +21,21 @@ import * as swaggerDocument from './swagger.json'
 const app = express();
 
 //initialize sockets
-const server = http.createServer(app);
-const io = new Server(server);
+//const server = http.createServer(app);
+/*var server = require('http').Server(app);
+const options= {   
+    transports: ["websocket"],
+       cors: {     origin: "*",
+            methods: ["GET", "POST"]} };
+
+
+let io = require('socket.io')(server,options);
+
+
+//const io = new Server(server);
 
 io.on('connection', (socket: any) => {
-
+    console.log("Tenemos user", socket);
     //get the id of the user & join in a room (one-to-one)
     //if string generates problems ---> we delete 'string'
     const id = socket.handshake.query.id;
@@ -57,10 +67,9 @@ var server_port = process.env.PORT || 3000;
 //we obviate the error
 server.listen(server_port, () => {
     console.log('listening on http://localhost:' + server_port);
-});
+});*/
 
 // Configuración
-app.set('port', process.env.PORT || 4000);
 //we use the port 8000 for Flutter ---> important from Eric!
 app.use(cors({origin: 'http://localhost:8000'}));
 app.use(cors({origin: '*'}));

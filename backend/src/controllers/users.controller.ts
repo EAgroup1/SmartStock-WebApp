@@ -134,7 +134,6 @@ class userCtrl {
 
         console.log(req.body);
         const { email, password } = req.body;
-
         //search the params ({email: email}) ---> next steps encrypt again
         try {
         //we wait to the search in database (async-await)
@@ -153,7 +152,6 @@ class userCtrl {
             userName: user.userName,
             role: user.role
         }
-        console.log(_aux);
         res.status(200).json(_aux);
         } catch (err) {
             res.status(500).json({
