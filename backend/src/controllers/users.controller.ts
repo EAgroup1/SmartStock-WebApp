@@ -38,7 +38,8 @@ class userCtrl {
                 email: req.body.email,
                 password: req.body.password,
                 role: req.body.role,
-                bank: req.body.bank
+                bank: req.body.bank,
+                location: req.body.location
             });
 
             console.log(newUser);
@@ -150,7 +151,8 @@ class userCtrl {
             _id: user._id,
             token: token,
             userName: user.userName,
-            role: user.role
+            role: user.role,
+            location: user.location
         }
         res.status(200).json(_aux);
         } catch (err) {
@@ -190,11 +192,11 @@ class userCtrl {
         console.log(req.body);
 
         //we extract the info of the json object
-        const { email, userName, password } = req.body;
+        const { email, userName, password, location} = req.body;
 
         //in the next steps, we encrypt these params
         try {
-        const newSignUpUser: IUser = new User({email, userName, password});
+        const newSignUpUser: IUser = new User({email, userName, password, location});
         await newSignUpUser.save();
     
         //then, we create a token (payload, variable & options)
@@ -207,7 +209,8 @@ class userCtrl {
         const _aux = {
             _id: newSignUpUser._id,
             token: token,
-            userName: newSignUpUser.userName
+            userName: newSignUpUser.userName,
+            location: newSignUpUser.location
         }
         console.log(_aux);
         res.status(200).json(_aux);
