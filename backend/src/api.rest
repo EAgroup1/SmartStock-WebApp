@@ -76,13 +76,9 @@ content-Type: application/json
 //HTTP OF LOTS-LOTS-LOTS-LOTS
 
 
-//Obtenemos lotes que aún no han sido guardados por user en SEARCH_PRODUCTS
+
 ###
 GET http://localhost:3000/api/lots/All
-### 
-GET http://localhost:3000/api/lots/get/Rojo
-###
-GET http://localhost:3000/api/lots/getByBusiness/60b684562ffee403ecae5fa3
 ###
 GET http://localhost:3000/api/lots/getByUser/60b369d031dfad0138709cbd
 
@@ -93,19 +89,26 @@ GET http://localhost:3000/api/lots/getByUser/60a8379570e909276c35b7c0
 GET http://localhost:3000/api/lots/getNumAll
 
 ###
+GET http://localhost:3000/api/lots/getSortLotsByAscPrice/60a8379570e909276c35b7c0
+
+###
+GET http://localhost:3000/api/lots/getSortLotsByAscQty/60a8379570e909276c35b7c0
+
+###
 POST http://localhost:3000/api/lots
 content-Type: application/json
 
 {
-    "name": "Rojo",
+    "name": "otro5",
     "dimensions": "60x30x15",
-    "weight": "60",
-    "qty": "40",
-    "price": "1",
+    "weight": 60,
+    "qty": 40,
+    "price": 12,
     "isFragile": true,
-    "info": "Rojosss",
-    "minimumQty": "40",
-    "businessItem": "60b684562ffee403ecae5fa3"
+    "info": "otro5",
+    "minimumQty": 40,
+    "businessItem": "60b0b73999e1c70758c73b7b",
+    "userItem":"60a8379570e909276c35b7c0"
 } 
 
 ###

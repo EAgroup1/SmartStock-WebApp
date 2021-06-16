@@ -201,6 +201,40 @@ class lotCtrl {
         }
     }
 
+    getSortLotsByAscPrice = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
+            .populate('businessItem')
+            .populate('userItem');
+            // res.json(lot);
+            lot.sort((a: any, b: any) => {
+                return a.price - b.price;
+            });
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getSortLotsByAscQty = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
+            .populate('businessItem')
+            .populate('userItem');
+            // res.json(lot);
+            lot.sort((a: any, b: any) => {
+                return a.qty - b.qty;
+            });
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
 }
 
 export default new lotCtrl();

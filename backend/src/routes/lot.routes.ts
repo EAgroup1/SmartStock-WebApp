@@ -13,6 +13,8 @@ lotRouter.delete('/:id', lotCtrl.deleteLot);
 lotRouter.put('/:id', lotCtrl.updateLot);
 lotRouter.get('/:id', lotCtrl.getLot);
 lotRouter.get('/get/:name', lotCtrl.getLotsWithSameName);
+lotRouter.get('/getSortLotsByAscPrice/:id', lotCtrl.getSortLotsByAscPrice);
+lotRouter.get('/getSortLotsByAscQty/:id', lotCtrl.getSortLotsByAscQty);
 lotRouter.get('/getByUser/:id', lotCtrl.getLotsByUserId);
 lotRouter.get('/getByBusiness/:id', lotCtrl.getLotsByBusinessId);
 
