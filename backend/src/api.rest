@@ -84,7 +84,7 @@ GET http://localhost:3000/api/lots/get/Rojo
 ###
 GET http://localhost:3000/api/lots/getByBusiness/60b684562ffee403ecae5fa3
 ###
-GET http://localhost:3000/api/lots/getByUser/60b369d031dfad0138709cbd
+GET http://localhost:3000/api/lots/getByUser/60b684372ffee403ecae5fa2
 
 ###
 GET http://localhost:3000/api/lots/getByUser/60a8379570e909276c35b7c0
