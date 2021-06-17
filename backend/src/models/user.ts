@@ -1,6 +1,8 @@
-import mongoose, { Schema, model } from 'mongoose';
+import mongoose, {Schema, model, Document} from 'mongoose';
+//password cannot store in plaintext on database
+import bcrypt from 'bcrypt-nodejs';
 
-export interface IUser extends mongoose.Document {
+export interface IUser extends Document {
     userName: string,
     email: string,
     password: string,
@@ -10,7 +12,11 @@ export interface IUser extends mongoose.Document {
     signUpWithFacebook?: boolean,
     location?: string,
     balance?: number,
-    avatar?: string
+    avatar?: string,
+    avatarCloudBinary?: string,
+    resetLink?: string,
+    friends?: string[],
+    validatePassword(password: string): Promise<boolean>
 }
 
 const userSchema = new Schema({
@@ -24,12 +30,46 @@ const userSchema = new Schema({
     location: { type: String, required: false},
     balance: { type: Number, required: false, default: '0'},
     //Guys we need a picture for the user! ---> location avatar
-    avatar: { type: String, required: false}
+    avatar: { type: String, required: false},
+    avatarCloudBinary: {type: String, required: false},
+    //reset pass--->
+    resetLink: { type: String, required: false },
+    friends: [{ type: String, required: false}]
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,
     versionKey: false
 });
+
+//we hash the user's password on this function
+userSchema.pre('save', function(next) {
+    let user = <IUser>this;
+    //salt factor of 12 is too safe! 
+    var SALT_FACTOR = 12;
+
+    if(!user.isModified('password')) return next();
+
+    return bcrypt.genSalt(SALT_FACTOR, function(err, salt){
+        if(err) return next(err);
+
+        return bcrypt.hash(user.password, salt, null, function(err, hash){
+            if(err) return next(err);
+            user.password = hash;
+            return next();
+        });
+    });
+});
+
+//validate the encrypted password
+userSchema.methods.validatePassword = async function(password: string): Promise<boolean> {
+    let user = <IUser>this;
+    return await new Promise((resolve, reject)=>{
+        bcrypt.compare(password , user.password, (err, isMatch) => {
+        if(err) return reject(err);
+        return resolve(isMatch);
+        });
+    });
+};
 
 //we will export our entity
 export default model<IUser>('User', userSchema);

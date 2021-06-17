@@ -2,8 +2,16 @@ import { Router } from 'express';
 import { Request, Response, NextFunction } from 'express';
 import usersCtrl from '../controllers/users.controller';
 import jwt from 'jsonwebtoken';
+import passport from 'passport';
 
 const usersRouter: Router = Router();
+
+usersRouter.post('/forgotPassword', usersCtrl.forgotPassword);
+usersRouter.get('/reset/:resetLink', usersCtrl.reset);
+usersRouter.post('/reset/:resetLink', usersCtrl.resetPassword);
+
+usersRouter.get('/getNumByRole/:role', usersCtrl.getNumByRole);
+usersRouter.get('/getNumAll', usersCtrl.getNumAll);
 
 //we put all routes in this file & we will se in the future
 usersRouter.get('/', usersCtrl.getAllUsers);
@@ -14,8 +22,15 @@ usersRouter.get('/:id', usersCtrl.getUser);
 
 //auth routes ---> we research private routes
 usersRouter.post('/logIn', usersCtrl.logIn);
+//auth with GOOGLE
+usersRouter.post('/logInGoogle', usersCtrl.logInGoogle);
 //the signup route has a small difference with the createUser route
 usersRouter.post('/signUp', usersCtrl.signUp);
+
+//test passport (Headers-Authorization: Bearer token)
+usersRouter.get('/special', passport.authenticate('jwt', {session: false}), (req, res) =>{
+    res.send('works!');
+})
 
 //validated function to private routes --- verify token -/- express routing
 function verifyToken(req: Request, res: Response, next: NextFunction) {

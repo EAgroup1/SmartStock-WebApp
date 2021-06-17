@@ -3,27 +3,29 @@ import User, {IUser} from './user';
 export interface ILot extends mongoose.Document {
     name: string,
     dimensions: string,
-    weight: number,
-    qty: number,
-    price: number,
+    weight: string,
+    qty: string,
+    price: string,
     isFragile: boolean,
     info?: string,
-    minimumQty: number,
+    minimumQty: string,
     businessItem: IUser,
-    userItem?: IUser
+    userItem?: IUser,
+    stored?: boolean
 }
 
 const lotSchema = new Schema({
     name: { type: String, required: true},
     dimensions: { type: String, required: true},
-    weight: { type: Number, required: true},
-    qty: { type: Number, required: true},
-    price: { type: Number, required: true},
+    weight: { type: String, required: true},
+    qty: { type: String, required: true},
+    price: { type: String, required: true},
     isFragile: { type: Boolean, required: true},
     info: { type: String, required: false, default: ''},
-    minimumQty: { type: Number, required: true},
+    minimumQty: { type: String, required: true},
     businessItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
-    userItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false, default: null}
+    userItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false},
+    stored: { type: Boolean, required: false, default: false}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,

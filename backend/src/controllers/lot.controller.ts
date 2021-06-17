@@ -1,14 +1,15 @@
 import Lot, { ILot } from '../models/lot';
 import { Request, Response } from 'express';
+import User, { IUser } from '../models/user';
 
 class lotCtrl {
-//CRUD
+    //CRUD
 
     getAllLots = async (_req: Request, res: Response) => {
         try {
             const lots: ILot[] = await Lot.find()
-            .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
-            .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
+            .populate('businessItem')
+            .populate('userItem');
             res.json(lots);
         } catch (err) {
             res.status(500).json({
@@ -16,6 +17,22 @@ class lotCtrl {
             });
         }
     }
+
+
+    //get all lots Sorted without User asociated
+    getAllLotsSorted = async (_req: Request, res: Response) => {
+        try {
+            const lots: ILot[] = await Lot.find({ 'userItem': { $exists: false } } ).sort({name:1})
+                .populate('businessItem');
+            console.log(lots);
+            res.json(lots);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
 
     createLot = async (req: Request, res: Response) => {
 
@@ -32,7 +49,8 @@ class lotCtrl {
             minimumQty: req.body.minimumQty,
             businessItem: req.body.businessItem,
             userItem: req.body.userItem,
-            info: req.body.info
+            info: req.body.info,
+            stored: req.body.stored
 
             });
             console.log(newLot);
@@ -104,16 +122,137 @@ class lotCtrl {
     getLot = async (req: Request, res: Response) => {
         console.log(req.params);
         try {
-        const lot = await Lot.findById(req.params.id)
-        .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
-        .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
-        res.json(lot);
+            const lot = await Lot.findById(req.params.id)
+            .populate('businessItem')
+            .populate('userItem');
+            res.json(lot);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
             });
         }
     }
+
+    getLotsWithSameName = async (req: Request, res: Response) => {
+        console.log(req.params);
+        try {
+            const lot: ILot[] = await Lot.find({ "name": req.params.name })
+            .populate('businessItem')
+            .populate('userItem');
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+    
+    getLotsByUserId = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({ "userItem": Object(req.params.id) }).sort({ name:1 })
+            .populate('businessItem');
+            /* .populate('userItem'); */
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getLotsByBusinessId = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({ "businessItem": Object(req.params.id) }).sort({ name: 1 })
+                .populate('businessItem')
+                .populate('userItem');
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    //new functions for the test
+    getNumLotsById = async (req: Request, res: Response) => {
+        console.log(req.params);
+        try {
+            //const lot: ILot[] = await Lot.find({ "name": req.params.name })
+            const numByRole: number = await User.find({ "role": req.params.role }).count();
+            //if anything
+            //const numAll = await User.find().count();
+            res.status(200).send(numByRole.toString());
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getNumAll = async (req: Request, res: Response) => {
+        //console.log(req.params);
+        try {
+            //const lot: ILot[] = await Lot.find({ "name": req.params.name })
+            const numAll: number = await User.find().count();
+            //if anything
+            //const numAll = await User.find().count();
+            res.status(200).send(numAll.toString());
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getSortLotsByAscPrice = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
+            .populate('businessItem')
+            .populate('userItem');
+            // res.json(lot);
+            lot.sort((a: any, b: any) => {
+                return a.price - b.price;
+            });
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getSortLotsByAscQty = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
+            .populate('businessItem')
+            .populate('userItem');
+            // res.json(lot);
+            lot.sort((a: any, b: any) => {
+                return a.qty - b.qty;
+            });
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getLotsByBusinessIdStored = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({$and: [{ "businessItem": Object(req.params.id)}, {"userItem": {$exists: true}}]}).sort({ name: 1 }) 
+                .populate('businessItem')
+                .populate('userItem');
+                
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+
 }
 
 export default new lotCtrl();
