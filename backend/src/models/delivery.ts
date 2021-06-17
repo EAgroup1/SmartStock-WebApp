@@ -29,7 +29,7 @@ const deliverySchema = new Schema({
     businessItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
     isAssigned: { type: Boolean, required: false, default: false},
     userItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
-    description: { type: String, required: false, default: ''}
+    description: { type: String, required: false}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,

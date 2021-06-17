@@ -182,15 +182,14 @@ class deliveryCtrl {
             //we create this object to not take delivery's id
             const delivery : IUser | null = await User.findById(req.body.userItem);
 
-            const business : IUser | null = await User.findById(req.body.lotItem.businessItem);
+            const business : IUser | null = await User.findById(req.body.businessItem);
 
-       
             const newDelivery: IDelivery = new Delivery({
             
                 lotItem: req.body.lotItem,
                 originLocation: business?.location,
                 destinationLocation: delivery?.location,
-                destinationItem: delivery?.location,
+                destinationItem: delivery?.id,
                 deliveryDate: req.body.deliveryDate,
                 isPicked: req.body.isPicked,
                 isDelivered: req.body.isDelivered,
@@ -198,7 +197,7 @@ class deliveryCtrl {
                 businessItem: business?.id,
                 isAssigned: req.body.isAssigned,
                 userItem: delivery?.id,
-                description: req.body.lot.description
+                description: req.body.info
             });
             console.log(newDelivery);
             //this takes some time!

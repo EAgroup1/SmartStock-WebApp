@@ -158,19 +158,10 @@ POST http://localhost:3000/api/delivery/
 content-Type: application/json
 
 {
-    "lots":"",
-    "lotItem": "60b0e298b1cdf634acb5ae8a",
-    "originLocation": "3.4379,-2.1179",
-    "destinationLocation": "3.4279,-2.179",
-    "destinationItem": "60b0b73999e1c70758c73b7b",
-    "deliveryDate": "13/09/2017",
-    "isPicked": false,
-    "isDelivered": false,
-    "isReady": false,
-    "businessItem":"60b0b73999e1c70758c73b7b",
-    "isAssigned": true,
-    "userItem": "60b0b73999e1c70758c73b7b",
-    "description": "Picar al 1o 1a"
+    "lotItem": "60ca074d33952b28c0146962",
+    "userItem": "60cb47fe19082604d0140b06"
+    "businessItem": 
+
 } 
 ###
 DELETE http://localhost:3000/api/delivery/609c4a5f4f2a8c39548b977c
