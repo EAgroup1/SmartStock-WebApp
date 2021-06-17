@@ -17,6 +17,8 @@ class lotCtrl {
             });
         }
     }
+
+
     //get all lots Sorted without User asociated
     getAllLotsSorted = async (_req: Request, res: Response) => {
         try {
@@ -30,6 +32,7 @@ class lotCtrl {
             });
         }
     }
+
 
     createLot = async (req: Request, res: Response) => {
 
@@ -143,12 +146,12 @@ class lotCtrl {
             });
         }
     }
-
+    
     getLotsByUserId = async (req: Request, res: Response) => {
         try {
             const lot: ILot[] = await Lot.find({ "userItem": Object(req.params.id) }).sort({ name:1 })
             .populate('businessItem');
-            //.populate('userItem');
+            /* .populate('userItem'); */
             res.json(lot);
         } catch (err) {
             res.status(500).json({
@@ -234,6 +237,21 @@ class lotCtrl {
             });
         }
     }
+
+    getLotsByBusinessIdStored = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({$and: [{ "businessItem": Object(req.params.id)}, {"userItem": {$exists: true}}]}).sort({ name: 1 }) 
+                .populate('businessItem')
+                .populate('userItem');
+                
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
 
 }
 

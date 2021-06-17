@@ -3,10 +3,9 @@ import Lot, {ILot} from './lot';
 import User, {IUser} from './user';
 
 export interface IDelivery extends mongoose.Document {
-    lots: ILot[];
     lotItem: ILot,
     originLocation: string,
-    destinationLocation: string,
+    destinationLocation?: string,
     destinationItem: IUser,
     deliveryDate: string,
     isPicked: boolean,
@@ -19,10 +18,9 @@ export interface IDelivery extends mongoose.Document {
 }
 
 const deliverySchema = new Schema({
-    lots:[{type:mongoose.Schema.Types.ObjectId, ref: Lot, required: true}],
     lotItem: { type: mongoose.Schema.Types.ObjectId, ref: Lot, required: true},
     originLocation: { type: String, required: true},
-    destinationLocation: { type: String, required: true},
+    destinationLocation: { type: String, required: false},
     destinationItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
     deliveryDate: { type: String, required: true},
     isPicked: { type: Boolean, required: true},
