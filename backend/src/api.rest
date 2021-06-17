@@ -10,11 +10,11 @@ GET http://localhost:3000/api/users/getNumByRole/Company
 GET http://localhost:3000/api/users/60c4f100aaaa0a33e4e27ebd
 
 ###
-PUT http://localhost:3000/api/users/60c4f100aaaa0a33e4e27ebd
+PUT http://localhost:3000/api/users/60a84313cd1c2549f80c1c02
 content-Type: application/json
 
 {
-    "friends":["60c4f116aaaa0a33e4e27ebe"]
+    "email": "etc@etc.com"
 } 
 
 ###
@@ -22,8 +22,8 @@ POST http://localhost:3000/api/users
 content-Type: application/json
 
 {
-    "userName": "hectorprueba2",
-    "email": "hectorfernandezg16@gmail.com",
+    "userName": "hectorprova",
+    "email": "hector.fernandez.granja@estudiantat.upc.edu",
     "password": "12345"
 } 
 
@@ -48,11 +48,11 @@ content-Type: application/json
 
 {
     "email": "hector.fernandez.granja@estudiantat.upc.edu",
-    "password": "nuevo1"
+    "password": "hola"
 }
 
 ###
-PUT http://localhost:3000/api/users/forgotPassword
+POST http://localhost:3000/api/users/forgotPassword
 content-Type: application/json
 
 {
@@ -60,11 +60,10 @@ content-Type: application/json
 }
 
 ###
-PUT http://localhost:3000/api/users/resetPassword
+POST http://localhost:3000/api/users/reset/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE4NDMxM2NkMWMyNTQ5ZjgwYzFjMDIiLCJpYXQiOjE2MjM1MTI2NTQsImV4cCI6MTYyMzUxMjk1NH0.hKU54Kpr8_e1TfsJYAB4-LOIrZrt10ICAlGzisE9X30
 content-Type: application/json
 
 {
-    "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE4NDMxM2NkMWMyNTQ5ZjgwYzFjMDIiLCJpYXQiOjE2MjMxNTQwMTUsImV4cCI6MTYyMzE1NDMxNX0.CqcP2LqCakt4s2KlOeXHS044_jaBDxDTgdGlgSykiu8",
     "newPass": "nuevo1",
     "confNewPass": "nuevo1"
 }
