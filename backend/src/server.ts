@@ -73,12 +73,12 @@ server.listen(server_port, () => {
 //mail connection
 // app.set('port', process.env.PORT || 3000);
 
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-// app.get('/resetPass', function(req, res){
-//     res.render('pages/reset');
-// });
+app.get('/resetPass', function(req, res){
+    res.render('pages/reset');
+});
 
 // Configuración
 //we use the port 8000 for Flutter ---> important from Eric!
