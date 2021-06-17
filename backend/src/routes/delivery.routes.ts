@@ -22,4 +22,6 @@ deliveryRouter.get('/:id/isAssigned', deliveryCtrl.getAssigned);
 deliveryRouter.put('/assigned/:id', deliveryCtrl.setAssigned);
 deliveryRouter.put('/picked/:id', deliveryCtrl.setIsPicked);
 deliveryRouter.put('/delivered/:id', deliveryCtrl.setIsDelivered);
+deliveryRouter.put('/time/:id', deliveryCtrl.setTime);
+
 export default deliveryRouter;
