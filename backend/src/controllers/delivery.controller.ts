@@ -1,10 +1,13 @@
 import Delivery, { IDelivery } from '../models/delivery';
 import { Request, Response } from 'express';
 import User, { IUser } from '../models/user';
+import user from '../models/user';
+import { ILot } from 'models/lot';
 
 
 
 class deliveryCtrl {
+
     //CRUD
     //GETALL
     getAllDeliveries = async (_req: Request, res: Response) => {
@@ -177,19 +180,25 @@ class deliveryCtrl {
         console.log(req.body)
         try {
             //we create this object to not take delivery's id
+            const delivery : IUser | null = await User.findById(req.body.userItem);
+
+            const business : IUser | null = await User.findById(req.body.lotItem.businessItem);
+
+       
             const newDelivery: IDelivery = new Delivery({
+            
                 lotItem: req.body.lotItem,
-                originLocation: req.body.originLocation,
-                destinationLocation: req.body.destinationLocation,
-                destinationItem: req.body.destinationItem,
+                originLocation: business?.location,
+                destinationLocation: delivery?.location,
+                destinationItem: delivery?.location,
                 deliveryDate: req.body.deliveryDate,
                 isPicked: req.body.isPicked,
                 isDelivered: req.body.isDelivered,
                 isReady: req.body.isReady,
-                businessItem: req.body.businessItem,
+                businessItem: business?.id,
                 isAssigned: req.body.isAssigned,
-                userItem: req.body.userItem,
-                description: req.body.description
+                userItem: delivery?.id,
+                description: req.body.lot.description
             });
             console.log(newDelivery);
             //this takes some time!
