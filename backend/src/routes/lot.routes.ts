@@ -18,5 +18,6 @@ lotRouter.get('/getSortLotsByAscQty/:id', lotCtrl.getSortLotsByAscQty);
 lotRouter.get('/getByUser/:id', lotCtrl.getLotsByUserId);
 lotRouter.get('/getByBusiness/:id', lotCtrl.getLotsByBusinessId);
 lotRouter.get('/getByBusinessStoredWithUserID/:id', lotCtrl.getLotsByBusinessIdStored);
+lotRouter.get('/getByBusinessStoredTrueWithUserID/:id', lotCtrl.getLotsByBusinessIdStoredTrue);
 
 export default lotRouter;
