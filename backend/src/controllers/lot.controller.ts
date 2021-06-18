@@ -240,7 +240,13 @@ class lotCtrl {
 
     getLotsByBusinessIdStored = async (req: Request, res: Response) => {
         try {
-            const lot: ILot[] = await Lot.find({$and: [{ "businessItem": Object(req.params.id)}, {"userItem": {$exists: true}}]}).sort({ name: 1 }) 
+            const lot: ILot[] = await Lot.find(
+                { 
+                    $and: [
+                        { "businessItem": Object(req.params.id) }, { "userItem": { $exists: true } }, { "stored": false}
+                    ]
+                }
+            ).sort({ name: 1 })
                 .populate('businessItem')
                 .populate('userItem');
                 
