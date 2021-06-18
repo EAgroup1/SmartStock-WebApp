@@ -2,7 +2,7 @@ import Delivery, { IDelivery } from '../models/delivery';
 import { Request, Response } from 'express';
 import User, { IUser } from '../models/user';
 import user from '../models/user';
-import { ILot } from 'models/lot';
+import Lot, { ILot } from '../models/lot';
 
 
 
@@ -177,27 +177,38 @@ class deliveryCtrl {
 
     //POST CREATEONE
     createDelivery = async (req: Request, res: Response) => {
-        console.log(req.body)
+        /* console.log(req.body) */
         try {
             //we create this object to not take delivery's id
-            const delivery : IUser | null = await User.findById(req.body.userItem);
+            const user: IUser | null = await User.findById(req.body.userItem);
 
-            const business : IUser | null = await User.findById(req.body.businessItem);
+            const lot: ILot | null = await Lot.findById(req.body.lotItem)
+            .populate('businessItem')
+            .populate('userItem');
+
+            /* console.log(lot + 'lo tengo');
+            console.log(lot + 'lo tengo');
+            console.log(lot + 'lo tengo'); */
+
+            //QUiero saber si tengo la id de businessItem en: lot.businessItem
+            console.log('lo tengo' + lot?.businessItem + 'lo tengo');
+
+            const business: IUser | null = await User.findById(lot?.businessItem);
 
             const newDelivery: IDelivery = new Delivery({
             
-                lotItem: req.body.lotItem,
+                lotItem: lot,
                 originLocation: business?.location,
-                destinationLocation: delivery?.location,
-                destinationItem: delivery?.id,
+                destinationLocation: user?.location,
+                destinationItem: user?.location,
                 deliveryDate: req.body.deliveryDate,
                 isPicked: req.body.isPicked,
                 isDelivered: req.body.isDelivered,
                 isReady: req.body.isReady,
-                businessItem: business?.id,
+                businessItem: business,
                 isAssigned: req.body.isAssigned,
-                userItem: delivery?.id,
-                description: req.body.info
+                userItem: user,
+                description: lot?.info
             });
             console.log(newDelivery);
             //this takes some time!
