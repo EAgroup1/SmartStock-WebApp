@@ -17,6 +17,8 @@ class lotCtrl {
             });
         }
     }
+
+
     //get all lots Sorted without User asociated
     getAllLotsSorted = async (_req: Request, res: Response) => {
         try {
@@ -30,6 +32,7 @@ class lotCtrl {
             });
         }
     }
+
 
     createLot = async (req: Request, res: Response) => {
 
@@ -143,10 +146,10 @@ class lotCtrl {
             });
         }
     }
- 
+    
     getLotsByUserId = async (req: Request, res: Response) => {
         try {
-            const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
+            const lot: ILot[] = await Lot.find({ "userItem": Object(req.params.id) }).sort({ name:1 })
             .populate('businessItem')
             .populate('userItem');
             res.json(lot);
@@ -200,6 +203,81 @@ class lotCtrl {
             });
         }
     }
+
+    getSortLotsByAscPrice = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
+            .populate('businessItem')
+            .populate('userItem');
+            // res.json(lot);
+            lot.sort((a: any, b: any) => {
+                return a.price - b.price;
+            });
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getSortLotsByAscQty = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
+            .populate('businessItem')
+            .populate('userItem');
+            // res.json(lot);
+            lot.sort((a: any, b: any) => {
+                return a.qty - b.qty;
+            });
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getLotsByBusinessIdStored = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find(
+                { 
+                    $and: [
+                        { "businessItem": Object(req.params.id) }, { "userItem": { $exists: true } }, { "stored": false}
+                    ]
+                }
+            ).sort({ name: 1 })
+                .populate('businessItem')
+                .populate('userItem');
+                
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getLotsByBusinessIdStoredTrue = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find(
+                {
+                    $and: [
+                        { "businessItem": Object(req.params.id) }, { "userItem": { $exists: true } }, { "stored": true }
+                    ]
+                }
+            ).sort({ name: 1 })
+                .populate('businessItem')
+                .populate('userItem');
+
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
 
 }
 

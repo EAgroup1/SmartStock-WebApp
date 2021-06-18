@@ -1,11 +1,14 @@
 import Delivery, { IDelivery } from '../models/delivery';
 import { Request, Response } from 'express';
 import User, { IUser } from '../models/user';
+import user from '../models/user';
+import Lot, { ILot } from '../models/lot';
 
 
 
-class deliveryCtrl { 
-//CRUD
+class deliveryCtrl {
+
+    //CRUD
     //GETALL
     getAllDeliveries = async (_req: Request, res: Response) => {
         console.log("llega");
@@ -13,15 +16,15 @@ class deliveryCtrl {
         console.log(_req.body);
         try {
             const deliveries: IDelivery[] = await Delivery.find()
-            .populate({path:'lotItem', populate:{path:'userItem'}})
-            .populate({path:'lotItem', populate:{path:'businessItem'}})
-            .populate('destinationItem')
-            .populate('businessItem')
-            .populate('userItem');
+                .populate({ path: 'lotItem', populate: { path: 'userItem' } })
+                .populate({ path: 'lotItem', populate: { path: 'businessItem' } })
+                .populate('destinationItem')
+                .populate('businessItem')
+                .populate('userItem');
 
             console.log(deliveries);
             res.json(deliveries);
-            
+
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -30,34 +33,34 @@ class deliveryCtrl {
     }
 
     //GET NOT REDAY DELIVERIES USER
-    getDeliveries = async(req: Request, res: Response)=> {
+    getDeliveries = async (req: Request, res: Response) => {
         console.log("no llega");
         const vacio = await User.findById(req.params.id)
-            if(vacio === null){
-                console.log(req.body);
-                res.status(400).json({
-                    code: 404,
-                    status: 'Delivery no existe'
-                });
-            }
+        if (vacio === null) {
+            console.log(req.body);
+            res.status(400).json({
+                code: 404,
+                status: 'Delivery no existe'
+            });
+        }
         try {
-             const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":false})
-            .populate({path:'lotItem', populate:{path:'userItem'}})
-            .populate({path:'lotItem', populate:{path:'businessItem'}})
-            .populate('destinationItem')
-            .populate('businessItem')
-            .populate('userItem');
+            const deliveries: IDelivery[] = await Delivery.find({ "userItem": Object(req.params.id), "isReady": false })
+                .populate({ path: 'lotItem', populate: { path: 'userItem' } })
+                .populate({ path: 'lotItem', populate: { path: 'businessItem' } })
+                .populate('destinationItem')
+                .populate('businessItem')
+                .populate('userItem');
 
             console.log(deliveries);
             res.json(deliveries);
-            
+
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
             });
         }
     }
-    getReadyDeliveries = async(req: Request, res: Response)=> {
+    getReadyDeliveries = async (req: Request, res: Response) => {
         console.log(req.body);
         try {
              const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":true, "isDelivered":false})
@@ -69,7 +72,7 @@ class deliveryCtrl {
 
             console.log(deliveries);
             res.json(deliveries);
-            
+
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -77,22 +80,22 @@ class deliveryCtrl {
         }
     }
 
-    setReadyDelivery = async(req: Request, res: Response)=> {
+    setReadyDelivery = async (req: Request, res: Response) => {
         console.log(req.params.id);
         try {
             const vacio = await Delivery.findById(req.params.id);
-            if(vacio === null){
+            if (vacio === null) {
                 res.status(400).json({
                     code: 404,
                     status: 'Delivery no existe'
                 });
             } else {
-            await Delivery.findByIdAndUpdate(req.params.id, { $set: {"isReady":true}})
-            res.status(200).json({
+                await Delivery.findByIdAndUpdate(req.params.id, { $set: { "isReady": true } })
+                res.status(200).json({
 
-                status: 'Delivery actualizado correctamente'
-            });
-         }           
+                    status: 'Delivery actualizado correctamente'
+                });
+            }
         } catch (err) {
             console.log(err);
             res.status(500).json({
@@ -102,18 +105,18 @@ class deliveryCtrl {
     }
 
     //get not assigned deliveries for deliverer
-    getNotAssigned = async(req: Request, res: Response)=> {
+    getNotAssigned = async (req: Request, res: Response) => {
         try {
-             const deliveries: IDelivery[] = await Delivery.find({"isAssigned":false, "isReady":true})
-            .populate({path:'lotItem', populate:{path:'userItem'}})
-            .populate({path:'lotItem', populate:{path:'businessItem'}})
-            .populate('destinationItem')
-            .populate('businessItem')
-            .populate('userItem');
+            const deliveries: IDelivery[] = await Delivery.find({ "isAssigned": false, "isReady": true })
+                .populate({ path: 'lotItem', populate: { path: 'userItem' } })
+                .populate({ path: 'lotItem', populate: { path: 'businessItem' } })
+                .populate('destinationItem')
+                .populate('businessItem')
+                .populate('userItem');
 
             console.log(deliveries);
             res.json(deliveries);
-            
+
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -124,7 +127,7 @@ class deliveryCtrl {
     getAssigned = async(req: Request, res: Response)=> {
         try {
             const vacio = await User.findById(req.params.id)
-            if(vacio === null){
+            if (vacio === null) {
                 console.log(req.body);
                 res.status(400).json({
                     code: 404,
@@ -140,7 +143,7 @@ class deliveryCtrl {
 
             console.log(deliveries);
             res.json(deliveries);
-            
+
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -148,22 +151,22 @@ class deliveryCtrl {
         }
     }
     //set is assigned delivery for deliverer
-    setAssigned = async(req: Request, res: Response)=> {
+    setAssigned = async (req: Request, res: Response) => {
         console.log(req.params.id);
         try {
             const vacio = await Delivery.findById(req.params.id);
-            if(vacio === null){
+            if (vacio === null) {
                 res.status(400).json({
                     code: 404,
                     status: 'Delivery no existe'
                 });
             } else {
-            await Delivery.findByIdAndUpdate(req.params.id, { $set: {"userItem":Object(req.body.id), "isAssigned":true}})
-            res.status(200).json({
+                await Delivery.findByIdAndUpdate(req.params.id, { $set: { "userItem": Object(req.body.id), "isAssigned": true } })
+                res.status(200).json({
 
-                status: 'Delivery actualizado correctamente'
-            });
-         }           
+                    status: 'Delivery actualizado correctamente'
+                });
+            }
         } catch (err) {
             console.log(err);
             res.status(500).json({
@@ -244,25 +247,42 @@ class deliveryCtrl {
 
     //POST CREATEONE
     createDelivery = async (req: Request, res: Response) => {
-        console.log(req.body)
-        try{
-    //we create this object to not take delivery's id
+        /* console.log(req.body) */
+        try {
+            //we create this object to not take delivery's id
+            const user: IUser | null = await User.findById(req.body.userItem);
+
+            const lot: ILot | null = await Lot.findById(req.body.lotItem)
+            .populate('businessItem')
+            .populate('userItem');
+
+            /* console.log(lot + 'lo tengo');
+            console.log(lot + 'lo tengo');
+            console.log(lot + 'lo tengo'); */
+
+            //QUiero saber si tengo la id de businessItem en: lot.businessItem
+            console.log('lo tengo::::' + lot?.businessItem + 'lo tengo');
+            console.log('lo tengo::::' + lot + 'lo tengo');
+
+            const business: IUser | null = await User.findById(lot?.businessItem._id);
+
+       
             const newDelivery: IDelivery = new Delivery({
-                lots: "6091cfbc57de44327c1eb88f",
-                lotItem: req.body.lotItem,
-                originLocation: req.body.originLocation,
-                destinationLocation: req.body.destinationLocation,
-                destinationItem: req.body.destinationItem,
+            
+                lotItem: lot,
+                originLocation: business?.location,
+                destinationLocation: user?.location,
+                destinationItem: user,
                 deliveryDate: req.body.deliveryDate,
                 isPicked: req.body.isPicked,
                 isDelivered: req.body.isDelivered,
                 isReady: req.body.isReady,
-                businessItem: req.body.businessItem,
+                businessItem: business,
                 isAssigned: req.body.isAssigned,
-                userItem: req.body.userItem,
-                description: req.body.description
-        });
-            console.log(newDelivery);
+                userItem: user,
+                description: lot?.info
+            });
+            console.log( 'Info del newDelivery::::::' + newDelivery);
             //this takes some time!
             await newDelivery.save();
             res.status(200).json({
@@ -272,17 +292,17 @@ class deliveryCtrl {
             res.status(500).json({
                 status: `${err.message}`
             });
-        } 
+        }
     }
 
     //DELETEONE
     deleteDelivery = async (req: Request, res: Response) => {
 
         console.log(req.params);
-        
+
         try {
             const vacio = await Delivery.findByIdAndDelete(req.params.id)
-            if(vacio === null){
+            if (vacio === null) {
                 res.status(400).json({
                     code: 404,
                     status: 'Delivery no existe'
@@ -302,8 +322,8 @@ class deliveryCtrl {
     //PUT MODIFYONE
     updateDelivery = async (req: Request, res: Response) => {
         // For update the delivery params:
-            //Location
-            //Booleans
+        //Location
+        //Booleans
         console.log(req.params);
 
         //we obtain id before we give it
@@ -313,13 +333,13 @@ class deliveryCtrl {
         try {
             //if any parameter doesn't exist we create it
             const vacio = await Delivery.findById(req.params.id);
-            if(vacio === null){
+            if (vacio === null) {
                 res.status(400).json({
                     code: 404,
                     status: 'Delivery no existe'
                 });
             } else {
-                await Delivery.findByIdAndUpdate(id, { $set: modifiedDelivery }, {new: true})
+                await Delivery.findByIdAndUpdate(id, { $set: modifiedDelivery }, { new: true })
                 res.status(200).json({
                     status: 'Delivery actualizado correctamente'
                 });
@@ -336,10 +356,10 @@ class deliveryCtrl {
         console.log(req.params);
         try {
             const delivery = await Delivery.findById(req.params.id)
-            .populate('lotItem')
-            .populate('destinationItem',{'userName':1,'email':1,'location':1,'role':1})
-            .populate('businessItem',{'userName':1,'email':1,'location':1,'role':1})
-            .populate('userItem',{'userName':1,'email':1,'location':1,'role':1});
+                .populate('lotItem')
+                .populate('destinationItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 })
+                .populate('businessItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 })
+                .populate('userItem', { 'userName': 1, 'email': 1, 'location': 1, 'role': 1 });
             res.json(delivery);
         } catch (err) {
             res.status(500).json({
@@ -348,7 +368,7 @@ class deliveryCtrl {
         }
     }
 
-    
+
 }
 
 export default new deliveryCtrl();
