@@ -7,7 +7,11 @@ GET http://localhost:3000/api/users
 GET http://localhost:3000/api/users/getNumByRole/Company
 
 ###
-GET http://localhost:3000/api/users/60c4f100aaaa0a33e4e27ebd
+GET http://localhost:3000/api/users/60c4f116aaaa0a33e4e27ebe
+
+###
+GET http://localhost:3000/api/users/chat/60c4f116aaaa0a33e4e27ebe
+
 
 ###
 PUT http://localhost:3000/api/users/60a84313cd1c2549f80c1c02
