@@ -191,16 +191,17 @@ class deliveryCtrl {
             console.log(lot + 'lo tengo'); */
 
             //QUiero saber si tengo la id de businessItem en: lot.businessItem
-            console.log('lo tengo' + lot?.businessItem + 'lo tengo');
+            console.log('lo tengo::::' + lot?.businessItem + 'lo tengo');
+            console.log('lo tengo::::' + lot + 'lo tengo');
 
-            const business: IUser | null = await User.findById(lot?.businessItem);
+            const business: IUser | null = await User.findById(lot?.businessItem._id);
 
             const newDelivery: IDelivery = new Delivery({
             
                 lotItem: lot,
                 originLocation: business?.location,
                 destinationLocation: user?.location,
-                destinationItem: user?.location,
+                destinationItem: user,
                 deliveryDate: req.body.deliveryDate,
                 isPicked: req.body.isPicked,
                 isDelivered: req.body.isDelivered,
@@ -210,7 +211,7 @@ class deliveryCtrl {
                 userItem: user,
                 description: lot?.info
             });
-            console.log(newDelivery);
+            console.log( 'Info del newDelivery::::::' + newDelivery);
             //this takes some time!
             await newDelivery.save();
             res.status(200).json({
