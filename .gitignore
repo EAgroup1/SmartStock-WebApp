@@ -2,7 +2,3 @@ backend/node_modules
 backend/package-lock.json
 backend/.env
 backend/api.rest
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/SmartStock-WebApp.iml
-/.idea/vcs.xml
