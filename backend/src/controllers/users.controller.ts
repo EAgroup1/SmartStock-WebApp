@@ -161,7 +161,7 @@ class userCtrl {
         //search the params ({email: email}) ---> next steps encrypt again
         try {
         //we wait to the search in database (async-await)
-        const user = await User.findOne({email});
+        const user = await User.findOne({email}).populate('friends');
         if(!user) return res.status(401).json({status:"This email doesn't exist!"});
         //& password validator
         const correctPassword: boolean = await user.validatePassword(password);
@@ -175,8 +175,10 @@ class userCtrl {
             token: token,
             userName: user.userName,
             role: user.role,
-            location: user.location
+            location: user.location,
+            friends: user.friends
         }
+        console.log(_aux);
         res.status(200).json(_aux);
         } catch (err) {
             res.status(500).json({

@@ -1,4 +1,16 @@
 //CRUD de USER
+###
+GET http://localhost:3000/api/users/chat/60ccc9c5bd290717f88511d6
+
+###
+PUT http://localhost:3000/api/users/60ccc9c5bd290717f88511d6
+content-Type: application/json
+
+{
+    "friends": "60ccc9c5bd290717f88511d6"
+} 
+
+###
 
 ###
 GET http://localhost:3000/api/users
