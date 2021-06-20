@@ -16,6 +16,7 @@ export interface IUser extends Document {
     avatarCloudBinary?: string,
     resetLink?: string,
     friends?: string[],
+    notifications: Array<any>;
     validatePassword(password: string): Promise<boolean>
 }
 
@@ -34,7 +35,8 @@ const userSchema = new Schema({
     avatarCloudBinary: {type: String, required: false},
     //reset pass--->
     resetLink: { type: String, required: false },
-    friends: [{ type: String, required: false}]
+    friends: [{ type: String, required: false}],
+    notifications: [{ type: Object, ref: 'Notification'}]
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,

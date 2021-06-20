@@ -160,6 +160,22 @@ class lotCtrl {
         }
     }
 
+    getLotsByChart = async (req: Request, res: Response) => {
+        console.log(req.params.id);
+        try {
+            const lot: ILot[] = await Lot.find({ "userItem": Object(req.params.id) });
+            var data = [];
+            for(var i in lot){
+                data.push(lot[i].name, parseInt(lot[i].qty)*parseInt(lot[i].price));
+            }
+            res.status(200).send(data);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
     getLotsByBusinessId = async (req: Request, res: Response) => {
         try {
             const lot: ILot[] = await Lot.find({ "businessItem": Object(req.params.id) }).sort({ name: 1 })
@@ -174,28 +190,21 @@ class lotCtrl {
     }
 
     //new functions for the test
-    getNumLotsById = async (req: Request, res: Response) => {
-        console.log(req.params);
-        try {
-            //const lot: ILot[] = await Lot.find({ "name": req.params.name })
-            const numByRole: number = await User.find({ "role": req.params.role }).count();
-            //if anything
-            //const numAll = await User.find().count();
-            res.status(200).send(numByRole.toString());
-        } catch (err) {
-            res.status(500).json({
-                status: `${err.message}`
-            });
-        }
-    }
+    // getNumLotsByUserId = async (req: Request, res: Response) => {
+    //     console.log(req.params);
+    //     try {
+    //         const numByRole: number = await Lot.find({ "userItem": req.params.id }).count();
+    //         res.status(200).send(numByRole);
+    //     } catch (err) {
+    //         res.status(500).json({
+    //             status: `${err.message}`
+    //         });
+    //     }
+    // }
 
     getNumAll = async (req: Request, res: Response) => {
-        //console.log(req.params);
         try {
-            //const lot: ILot[] = await Lot.find({ "name": req.params.name })
-            const numAll: number = await User.find().count();
-            //if anything
-            //const numAll = await User.find().count();
+            const numAll: number = await Lot.find().count();
             res.status(200).send(numAll.toString());
         } catch (err) {
             res.status(500).json({
@@ -209,7 +218,6 @@ class lotCtrl {
             const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
             .populate('businessItem')
             .populate('userItem');
-            // res.json(lot);
             lot.sort((a: any, b: any) => {
                 return a.price - b.price;
             });
@@ -226,7 +234,6 @@ class lotCtrl {
             const lot: ILot[] = await Lot.find({"userItem":Object(req.params.id)})
             .populate('businessItem')
             .populate('userItem');
-            // res.json(lot);
             lot.sort((a: any, b: any) => {
                 return a.qty - b.qty;
             });

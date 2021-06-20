@@ -19,5 +19,6 @@ deliveryRouter.get('/deliverer/notAssigned', deliveryCtrl.getNotAssigned);
 
 deliveryRouter.get('/:id/isAssigned', deliveryCtrl.getAssigned);
 deliveryRouter.put('/assigned/:id', deliveryCtrl.setAssigned);
+deliveryRouter.get('/getDeliveriesByChart/:id', deliveryCtrl.getDeliveriesByChart);
 
 export default deliveryRouter;
