@@ -15,7 +15,9 @@ export interface IUser extends Document {
     avatar?: string,
     avatarCloudBinary?: string,
     resetLink?: string,
-    friends?: string[],
+    friends?: IUser[],
+    clat?: number,
+    clng?:number,
     validatePassword(password: string): Promise<boolean>
 }
 
@@ -29,12 +31,14 @@ const userSchema = new Schema({
     signUpWithFacebook: { type: Boolean, required: false, default: false},
     location: { type: String, required: false},
     balance: { type: Number, required: false, default: '0'},
+    clat: { type: Number, required: false, default: '0'},
+    clng: { type: Number, required: false, default: '0'},
     //Guys we need a picture for the user! ---> location avatar
     avatar: { type: String, required: false},
     avatarCloudBinary: {type: String, required: false},
     //reset pass--->
-    resetLink: { type: String, required: false },
-    friends: [{ type: String, required: false}]
+    resetLink: { type: String, required: false, default: 'link' },
+    friends: [{ type: mongoose.Schema.Types.ObjectId, required: false}]
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,

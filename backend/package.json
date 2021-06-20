@@ -46,7 +46,7 @@
     "@types/cors": "^2.8.10",
     "@types/dotenv": "^8.2.0",
     "@types/ejs": "^3.0.6",
-    "@types/express": "^4.17.11",
+    "@types/express": "^4.17.12",
     "@types/express-session": "^1.17.3",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/lodash": "^4.14.170",

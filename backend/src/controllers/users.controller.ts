@@ -129,6 +129,29 @@ class userCtrl {
         }
     }
 
+
+    //GET USER CHAT (popula los amigos)
+    getUserChat = async (req: Request, res: Response) => {
+
+        console.log(req.params);
+        try {
+            const user = await User.findById(req.params.id).populate('friends');
+            if (user === null) {
+                res.status(400).json({
+                    code: 404,
+                    status: 'User no existe'
+                });
+
+            } else {
+                res.json(user);
+            }
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
     //LOGIN OF ONE USER
     logIn = async (req: Request, res: Response) => {
 
@@ -137,7 +160,7 @@ class userCtrl {
         //search the params ({email: email}) ---> next steps encrypt again
         try {
         //we wait to the search in database (async-await)
-        const user = await User.findOne({email});
+        const user = await User.findOne({email}).populate('friends');
         if(!user) return res.status(401).json({status:"This email doesn't exist!"});
         //& password validator
         const correctPassword: boolean = await user.validatePassword(password);
@@ -151,8 +174,10 @@ class userCtrl {
             token: token,
             userName: user.userName,
             role: user.role,
-            location: user.location
+            location: user.location,
+            friends: user.friends
         }
+        console.log(_aux);
         res.status(200).json(_aux);
         } catch (err) {
             res.status(500).json({
@@ -191,11 +216,11 @@ class userCtrl {
         console.log(req.body);
 
         //we extract the info of the json object
-        const { email, userName, password, location} = req.body;
+        const { email, userName, password} = req.body;
 
         //in the next steps, we encrypt these params
         try {
-        const newSignUpUser: IUser = new User({email, userName, password, location});
+        const newSignUpUser: IUser = new User({email, userName, password});
         await newSignUpUser.save();
     
         //then, we create a token (payload, variable & options)
@@ -208,8 +233,7 @@ class userCtrl {
         const _aux = {
             _id: newSignUpUser._id,
             token: token,
-            userName: newSignUpUser.userName,
-            location: newSignUpUser.location
+            userName: newSignUpUser.userName
         }
         console.log(_aux);
         res.status(200).json(_aux);

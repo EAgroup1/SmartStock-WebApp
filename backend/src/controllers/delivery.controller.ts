@@ -1,10 +1,13 @@
 import Delivery, { IDelivery } from '../models/delivery';
 import { Request, Response } from 'express';
 import User, { IUser } from '../models/user';
+import user from '../models/user';
+import Lot, { ILot } from '../models/lot';
 
 
 
 class deliveryCtrl {
+
     //CRUD
     //GETALL
     getAllDeliveries = async (_req: Request, res: Response) => {
@@ -60,12 +63,12 @@ class deliveryCtrl {
     getReadyDeliveries = async (req: Request, res: Response) => {
         console.log(req.body);
         try {
-            const deliveries: IDelivery[] = await Delivery.find({ "userItem": Object(req.params.id), "isReady": true })
-                .populate({ path: 'lotItem', populate: { path: 'userItem' } })
-                .populate({ path: 'lotItem', populate: { path: 'businessItem' } })
-                .populate('destinationItem')
-                .populate('businessItem')
-                .populate('userItem');
+             const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":true, "isDelivered":false})
+            .populate({path:'lotItem', populate:{path:'userItem'}})
+            .populate({path:'lotItem', populate:{path:'businessItem'}})
+            .populate('destinationItem')
+            .populate('businessItem')
+            .populate('userItem');
 
             console.log(deliveries);
             res.json(deliveries);
@@ -120,8 +123,8 @@ class deliveryCtrl {
             });
         }
     }
-    //get assigned deliveries for deliverer
-    getAssigned = async (req: Request, res: Response) => {
+    //get assigned deliveries of the deliverer
+    getAssigned = async(req: Request, res: Response)=> {
         try {
             const vacio = await User.findById(req.params.id)
             if (vacio === null) {
@@ -131,12 +134,12 @@ class deliveryCtrl {
                     status: 'User no existe?'
                 });
             }
-            const deliveries: IDelivery[] = await Delivery.find({ "userItem": Object(req.params.id), "isAssigned": true })
-                .populate({ path: 'lotItem', populate: { path: 'userItem' } })
-                .populate({ path: 'lotItem', populate: { path: 'businessItem' } })
-                .populate('destinationItem')
-                .populate('businessItem')
-                .populate('userItem');
+            const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id),"isAssigned":true, "isDelivered":false})
+            .populate({path:'lotItem', populate:{path:'userItem'}})
+            .populate({path:'lotItem', populate:{path:'businessItem'}})
+            .populate('destinationItem')
+            .populate('businessItem')
+            .populate('userItem');
 
             console.log(deliveries);
             res.json(deliveries);
@@ -171,27 +174,115 @@ class deliveryCtrl {
             });
         }
     }
+    //set is picked delivery for deliverer
+    setIsPicked = async(req: Request, res: Response)=> {
+        console.log(req.params.id);
+        try {
+            const vacio = await Delivery.findById(req.params.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'Delivery no existe'
+                });
+            } else {
+            await Delivery.findByIdAndUpdate(req.params.id, {"isPicked":true})
+            res.status(200).json({
+                status: 'Delivery actualizado correctamente'
+            });
+         }           
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+    //set is delivered
+    setIsDelivered = async(req: Request, res: Response)=> {
+        console.log(req.params.id);
+        try {
+            const vacio = await Delivery.findById(req.params.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'Delivery no existe'
+                });
+            } else {
+            await Delivery.findByIdAndUpdate(req.params.id, {"isDelivered":true})
+            res.status(200).json({
+                status: 'Delivery actualizado correctamente'
+            });
+            }           
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    setTime = async(req: Request, res: Response)=> {
+        console.log(req.params.id);
+        try {
+            const vacio = await Delivery.findById(req.params.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'Delivery no existe'
+                });
+            } else {
+            await Delivery.findByIdAndUpdate(req.params.id, {"time":req.body.time})
+            res.status(200).json({
+                status: 'Delivery actualizado correctamente'
+            });
+            }           
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
 
     //POST CREATEONE
     createDelivery = async (req: Request, res: Response) => {
-        console.log(req.body)
+        /* console.log(req.body) */
         try {
             //we create this object to not take delivery's id
+            const user: IUser | null = await User.findById(req.body.userItem);
+
+            const lot: ILot | null = await Lot.findById(req.body.lotItem)
+            .populate('businessItem')
+            .populate('userItem');
+
+            /* console.log(lot + 'lo tengo');
+            console.log(lot + 'lo tengo');
+            console.log(lot + 'lo tengo'); */
+
+            //QUiero saber si tengo la id de businessItem en: lot.businessItem
+            console.log('lo tengo::::' + lot?.businessItem + 'lo tengo');
+            console.log('lo tengo::::' + lot + 'lo tengo');
+
+            const business: IUser | null = await User.findById(lot?.businessItem._id);
+
+       
             const newDelivery: IDelivery = new Delivery({
-                lotItem: req.body.lotItem,
-                originLocation: req.body.originLocation,
-                destinationLocation: req.body.destinationLocation,
-                destinationItem: req.body.destinationItem,
+            
+                lotItem: lot,
+                originLocation: business?.location,
+                destinationLocation: user?.location,
+                destinationItem: user,
                 deliveryDate: req.body.deliveryDate,
                 isPicked: req.body.isPicked,
                 isDelivered: req.body.isDelivered,
                 isReady: req.body.isReady,
-                businessItem: req.body.businessItem,
+                businessItem: business,
                 isAssigned: req.body.isAssigned,
-                userItem: req.body.userItem,
-                description: req.body.description
+                userItem: user,
+                description: lot?.info
             });
-            console.log(newDelivery);
+            console.log( 'Info del newDelivery::::::' + newDelivery);
             //this takes some time!
             await newDelivery.save();
             res.status(200).json({
