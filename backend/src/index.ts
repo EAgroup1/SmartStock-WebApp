@@ -21,21 +21,24 @@ let io = require('socket.io')(server,options);
 
 io.on('connection', (socket: any) => {
     console.log("Socket listening with id: "+socket.id);
-    socket.emit('MyReceiverSocket',socket.id);
-    socket.on('escribiendo',(data: any) =>{
-        console.log("Listening chat with id: "+socket.id);
-        //socket.in(data).emit('escribiendo',data);
-        socket.to(data).emit('escribiendo',socket.id);
-        //socket.id;
+
+    socket.on('escribiendo',(chatID: any) =>{
+        socket.to(chatID).emit('escribiendo',chatID);
     });
     socket.on('newmsg',(data: any) =>{
-        console.log("New message from "+socket.id);
         console.log(data);
-        socket.to(data.socket).emit('newmsg', data);
+        console.log(data.room);
+        socket.to(data.room).emit('newmsg', data);
     });
+    //actually disconnects automatically: do not remove "porsiacaso"
     socket.on('disconnect', (data: any) => {
         socket.to(data).disconnect();
         console.log("Disconnected chat with id: "+socket.id);
+    });
+    socket.on('joinrooms', (rooms: any) =>{
+        socket.join(rooms);
+        console.log(rooms);
+        console.log("Joined to rooms");
     });
 });
 
