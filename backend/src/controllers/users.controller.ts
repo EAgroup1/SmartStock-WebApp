@@ -6,9 +6,8 @@ import jwt from 'jsonwebtoken';
 import mailgun from 'mailgun-js';
 import _ from 'lodash';
 //if we see that JWT_SECRET & RESETJWT_SECRET fail we use also the following structure 
-let DOMAIN: string = process.env.DOMAIN!;
-let APIKEY: string = process.env.MAILGUN_APIKEY!;
-const mg = mailgun({apiKey: APIKEY, domain: DOMAIN});
+
+const mg = mailgun({apiKey: "027fc2b6d88bebbfc0b38212021b9bfa-1d8af1f4-de2fa044", domain: "sandbox20d3016d024447ea93bd7082c2fb9728.mailgun.org"});
 
 class userCtrl {
 
