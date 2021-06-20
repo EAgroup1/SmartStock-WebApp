@@ -7,7 +7,7 @@ PUT http://localhost:3000/api/users/60ccc9c5bd290717f88511d6
 content-Type: application/json
 
 {
-    "friends": "60ccc9c5bd290717f88511d6"
+    "friends": "60ccca5dbd290717f88511d7"
 } 
 
 ###
