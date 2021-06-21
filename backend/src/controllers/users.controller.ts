@@ -215,11 +215,11 @@ class userCtrl {
         console.log(req.body);
 
         //we extract the info of the json object
-        const { email, userName, password, location} = req.body;
+        const { email, userName, password} = req.body;
 
         //in the next steps, we encrypt these params
         try {
-        const newSignUpUser: IUser = new User({email, userName, password, location});
+        const newSignUpUser: IUser = new User({email, userName, password});
         await newSignUpUser.save();
     
         //then, we create a token (payload, variable & options)
@@ -232,8 +232,7 @@ class userCtrl {
         const _aux = {
             _id: newSignUpUser._id,
             token: token,
-            userName: newSignUpUser.userName,
-            location: newSignUpUser.location
+            userName: newSignUpUser.userName
         }
         console.log(_aux);
         res.status(200).json(_aux);
@@ -406,6 +405,23 @@ class userCtrl {
             });
         }
     }
+
+    getUsersByRole = async (req: Request, res: Response) => {
+        console.log(req.params);
+        try {
+            //const lot: ILot[] = await Lot.find({ "name": req.params.name })
+            const usersByRole: IUser[] = await User.find({ "role": req.params.role });
+            //if anything
+            //const numAll = await User.find().count();
+            res.status(200).send(usersByRole);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    
 }
 
 export default new userCtrl();

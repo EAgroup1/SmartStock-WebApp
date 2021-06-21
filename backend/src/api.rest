@@ -7,6 +7,10 @@ GET http://localhost:3000/api/users
 GET http://localhost:3000/api/users/getNumByRole/Company
 
 ###
+
+GET http://localhost:3000/api/users/getUsersByRole/Storage
+
+###
 GET http://localhost:3000/api/users/60c4f116aaaa0a33e4e27ebe
 
 ###
@@ -187,4 +191,4 @@ content-Type: application/json
     "description": "Ahora pica al 4o que el del 1o no viene"
 } 
 ###
-GET http://localhost:3000/api/delivery/609c54bda34787271456871e
+GET http://localhost:3000/api/delivery/60d0b532a20ce4673c5bc06b

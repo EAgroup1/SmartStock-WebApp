@@ -12,9 +12,10 @@ export interface IDelivery extends mongoose.Document {
     isDelivered?: boolean,
     isReady?: boolean,
     businessItem: IUser,
-    isAssigned?: boolean,
-    userItem: IUser,
-    description?: string
+    isAssigned: boolean,
+    userItem?: IUser,
+    description?: string,
+    time?: string,
 }
 
 const deliverySchema = new Schema({
@@ -29,7 +30,8 @@ const deliverySchema = new Schema({
     businessItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
     isAssigned: { type: Boolean, required: false, default: false},
     userItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
-    description: { type: String, required: false}
+    description: { type: String, required: false, default: '',
+    time: { type: String, required: false, default: ''},}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,

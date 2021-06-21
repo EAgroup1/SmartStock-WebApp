@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import delivery from 'models/delivery';
 import deliveryController from '../controllers/delivery.controller';
 import deliveryCtrl from '../controllers/delivery.controller';
 
@@ -19,5 +20,8 @@ deliveryRouter.get('/deliverer/notAssigned', deliveryCtrl.getNotAssigned);
 
 deliveryRouter.get('/:id/isAssigned', deliveryCtrl.getAssigned);
 deliveryRouter.put('/assigned/:id', deliveryCtrl.setAssigned);
+deliveryRouter.put('/picked/:id', deliveryCtrl.setIsPicked);
+deliveryRouter.put('/delivered/:id', deliveryCtrl.setIsDelivered);
+deliveryRouter.put('/time/:id', deliveryCtrl.setTime);
 
 export default deliveryRouter;
