@@ -366,7 +366,34 @@ class deliveryCtrl {
         }
     }
 
-
+    getDeliveriesByChart = async (req: Request, res: Response) => {
+        console.log(req.params.id);
+        try {
+            const delivery: IDelivery[] = await Delivery.find({ "userItem": Object(req.params.id) });
+            var data = [];
+            var numDel: number;
+            var obj: number;
+            for(obj = 1; obj<13; obj++){
+                numDel = 0;
+                for(var i in delivery){
+                    var date: string = delivery[i].deliveryDate!;
+                    var month: string = date.slice(3,-5);
+                    if(month.charAt(0) == "0") month.slice(1,0);
+                    if(month == obj.toString()) numDel++;
+                }
+                let modelData = {
+                    month: obj,
+                    orders: numDel
+                };
+                data.push(modelData);
+            }
+            res.json(data);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
 }
 
 export default new deliveryCtrl();

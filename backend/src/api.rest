@@ -1,4 +1,16 @@
 //CRUD de USER
+###
+GET http://localhost:3000/api/users/chat/60ccc9c5bd290717f88511d6
+
+###
+PUT http://localhost:3000/api/users/60ccc9c5bd290717f88511d6
+content-Type: application/json
+
+{
+    "friends": "60ccca5dbd290717f88511d7"
+} 
+
+###
 
 ###
 GET http://localhost:3000/api/users
@@ -18,11 +30,11 @@ GET http://localhost:3000/api/users/chat/60c4f116aaaa0a33e4e27ebe
 
 
 ###
-PUT http://localhost:3000/api/users/60a84313cd1c2549f80c1c02
+PUT http://localhost:3000/api/users/60c4fca0488f893984a0f410
 content-Type: application/json
 
 {
-    "email": "etc@etc.com"
+    "location": "etc@etc.com"
 } 
 
 ###
@@ -55,8 +67,8 @@ POST http://localhost:3000/api/users/logIn
 content-Type: application/json
 
 {
-    "email": "hector.fernandez.granja@estudiantat.upc.edu",
-    "password": "hola"
+    "email": "manel@upc.edu",
+    "password": "manel12345"
 }
 
 ###
@@ -90,10 +102,13 @@ GET http://localhost:3000/api/lots/All
 GET http://localhost:3000/api/lots/getByUser/60b684372ffee403ecae5fa2
 
 ###
-GET http://localhost:3000/api/lots/getByUser/60a8379570e909276c35b7c0
+GET http://localhost:3000/api/lots/getByUser/60c4fca0488f893984a0f410
 
 ###
-GET http://localhost:3000/api/lots/getNumAll
+GET http://localhost:3000/api/lots/getLotsByChart/60c4fca0488f893984a0f410
+
+###
+GET http://localhost:3000/api/lots/gets/getNumAll
 
 ###
 GET http://localhost:3000/api/lots/getSortLotsByAscPrice/60a8379570e909276c35b7c0
@@ -106,16 +121,16 @@ POST http://localhost:3000/api/lots
 content-Type: application/json
 
 {
-    "name": "otro5",
+    "name": "yogur",
     "dimensions": "60x30x15",
     "weight": 60,
-    "qty": 40,
-    "price": 12,
+    "qty": 30,
+    "price": 6,
     "isFragile": true,
     "info": "otro5",
     "minimumQty": 40,
-    "businessItem": "60b0b73999e1c70758c73b7b",
-    "userItem":"60a8379570e909276c35b7c0"
+    "businessItem": "60a900e05be6b70a807f5f3e",
+    "userItem":"60c4fca0488f893984a0f410"
 } 
 
 ###
@@ -150,10 +165,6 @@ GET http://localhost:3000/api/lots/get/Leche
 
 ### 
 GET http://localhost:3000/api/delivery/
-
-###
-GET http://localhost:3000/api/delivery/getNumAll
-
 ###
 GET http://localhost:3000/api/delivery/60b0b73999e1c70758c73b7b/deliveries
 ###
@@ -190,5 +201,29 @@ content-Type: application/json
     "userItem": "6091d6782d3a564454063112",
     "description": "Ahora pica al 4o que el del 1o no viene"
 } 
+
+###
+PUT http://localhost:3000/api/delivery/60a9327a546e2a1cfc07cebc
+content-Type: application/json 
+
+{
+    "userItem": "6091d6782d3a564454063112"
+}
+
+###
+GET http://localhost:3000/api/delivery/609c54bda34787271456871e
+
+###
+GET http://localhost:3000/api/delivery/getDeliveriesByChart/6091d6782d3a564454063112
+
+###
+POST http://localhost:3000/api/notifications/me
+content-Type: application/json 
+
+{
+    "user": "60c4fca0488f893984a0f410",
+    "getlength": "4"
+}
+
 ###
 GET http://localhost:3000/api/delivery/60d0b532a20ce4673c5bc06b
