@@ -69,8 +69,8 @@ POST http://localhost:3000/api/users/logIn
 content-Type: application/json
 
 {
-    "email": "hector.fernandez.granja@estudiantat.upc.edu",
-    "password": "hola"
+    "email": "manel@upc.edu",
+    "password": "manel12345"
 }
 
 ###
@@ -226,3 +226,15 @@ GET http://localhost:3000/api/delivery/609c54bda34787271456871e
 
 ###
 GET http://localhost:3000/api/delivery/getDeliveriesByChart/6091d6782d3a564454063112
+
+###
+POST http://localhost:3000/api/notifications/me
+content-Type: application/json 
+
+{
+    "user": "60c4fca0488f893984a0f410",
+    "getlength": "4"
+}
+
+###
+POST http://localhost:3000/api/notifications/del

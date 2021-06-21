@@ -13,12 +13,12 @@ function getMyNotifications(req:Request, res:Response): void {
     })
 }
 
-async function deleteNotification(type: string, destino: string, origen: any, otros?: string): Promise<any> {
-    await User.findById(destino, {notifications: 1}).then(data => {
+async function deleteNotification(type: string, destiny: string, origin: any, others?: string): Promise<any> {
+    await User.findById(destiny, {notifications: 1}).then(data => {
         data?.notifications.forEach((notification) => {
-            if(notification.type == type && notification.origen == origen){
-                if (notification.type == "Cola"){
-                    if (notification.otros == otros)
+            if(notification.type == type && notification.origin == origin){
+                if (notification.type == "Queue"){
+                    if (notification.others == others)
                         data.notifications.splice(data.notifications.indexOf(notification), 1);
                 }
 
@@ -26,7 +26,7 @@ async function deleteNotification(type: string, destino: string, origen: any, ot
                     data.notifications.splice(data.notifications.indexOf(notification), 1);
             }
         });
-        return User.updateOne({"_id": destino}, {$set: {notifications: data?.notifications}})
+        return User.updateOne({"_id": destiny}, {$set: {notifications: data?.notifications}})
     })
 }
 
@@ -35,7 +35,7 @@ async function delNotification(req: Request, res: Response){
 
    await User.findById(req.user, {notifications: 1}).then(data => {
     data?.notifications.forEach((notification) => {
-        if(notification.type == notificationbody.type && notification.origen == notificationbody.origen){
+        if(notification.type == notificationbody.type && notification.origin == notificationbody.origin){
             data.notifications.splice(data.notifications.indexOf(notification), 1);
             User.updateOne({"_id": req.user}, {$set: {notifications: data?.notifications}}).then(data => {
                 return res.status(200).json(data);
