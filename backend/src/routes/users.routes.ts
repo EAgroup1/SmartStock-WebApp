@@ -19,6 +19,8 @@ usersRouter.get('/', usersCtrl.getAllUsers);
 usersRouter.post('/', usersCtrl.createUser);
 usersRouter.delete('/:id', usersCtrl.deleteUser);
 usersRouter.put('/:id', usersCtrl.updateUser);
+usersRouter.put('/:id/putfriend', usersCtrl.putFriend);
+usersRouter.put('/:id/deletefriend', usersCtrl.deleteFriend);
 usersRouter.get('/:id', usersCtrl.getUser);
 usersRouter.get('/chat/:id', usersCtrl.getUserChat);
 
