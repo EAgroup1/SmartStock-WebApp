@@ -383,9 +383,13 @@ class deliveryCtrl {
                     if(month.charAt(0) == "0") month.slice(1,0);
                     if(month == obj.toString()) numDel++;
                 }
-                data.push(obj, numDel);
+                let modelData = {
+                    month: obj,
+                    orders: numDel
+                };
+                data.push(modelData);
             }
-            res.status(200).send(data);
+            res.json(data);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`

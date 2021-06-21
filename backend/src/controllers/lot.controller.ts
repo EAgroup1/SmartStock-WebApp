@@ -166,9 +166,13 @@ class lotCtrl {
             const lot: ILot[] = await Lot.find({ "userItem": Object(req.params.id) });
             var data = [];
             for(var i in lot){
-                data.push(lot[i].name, parseInt(lot[i].qty)*parseInt(lot[i].price));
+                let modelData = {
+                    name: lot[i].name,
+                    money: parseInt(lot[i].qty)*parseInt(lot[i].price)
+                };
+                data.push(modelData);
             }
-            res.status(200).send(data);
+            res.json(data);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
