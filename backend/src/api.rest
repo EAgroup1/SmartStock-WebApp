@@ -257,7 +257,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQxMTg0N
 POST http://localhost:3000/api/notifications/del
 content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQxMTg0NjJiMzQzZDNjYThiOWY2ZWQiLCJpYXQiOjE2MjQzMTU5NzYsImV4cCI6MTYyNDQwMjM3Nn0.D5cvJpbZY7CqWALTZmKFFNj8WmQZiEL-4j3d9RqHrjs 
+
 {
-    "type": "profile",
-	"origin": "60a901215be6b70a807f5f40"
+	"notification": [
+		{"type": "profiles"},
+		{"origin": "60a901215be6b70a807f5f40"}
+	]
+}
+
+###
+POST http://localhost:3000/api/notifications/add
+{
+    "type": "other",
+    "description": "other refresh the page",
+    "status": 0,
+    "origin": "60a901215be6b70a807f5f40",
+    "image": "",
+    "others": ""
 }
