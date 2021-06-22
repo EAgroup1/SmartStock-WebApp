@@ -44,7 +44,7 @@ class deliveryCtrl {
             });
         }
         try {
-            const deliveries: IDelivery[] = await Delivery.find({ "userItem": Object(req.params.id), "isReady": false })
+            const deliveries: IDelivery[] = await Delivery.find({ "userItem": Object(req.params.id), "isReady": false, "casa": true})
                 .populate({ path: 'lotItem', populate: { path: 'userItem' } })
                 .populate({ path: 'lotItem', populate: { path: 'businessItem' } })
                 .populate('destinationItem')
@@ -63,7 +63,7 @@ class deliveryCtrl {
     getReadyDeliveries = async (req: Request, res: Response) => {
         console.log(req.body);
         try {
-             const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":true, "isDelivered":false})
+             const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":true, "isDelivered":false, "casa":false})
             .populate({path:'lotItem', populate:{path:'userItem'}})
             .populate({path:'lotItem', populate:{path:'businessItem'}})
             .populate('destinationItem')
@@ -244,6 +244,29 @@ class deliveryCtrl {
         }
     }
 
+    setCasa = async(req: Request, res: Response)=> {
+        console.log(req.params.id);
+        try {
+            const vacio = await Delivery.findById(req.params.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'Delivery no existe'
+                });
+            } else {
+            await Delivery.findByIdAndUpdate(req.params.id, {"casa":true})
+            res.status(200).json({
+                status: 'Delivery actualizado correctamente'
+            });
+            }           
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
 
     //POST CREATEONE
     createDelivery = async (req: Request, res: Response) => {
@@ -278,14 +301,13 @@ class deliveryCtrl {
                 businessItem: business,
                 isAssigned: req.body.isAssigned,
                 userItem: user,
-                description: lot?.info
+                description: lot?.info,
+                casa: req.body.casa
             });
             console.log( 'Info del newDelivery::::::' + newDelivery);
             //this takes some time!
             await newDelivery.save();
-            res.status(200).json({
-                status: 'Delivery Saved Succesfully'
-            });
+            res.status(200).json(newDelivery);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
