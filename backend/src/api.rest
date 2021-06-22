@@ -70,11 +70,11 @@ content-Type: application/json
 DELETE http://localhost:3000/api/users/:id
 
 ###
-PUT http://localhost:3000/api/users/60be61ae74ee9a25041a649e
+PUT http://localhost:3000/api/users/60ccc9c5bd290717f88511d6/putfriend
 content-Type: application/json
 
 {
-    "role": "User"
+    "friend": "60ce4ef2a1b5ba1d48455a5f"
 
 } 
 
