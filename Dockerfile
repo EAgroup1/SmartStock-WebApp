@@ -6,6 +6,7 @@ RUN npm install
 # Create app directory
 WORKDIR /usr/src/app/backend
 RUN npm install
+RUN npm -version
 
 WORKDIR /usr/src/app
 
@@ -16,10 +17,13 @@ COPY ./backend/package*.json ./
 
 WORKDIR /usr/src/app/backend
 
-RUN npm run build
 # If you are building your code for production
-# RUN npm ci --only=production
+RUN npm ci --only=production
+
+RUN npm run build
 
 # Bundle app source
 EXPOSE 3000
-CMD [ "node", "./build/src/server.js" ]
+EXPOSE 4000
+#CMD [ "node", "./build/src/server.js" ]
+CMD [ "npm", "run", "start" ]
