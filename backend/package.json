@@ -6,7 +6,7 @@
   "scripts": {
     "ts:node": "ts-node src/index.ts",
     "clean": "rm -rf build",
-    "build": "tsc -w",
+    "build": "tsc",
     "start": "node build/src",
     "dev": "nodemon"
   },
