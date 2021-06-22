@@ -12,6 +12,7 @@ usersRouter.post('/reset/:resetLink', usersCtrl.resetPassword);
 
 usersRouter.get('/getNumByRole/:role', usersCtrl.getNumByRole);
 usersRouter.get('/getNumAll', usersCtrl.getNumAll);
+usersRouter.get('/getUsersByRole/:role', usersCtrl.getUsersByRole);
 
 //we put all routes in this file & we will se in the future
 usersRouter.get('/', usersCtrl.getAllUsers);
@@ -29,7 +30,7 @@ usersRouter.post('/logInGoogle', usersCtrl.logInGoogle);
 usersRouter.post('/signUp', usersCtrl.signUp);
 
 //test passport (Headers-Authorization: Bearer token)
-usersRouter.get('/special', passport.authenticate('jwt', {session: false}), (req, res) =>{
+usersRouter.get('/special/checkToken', passport.authenticate('jwt', {session: false}), (req, res) =>{
     res.send('works!');
 })
 

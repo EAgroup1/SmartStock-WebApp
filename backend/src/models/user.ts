@@ -15,6 +15,7 @@ export interface IUser extends Document {
     avatar?: string,
     avatarCloudBinary?: string,
     resetLink?: string,
+    notifications: Array<any>;
     friends?: IUser[],
     clat?: number,
     clng?:number,
@@ -37,6 +38,7 @@ const userSchema = new Schema({
     avatar: { type: String, required: false},
     avatarCloudBinary: {type: String, required: false},
     //reset pass--->
+    notifications: [{ type: Object, ref: 'Notification'}],
     resetLink: { type: String, required: false, default: 'link' },
     friends: [{ type: mongoose.Schema.Types.ObjectId, required: false}]
 }, {

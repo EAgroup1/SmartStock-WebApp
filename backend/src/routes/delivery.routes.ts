@@ -20,8 +20,10 @@ deliveryRouter.get('/deliverer/notAssigned', deliveryCtrl.getNotAssigned);
 
 deliveryRouter.get('/:id/isAssigned', deliveryCtrl.getAssigned);
 deliveryRouter.put('/assigned/:id', deliveryCtrl.setAssigned);
+deliveryRouter.get('/getDeliveriesByChart/:id', deliveryCtrl.getDeliveriesByChart);
 deliveryRouter.put('/picked/:id', deliveryCtrl.setIsPicked);
 deliveryRouter.put('/delivered/:id', deliveryCtrl.setIsDelivered);
 deliveryRouter.put('/time/:id', deliveryCtrl.setTime);
+deliveryRouter.put('/casa/:id', deliveryCtrl.setCasa);
 
 export default deliveryRouter;

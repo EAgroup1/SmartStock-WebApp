@@ -44,7 +44,7 @@ class deliveryCtrl {
             });
         }
         try {
-            const deliveries: IDelivery[] = await Delivery.find({ "userItem": Object(req.params.id), "isReady": false })
+            const deliveries: IDelivery[] = await Delivery.find({ "userItem": Object(req.params.id), "isReady": false, "casa": true})
                 .populate({ path: 'lotItem', populate: { path: 'userItem' } })
                 .populate({ path: 'lotItem', populate: { path: 'businessItem' } })
                 .populate('destinationItem')
@@ -63,7 +63,7 @@ class deliveryCtrl {
     getReadyDeliveries = async (req: Request, res: Response) => {
         console.log(req.body);
         try {
-             const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":true, "isDelivered":false})
+             const deliveries: IDelivery[] = await Delivery.find({"userItem":Object(req.params.id), "isReady":true, "isDelivered":false, "casa":false})
             .populate({path:'lotItem', populate:{path:'userItem'}})
             .populate({path:'lotItem', populate:{path:'businessItem'}})
             .populate('destinationItem')
@@ -244,6 +244,29 @@ class deliveryCtrl {
         }
     }
 
+    setCasa = async(req: Request, res: Response)=> {
+        console.log(req.params.id);
+        try {
+            const vacio = await Delivery.findById(req.params.id);
+            if(vacio === null){
+                res.status(400).json({
+                    code: 404,
+                    status: 'Delivery no existe'
+                });
+            } else {
+            await Delivery.findByIdAndUpdate(req.params.id, {"casa":true})
+            res.status(200).json({
+                status: 'Delivery actualizado correctamente'
+            });
+            }           
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
 
     //POST CREATEONE
     createDelivery = async (req: Request, res: Response) => {
@@ -266,9 +289,7 @@ class deliveryCtrl {
 
             const business: IUser | null = await User.findById(lot?.businessItem._id);
 
-       
             const newDelivery: IDelivery = new Delivery({
-            
                 lotItem: lot,
                 originLocation: business?.location,
                 destinationLocation: user?.location,
@@ -280,14 +301,13 @@ class deliveryCtrl {
                 businessItem: business,
                 isAssigned: req.body.isAssigned,
                 userItem: user,
-                description: lot?.info
+                description: lot?.info,
+                casa: req.body.casa
             });
             console.log( 'Info del newDelivery::::::' + newDelivery);
             //this takes some time!
             await newDelivery.save();
-            res.status(200).json({
-                status: 'Delivery Saved Succesfully'
-            });
+            res.status(200).json(newDelivery);
         } catch (err) {
             res.status(500).json({
                 status: `${err.message}`
@@ -368,7 +388,34 @@ class deliveryCtrl {
         }
     }
 
-
+    getDeliveriesByChart = async (req: Request, res: Response) => {
+        console.log(req.params.id);
+        try {
+            const delivery: IDelivery[] = await Delivery.find({ "userItem": Object(req.params.id) });
+            var data = [];
+            var numDel: number;
+            var obj: number;
+            for(obj = 1; obj<13; obj++){
+                numDel = 0;
+                for(var i in delivery){
+                    var date: string = delivery[i].deliveryDate!;
+                    var month: string = date.slice(3,-5);
+                    if(month.charAt(0) == "0") month.slice(1,0);
+                    if(month == obj.toString()) numDel++;
+                }
+                let modelData = {
+                    month: obj,
+                    orders: numDel
+                };
+                data.push(modelData);
+            }
+            res.json(data);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
 }
 
 export default new deliveryCtrl();
