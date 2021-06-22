@@ -82,7 +82,7 @@ app.get('/resetPass', function(req, res){
 
 // Configuración
 //we use the port 8000 for Flutter ---> important from Eric!
-app.use(cors({origin: 'http://eetacea0.upc.es'}));
+app.use(cors({origin: '*'}));
 
 // Middlewares ---> functions that process data before routes
 app.use(morgan('dev'));
