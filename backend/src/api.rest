@@ -3,11 +3,28 @@
 GET http://localhost:3000/api/users/chat/60ccc9c5bd290717f88511d6
 
 ###
-PUT http://localhost:3000/api/users/60ccc9c5bd290717f88511d6
+PUT http://localhost:3000/api/users/60d118462b343d3ca8b9f6ed
 content-Type: application/json
 
 {
-    "friends": "60ccca5dbd290717f88511d7"
+    "notifications": [
+        {
+            "type": "profile",
+            "description": "The user refresh the profile",
+            "status": 0,
+            "origin": "60a901215be6b70a807f5f40",
+            "image": "",
+            "others": ""
+        },
+        {
+            "type": "validation",
+            "description": "The storage accepts the lot",
+            "status": 0,
+            "origin": "60a901215be6b70a807f5f40",
+            "image": "",
+            "others": ""
+        }
+    ]
 } 
 
 ###
@@ -229,12 +246,18 @@ GET http://localhost:3000/api/delivery/getDeliveriesByChart/6091d6782d3a56445406
 
 ###
 POST http://localhost:3000/api/notifications/me
-content-Type: application/json 
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQxMTg0NjJiMzQzZDNjYThiOWY2ZWQiLCJpYXQiOjE2MjQzMTU5NzYsImV4cCI6MTYyNDQwMjM3Nn0.D5cvJpbZY7CqWALTZmKFFNj8WmQZiEL-4j3d9RqHrjs 
 
 {
-    "user": "60c4fca0488f893984a0f410",
-    "getlength": "4"
+    "getlength": true
 }
 
 ###
 POST http://localhost:3000/api/notifications/del
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQxMTg0NjJiMzQzZDNjYThiOWY2ZWQiLCJpYXQiOjE2MjQzMTU5NzYsImV4cCI6MTYyNDQwMjM3Nn0.D5cvJpbZY7CqWALTZmKFFNj8WmQZiEL-4j3d9RqHrjs
+{
+    "type": "profile",
+	"origin": "60a901215be6b70a807f5f40"
+}
