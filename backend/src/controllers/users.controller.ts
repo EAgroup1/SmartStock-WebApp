@@ -176,6 +176,7 @@ class userCtrl {
             userName: user.userName,
             role: user.role,
             location: user.location,
+            bank: user.bank,
             friends: user.friends
         }
         console.log(_aux);

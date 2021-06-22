@@ -22,7 +22,7 @@ class lotCtrl {
     //get all lots Sorted without User asociated
     getAllLotsSorted = async (_req: Request, res: Response) => {
         try {
-            const lots: ILot[] = await Lot.find({ 'userItem': { $exists: false } } ).sort({name:1})
+            const lots: ILot[] = await Lot.find({ 'userItem': {$exists: false}, 'stored': false}).sort({name:1})
                 .populate('businessItem');
             console.log(lots);
             res.json(lots);
