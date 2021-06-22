@@ -19,6 +19,8 @@ usersRouter.get('/', usersCtrl.getAllUsers);
 usersRouter.post('/', usersCtrl.createUser);
 usersRouter.delete('/:id', usersCtrl.deleteUser);
 usersRouter.put('/:id', usersCtrl.updateUser);
+usersRouter.put('/:id/putfriend', usersCtrl.putFriend);
+usersRouter.put('/:id/deletefriend', usersCtrl.deleteFriend);
 usersRouter.get('/:id', usersCtrl.getUser);
 usersRouter.get('/chat/:id', usersCtrl.getUserChat);
 
@@ -30,7 +32,7 @@ usersRouter.post('/logInGoogle', usersCtrl.logInGoogle);
 usersRouter.post('/signUp', usersCtrl.signUp);
 
 //test passport (Headers-Authorization: Bearer token)
-usersRouter.get('/special', passport.authenticate('jwt', {session: false}), (req, res) =>{
+usersRouter.get('/special/checkToken', passport.authenticate('jwt', {session: false}), (req, res) =>{
     res.send('works!');
 })
 

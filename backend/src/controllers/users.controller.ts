@@ -107,6 +107,51 @@ class userCtrl {
             });
         }
     }
+    
+    //DELETE
+    deleteFriend = async (req:Request, res: Response)=> {
+        try {
+            const vacio = await User.findByIdAndUpdate(req.params.id, { $pull: {"friends": req.body.friend }});
+            console.log(vacio);
+            if (vacio === null) {
+                res.status(400).json({
+                    code: 404,
+                    status: 'No esta este usuario en la base de datos'
+                });
+            } else {
+                res.status(200).json({
+                    status: 'User actualizado'
+                });
+            }
+
+        }catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+    //DELETE
+    putFriend = async (req:Request, res: Response)=> {
+        try {
+            const vacio = await User.findByIdAndUpdate(req.params.id, { $push: {"friends": req.body.friend }});
+            console.log(vacio);
+            if (vacio === null) {
+                res.status(400).json({
+                    code: 404,
+                    status: 'No esta este usuario en la base de datos'
+                });
+            } else {
+                res.status(200).json({
+                    status: 'User actualizado'
+                });
+            }
+        }catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+
+    }
 
     //GET USER
     getUser = async (req: Request, res: Response) => {

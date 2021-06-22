@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/user";
+import Notification, { INotification } from '../models/notification';
 
 function getMyNotifications(req:Request, res:Response): void {
     const getlength = req.body.getlength; 
@@ -43,10 +44,39 @@ async function delNotification(req: Request, res: Response){
                 return res.status(500).json(error);
             });
         }
+        else return res.status(400).json("¡No se encontró esta notificacion!");
     });
     }).catch((err) => {
         return res.status(500).json(err);
     });
 }
 
-export default { getMyNotifications, deleteNotification, delNotification };
+async function addNotification(req: Request, res: Response){
+    console.log(req.body);
+
+        try {
+            //we create this object to not take user's id
+            const newNotification: INotification = new Notification({
+                type: req.body.type,
+                description: req.body.description,
+                status: req.body.status,
+                origin: req.body.origin,
+                image: req.body.image,
+                others: req.body.others
+            });
+
+            console.log(newNotification);
+            //this takes some time!
+            await newNotification.save();
+            res.json({
+                status: 'Notification Saved Succesfully'
+            });
+
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+}
+
+export default { getMyNotifications, deleteNotification, delNotification, addNotification };
