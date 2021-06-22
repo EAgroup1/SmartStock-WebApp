@@ -250,13 +250,13 @@ content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQxMTg0NjJiMzQzZDNjYThiOWY2ZWQiLCJpYXQiOjE2MjQzMTU5NzYsImV4cCI6MTYyNDQwMjM3Nn0.D5cvJpbZY7CqWALTZmKFFNj8WmQZiEL-4j3d9RqHrjs 
 
 {
-    "getlength": true
+    "getlength": false
 }
 
 ###
 POST http://localhost:3000/api/notifications/del
 content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQxMTg0NjJiMzQzZDNjYThiOWY2ZWQiLCJpYXQiOjE2MjQzMTU5NzYsImV4cCI6MTYyNDQwMjM3Nn0.D5cvJpbZY7CqWALTZmKFFNj8WmQZiEL-4j3d9RqHrjs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQxMTg0NjJiMzQzZDNjYThiOWY2ZWQiLCJpYXQiOjE2MjQzMTU5NzYsImV4cCI6MTYyNDQwMjM3Nn0.D5cvJpbZY7CqWALTZmKFFNj8WmQZiEL-4j3d9RqHrjs 
 {
     "type": "profile",
 	"origin": "60a901215be6b70a807f5f40"

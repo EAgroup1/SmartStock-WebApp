@@ -400,6 +400,23 @@ class userCtrl {
             });
         }
     }
+
+    getUsersByRole = async (req: Request, res: Response) => {
+        console.log(req.params);
+        try {
+            //const lot: ILot[] = await Lot.find({ "name": req.params.name })
+            const usersByRole: IUser[] = await User.find({ "role": req.params.role });
+            //if anything
+            //const numAll = await User.find().count();
+            res.status(200).send(usersByRole);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    
 }
 
 export default new userCtrl();

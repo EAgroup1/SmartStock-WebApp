@@ -12,6 +12,7 @@ usersRouter.post('/reset/:resetLink', usersCtrl.resetPassword);
 
 usersRouter.get('/getNumByRole/:role', usersCtrl.getNumByRole);
 usersRouter.get('/getNumAll', usersCtrl.getNumAll);
+usersRouter.get('/getUsersByRole/:role', usersCtrl.getUsersByRole);
 
 //we put all routes in this file & we will se in the future
 usersRouter.get('/', usersCtrl.getAllUsers);

@@ -50,7 +50,9 @@ class lotCtrl {
             businessItem: req.body.businessItem,
             userItem: req.body.userItem,
             info: req.body.info,
-            stored: req.body.stored
+            stored: req.body.stored,
+            delivered: req.body.delivered,
+            picked: req.body.picked
 
             });
             console.log(newLot);
