@@ -32,7 +32,7 @@ usersRouter.post('/logInGoogle', usersCtrl.logInGoogle);
 usersRouter.post('/signUp', usersCtrl.signUp);
 
 //test passport (Headers-Authorization: Bearer token)
-usersRouter.get('/special', passport.authenticate('jwt', {session: false}), (req, res) =>{
+usersRouter.get('/special/checkToken', passport.authenticate('jwt', {session: false}), (req, res) =>{
     res.send('works!');
 })
 
