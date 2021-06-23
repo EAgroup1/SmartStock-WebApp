@@ -24,5 +24,6 @@ deliveryRouter.get('/getDeliveriesByChart/:id', deliveryCtrl.getDeliveriesByChar
 deliveryRouter.put('/picked/:id', deliveryCtrl.setIsPicked);
 deliveryRouter.put('/delivered/:id', deliveryCtrl.setIsDelivered);
 deliveryRouter.put('/time/:id', deliveryCtrl.setTime);
+deliveryRouter.put('/casa/:id', deliveryCtrl.setCasa);
 
 export default deliveryRouter;

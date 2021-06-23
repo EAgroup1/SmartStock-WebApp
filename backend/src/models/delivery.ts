@@ -16,6 +16,7 @@ export interface IDelivery extends mongoose.Document {
     userItem?: IUser,
     description?: string,
     time?: string,
+    casa?: boolean
 }
 
 const deliverySchema = new Schema({
@@ -31,7 +32,8 @@ const deliverySchema = new Schema({
     isAssigned: { type: Boolean, required: false, default: false},
     userItem: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
     description: { type: String, required: false, default: '',
-    time: { type: String, required: false, default: ''},}
+    time: { type: String, required: false, default: ''},
+    casa: { type: Boolean, required: false, default: false}}
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,

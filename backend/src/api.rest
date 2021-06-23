@@ -64,11 +64,11 @@ content-Type: application/json
 DELETE http://localhost:3000/api/users/:id
 
 ###
-PUT http://localhost:3000/api/users/60be61ae74ee9a25041a649e
+PUT http://localhost:3000/api/users/60ccc9c5bd290717f88511d6/putfriend
 content-Type: application/json
 
 {
-    "role": "User"
+    "friend": "60ce4ef2a1b5ba1d48455a5f"
 
 } 
 
@@ -115,7 +115,7 @@ GET http://localhost:3000/api/lots/All
 GET http://localhost:3000/api/lots/getByUser/60b684372ffee403ecae5fa2
 
 ###
-GET http://localhost:3000/api/lots/getByUser/60c4fca0488f893984a0f410
+GET http://localhost:3000/api/lots/getByUser/60d247a9708b7a1c5424e45f
 
 ###
 GET http://localhost:3000/api/lots/getLotsByChart/60c4fca0488f893984a0f410
@@ -240,12 +240,32 @@ GET http://localhost:3000/api/delivery/getDeliveriesByChart/6091d6782d3a56445406
 
 ###
 POST http://localhost:3000/api/notifications/me
-content-Type: application/json 
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQxMTg0NjJiMzQzZDNjYThiOWY2ZWQiLCJpYXQiOjE2MjQzMTU5NzYsImV4cCI6MTYyNDQwMjM3Nn0.D5cvJpbZY7CqWALTZmKFFNj8WmQZiEL-4j3d9RqHrjs 
 
 {
-    "user": "60c4fca0488f893984a0f410",
-    "getlength": "4"
+    "getlength": false
 }
 
 ###
 POST http://localhost:3000/api/notifications/del
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQxMTg0NjJiMzQzZDNjYThiOWY2ZWQiLCJpYXQiOjE2MjQzMTU5NzYsImV4cCI6MTYyNDQwMjM3Nn0.D5cvJpbZY7CqWALTZmKFFNj8WmQZiEL-4j3d9RqHrjs 
+
+{
+	"notification": [
+		{"type": "profiles"},
+		{"origin": "60a901215be6b70a807f5f40"}
+	]
+}
+
+###
+POST http://localhost:3000/api/notifications/add
+{
+    "type": "other",
+    "description": "other refresh the page",
+    "status": 0,
+    "origin": "60a901215be6b70a807f5f40",
+    "image": "",
+    "others": ""
+}

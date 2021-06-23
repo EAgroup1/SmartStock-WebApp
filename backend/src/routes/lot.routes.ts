@@ -21,5 +21,6 @@ lotRouter.get('/getByUser/:id', lotCtrl.getLotsByUserId);
 lotRouter.get('/getByBusiness/:id', lotCtrl.getLotsByBusinessId);
 lotRouter.get('/getByBusinessStoredWithUserID/:id', lotCtrl.getLotsByBusinessIdStored);
 lotRouter.get('/getByBusinessStoredTrueWithUserID/:id', lotCtrl.getLotsByBusinessIdStoredTrue);
+lotRouter.get('/getByUserStoredTrueWithUserID/:id', lotCtrl.getLotsByUserIdStoredTrue);
 
 export default lotRouter;
