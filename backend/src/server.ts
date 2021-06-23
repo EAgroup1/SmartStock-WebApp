@@ -7,7 +7,6 @@ import router from './routes';
 //require all imports to deploy WebSockets
 import http from 'http';
 const { Server } = require("socket.io");
-import { Message } from './models';
 import path from 'path';
 // import User, {IUser} from './models/user';
 
