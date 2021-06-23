@@ -6,6 +6,7 @@ import deliveryCtrl from '../controllers/delivery.controller';
 const deliveryRouter: Router = Router();
 
 //we put all routes in this file & we will se in the future
+deliveryRouter.get('/:id/delivery/lot', deliveryCtrl.getAllDelivery);
 deliveryRouter.get('/', deliveryCtrl.getAllDeliveries);
 deliveryRouter.post('/', deliveryCtrl.createDelivery);
 deliveryRouter.delete('/:id', deliveryCtrl.deleteDelivery);

@@ -22,7 +22,7 @@ class lotCtrl {
     //get all lots Sorted without User asociated
     getAllLotsSorted = async (_req: Request, res: Response) => {
         try {
-            const lots: ILot[] = await Lot.find({ 'userItem': { $exists: false } } ).sort({name:1})
+            const lots: ILot[] = await Lot.find({ 'userItem': {$exists: false}, 'stored': false}).sort({name:1})
                 .populate('businessItem');
             console.log(lots);
             res.json(lots);
@@ -277,6 +277,26 @@ class lotCtrl {
                 {
                     $and: [
                         { "businessItem": Object(req.params.id) }, { "userItem": { $exists: true } }, { "stored": true }
+                    ]
+                }
+            ).sort({ name: 1 })
+                .populate('businessItem')
+                .populate('userItem');
+
+            res.json(lot);
+        } catch (err) {
+            res.status(500).json({
+                status: `${err.message}`
+            });
+        }
+    }
+
+    getLotsByUserIdStoredTrue = async (req: Request, res: Response) => {
+        try {
+            const lot: ILot[] = await Lot.find(
+                {
+                    $and: [
+                        { "userItem": Object(req.params.id) }, { "stored": true }
                     ]
                 }
             ).sort({ name: 1 })

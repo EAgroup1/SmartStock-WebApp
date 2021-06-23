@@ -121,7 +121,7 @@ GET http://localhost:3000/api/lots/All
 GET http://localhost:3000/api/lots/getByUser/60b684372ffee403ecae5fa2
 
 ###
-GET http://localhost:3000/api/lots/getByUser/60c4fca0488f893984a0f410
+GET http://localhost:3000/api/lots/getByUser/60d247a9708b7a1c5424e45f
 
 ###
 GET http://localhost:3000/api/lots/getLotsByChart/60c4fca0488f893984a0f410
