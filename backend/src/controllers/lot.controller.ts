@@ -170,7 +170,7 @@ class lotCtrl {
             for(var i in lot){
                 let modelData = {
                     name: lot[i].name,
-                    money: parseInt(lot[i].qty)*parseInt(lot[i].price)
+                    money: parseInt(lot[i].qty)*parseInt(lot[i].price)*0.2
                 };
                 data.push(modelData);
             }
