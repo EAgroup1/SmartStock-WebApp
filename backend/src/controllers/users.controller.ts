@@ -80,16 +80,16 @@ class userCtrl {
 
     //UPDATE USER
     updateUser = async (req: Request, res: Response) => {
-
-        console.log(req.params);
-
         //we obtain id before we give it
         const { id } = req.params;
+
         //we want to modify this object with these parameters
         const modifiedUser: IUser = req.body;
+        console.log("EL REQBODY");
+        console.log(req.body);
         try {
             //if any parameter doesn't exist we create it
-            const vacio = await User.findById(req.params.id);
+            const vacio = await User.findById(id);
             if (vacio === null) {
                 res.status(400).json({
                     code: 404,
@@ -137,6 +137,8 @@ class userCtrl {
         console.log(req.params);
         try {
             const user = await User.findById(req.params.id).populate('friends');
+            //.populate({ path: 'messages', populate: { path: 'Message' } });
+            console.log(user);
             if (user === null) {
                 res.status(400).json({
                     code: 404,

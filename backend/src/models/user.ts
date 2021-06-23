@@ -1,5 +1,7 @@
 import mongoose, {Schema, model, Document} from 'mongoose';
 //password cannot store in plaintext on database
+import Message, { IChatMessage } from '../models/chatmessage';
+
 import bcrypt from 'bcrypt-nodejs';
 
 export interface IUser extends Document {
@@ -17,6 +19,7 @@ export interface IUser extends Document {
     resetLink?: string,
     notifications: Array<any>;
     friends?: IUser[],
+    messages?: IChatMessage[],
     clat?: number,
     clng?:number,
     validatePassword(password: string): Promise<boolean>
@@ -40,7 +43,8 @@ const userSchema = new Schema({
     //reset pass--->
     notifications: [{ type: Object, ref: 'Notification'}],
     resetLink: { type: String, required: false, default: 'link' },
-    friends: [{ type: mongoose.Schema.Types.ObjectId, required: false}]
+    friends: [{ type: mongoose.Schema.Types.ObjectId, required: false}],
+    messages: [{ type: Object, ref: Message, required: false}]
 }, {
     //timestamps adds createDate and updateDate of the object
     timestamps: true,

@@ -29,6 +29,7 @@ io.on('connection', (socket: any) => {
         console.log(data);
         console.log(data.room);
         socket.to(data.room).emit('newmsg', data);
+        console.log("se ha enviado mensaje");
     });
     //actually disconnects automatically: do not remove "porsiacaso"
     socket.on('disconnect', (data: any) => {

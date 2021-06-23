@@ -1,13 +1,24 @@
 //CRUD de USER
 ###
-GET http://localhost:3000/api/users/chat/60ccc9c5bd290717f88511d6
+GET http://localhost:3000/api/users/chat/60c4f100aaaa0a33e4e27ebd
 
 ###
-PUT http://localhost:3000/api/users/60ccc9c5bd290717f88511d6
+PUT http://localhost:3000/api/users/60c4f100aaaa0a33e4e27ebd
 content-Type: application/json
 
 {
-    "friends": "60ccca5dbd290717f88511d7"
+    "messages": [
+        {
+            "senderID": "60c4f100aaaa0a33e4e27ebd",
+            "text": "dinamike guay",
+            "receiverID": "60c4f116aaaa0a33e4e27ebe"
+        },
+        {
+            "senderID": "60c4f100aaaa0a33e4e27ebd",
+            "text": "pero que quiero el JSON",
+            "receiverID": "60c4f116aaaa0a33e4e27ebe"
+        }
+    ]
 } 
 
 ###
